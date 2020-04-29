@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Charlotte.AudioPicMp4s;
+using Charlotte.AudioPicMP4s;
 using Charlotte.Tools;
 
-namespace Charlotte.Tests.AudioPicMp4s
+namespace Charlotte.Tests.AudioPicMP4s
 {
 	public class WaveDataTest
 	{

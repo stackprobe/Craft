@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test01", "Test01\Test01.csproj", "{DDFC3E01-026A-470B-B939-79DEB4CD1EF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioPicMp4", "AudioPicMp4\AudioPicMp4.csproj", "{024B68E0-006B-449E-9520-7AEFC1CD80BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioPicMP4", "AudioPicMP4\AudioPicMP4.csproj", "{024B68E0-006B-449E-9520-7AEFC1CD80BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

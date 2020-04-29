@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Charlotte.AudioPicMp4s
+namespace Charlotte.AudioPicMP4s
 {
 	/// <summary>
 	/// 動画(映像と音声)

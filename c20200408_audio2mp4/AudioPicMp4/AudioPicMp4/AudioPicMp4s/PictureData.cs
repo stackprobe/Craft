@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Charlotte.Tools;
 
-namespace Charlotte.AudioPicMp4s
+namespace Charlotte.AudioPicMP4s
 {
 	/// <summary>
 	/// 画像

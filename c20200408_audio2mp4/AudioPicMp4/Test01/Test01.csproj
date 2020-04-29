@@ -50,12 +50,12 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\AudioPicMp4s\WaveDataTest.cs" />
+    <Compile Include="Tests\AudioPicMP4s\WaveDataTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AudioPicMp4\AudioPicMp4.csproj">
+    <ProjectReference Include="..\AudioPicMP4\AudioPicMP4.csproj">
       <Project>{024B68E0-006B-449E-9520-7AEFC1CD80BB}</Project>
-      <Name>AudioPicMp4s</Name>
+      <Name>AudioPicMP4s</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Charlotte.Tools;
-using Charlotte.Tests.AudioPicMp4s;
+using Charlotte.Tests.AudioPicMP4s;
 
 namespace Charlotte
 {
 	class Program
 	{
 		public const string APP_IDENT = "{5fac1e8a-3300-4834-aad4-70ba3523df82}";
-		public const string APP_TITLE = "AudioPicMp4";
+		public const string APP_TITLE = "AudioPicMP4";
 
 		static void Main(string[] args)
 		{

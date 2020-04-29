@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Charlotte.Tools;
 using System.IO;
-using Charlotte.AudioPicMp4s.Internal;
+using Charlotte.AudioPicMP4s.Internal;
 
-namespace Charlotte.AudioPicMp4s
+namespace Charlotte.AudioPicMP4s
 {
 	/// <summary>
 	/// 音声

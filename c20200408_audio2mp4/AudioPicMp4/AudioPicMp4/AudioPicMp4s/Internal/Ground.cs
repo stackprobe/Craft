@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace Charlotte.AudioPicMp4s.Internal
+namespace Charlotte.AudioPicMP4s.Internal
 {
 	public class Ground
 	{
