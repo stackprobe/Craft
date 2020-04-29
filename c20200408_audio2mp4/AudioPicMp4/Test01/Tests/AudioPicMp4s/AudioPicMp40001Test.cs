@@ -10,12 +10,12 @@ namespace Charlotte.Tests.AudioPicMp4s
 	{
 		public void Test01()
 		{
-			string message = "AudioPicMp49999";
+			//string message = "AudioPicMp49999";
 
-			if (new AudioPicMp40001().Echo(message) != message)
-				throw null;
+			//if (new AudioPicMp40001().Echo(message) != message)
+			//throw null;
 
-			Console.WriteLine("OK!");
+			//Console.WriteLine("OK!");
 		}
 	}
 }
