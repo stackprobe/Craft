@@ -16,16 +16,18 @@ namespace Charlotte
 		{
 			ProcMain.CUIMain(new Program().Main2, APP_IDENT, APP_TITLE);
 
+#if DEBUG
 			//if (ProcMain.CUIError)
 			{
 				Console.WriteLine("Press ENTER.");
 				Console.ReadLine();
 			}
+#endif
 		}
 
 		private void Main2(ArgsReader ar)
 		{
-			//new AudioPicMp40001Test().Test01(); // -- 0001
+			new WaveDataTest().Test01();
 		}
 	}
 }

@@ -15,7 +15,7 @@ namespace Charlotte.AudioPicMp4s
 	{
 		private double[] WavData_L;
 		private double[] WavData_R;
-		private int WavHz;
+		public int WavHz { get; private set; }
 
 		public WaveData(string wavFile)
 		{
@@ -58,6 +58,14 @@ namespace Charlotte.AudioPicMp4s
 			}
 		}
 
+		public int Length
+		{
+			get
+			{
+				return this.WavData_L.Length;
+			}
+		}
+
 		private const int WINDOW_SIZE = 1000;
 
 		private double[] WavPart_L = new double[WINDOW_SIZE];
@@ -77,10 +85,18 @@ namespace Charlotte.AudioPicMp4s
 			{
 				for (int offset = 0; offset < WINDOW_SIZE; offset++)
 				{
-					this.WavPart_L[offset] = this.WavData_L[startPos + offset];
-					this.WavPart_R[offset] = this.WavData_R[startPos + offset];
+					double rate = offset * 1.0 / (WINDOW_SIZE - 1);
+					double hh = Hamming(rate);
+
+					this.WavPart_L[offset] = this.WavData_L[startPos + offset] * hh;
+					this.WavPart_R[offset] = this.WavData_R[startPos + offset] * hh;
 				}
 			}
+		}
+
+		private static double Hamming(double rate)
+		{
+			return 0.5 - 0.5 * Math.Cos(rate * Math.PI * 2.0);
 		}
 
 		public double GetSpectrum(int hz)
@@ -103,7 +119,6 @@ namespace Charlotte.AudioPicMp4s
 			if (hz < 1 || IntTools.IMAX < hz)
 				throw new Exception("Bad hz: " + hz);
 
-			double monHz = hz * (Math.PI * 2.0) / this.WavHz;
 			double cc = 0.0;
 			double ss = 0.0;
 
@@ -111,18 +126,11 @@ namespace Charlotte.AudioPicMp4s
 			{
 				double aa = offset * hz * (Math.PI * 2.0) / this.WavHz;
 				double vv = windowData[offset];
-				double rate = offset * 1.0 / (WINDOW_SIZE - 1);
-				double hh = Hamming(rate);
 
-				cc += Math.Cos(aa) * vv * hh;
-				ss += Math.Sin(aa) * vv * hh;
+				cc += Math.Cos(aa) * vv;
+				ss += Math.Sin(aa) * vv;
 			}
 			return cc * cc + ss * ss;
-		}
-
-		private static double Hamming(double rate)
-		{
-			return 0.5 - 0.5 * Math.Cos(rate * Math.PI * 2.0);
 		}
 	}
 }
