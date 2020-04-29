@@ -74,9 +74,7 @@ namespace Charlotte.AudioPicMP4s
 		{
 			Canvas2 maskImg = new Canvas2(canvas.GetWidth(), canvas.GetHeight());
 
-			maskImg.AntiAliasing = false;
-
-			using (Graphics g = maskImg.GetGraphics())
+			using (Graphics g = maskImg.GetGraphics(false))
 			{
 				g.FillRectangle(new SolidBrush(color), 0, 0, maskImg.GetWidth(), maskImg.GetHeight());
 			}
