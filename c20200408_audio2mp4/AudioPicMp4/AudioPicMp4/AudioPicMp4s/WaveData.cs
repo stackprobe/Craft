@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Charlotte.Tools;
 using System.IO;
+using Charlotte.AudioPicMp4s.Internal;
 
 namespace Charlotte.AudioPicMp4s
 {
@@ -12,9 +13,9 @@ namespace Charlotte.AudioPicMp4s
 	/// </summary>
 	public class WaveData
 	{
-		private double[] WavData_L;
-		private double[] WavData_R;
-		private int WavHz;
+		public double[] WavData_L;
+		public double[] WavData_R;
+		public int WavHz;
 
 		public WaveData(string wavFile)
 		{
@@ -24,7 +25,7 @@ namespace Charlotte.AudioPicMp4s
 
 				ProcessTools.Batch(new string[]
 				{
-					@"C:\Factory\SubTools\wavCsv.exe /W2C 1.wav 1.csv 1.hz",
+					Ground.I.wavCsvExeFile + " /W2C 1.wav 1.csv 1.hz",
 				},
 				wd.GetPath(".")
 				);
@@ -55,6 +56,52 @@ namespace Charlotte.AudioPicMp4s
 				if (this.WavHz < 1 || IntTools.IMAX < this.WavHz)
 					throw new Exception("Bad WavHz: " + this.WavHz);
 			}
+		}
+
+		private WavMonoData WavMono_L = null;
+		private WavMonoData WavMono_R = null;
+
+		public WavMonoData L
+		{
+			get
+			{
+				if (this.WavMono_L == null)
+				{
+					this.WavMono_L = new WavMonoData()
+					{
+						Parent = this,
+						WavData = this.WavData_L,
+					};
+				}
+				return this.WavMono_L;
+			}
+		}
+
+		public WavMonoData R
+		{
+			get
+			{
+				if (this.WavMono_R == null)
+				{
+					this.WavMono_R = new WavMonoData()
+					{
+						Parent = this,
+						WavData = this.WavData_R,
+					};
+				}
+				return this.WavMono_R;
+			}
+		}
+
+		public const int DEFAULT_WINDOW_SIZE = 1000;
+		public const bool DEFAULT_HAMMING_FLAG = true;
+
+		public double GetSpectrum(int hz, int offset, int windowSize = DEFAULT_WINDOW_SIZE, bool hammingFlag = DEFAULT_HAMMING_FLAG)
+		{
+			return (
+				this.L.GetSpectrum(hz, offset, windowSize, hammingFlag) +
+				this.R.GetSpectrum(hz, offset, windowSize, hammingFlag)
+				) / 2.0;
 		}
 	}
 }

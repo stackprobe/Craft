@@ -45,12 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AudioPicMp4s\Internal\Ground.cs" />
     <Compile Include="AudioPicMp4s\MovieData.cs" />
     <Compile Include="AudioPicMp4s\PictureData.cs" />
     <Compile Include="AudioPicMp4s\VideoData.cs" />
     <Compile Include="AudioPicMp4s\WaveData.cs" />
+    <Compile Include="AudioPicMp4s\WavMixedData.cs" />
+    <Compile Include="AudioPicMp4s\WavMonoData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
