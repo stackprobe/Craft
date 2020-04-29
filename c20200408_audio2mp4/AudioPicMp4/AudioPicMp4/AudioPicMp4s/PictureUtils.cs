@@ -10,37 +10,49 @@ namespace Charlotte.AudioPicMP4s
 {
 	public static class PictureUtils
 	{
-		public static Canvas2 Blur(Canvas2 canvas, int deep)
+		public static Canvas2 Blur(Canvas2 canvas, int depth)
 		{
-			for (; 1 <= deep; deep--)
-			{
-				canvas = Blur(canvas, 1, 0);
-				canvas = Blur(canvas, 0, 1);
-			}
+			for (int count = 0; count < depth; count++)
+				canvas = BlurOnce(canvas, count);
+
 			return canvas;
 		}
 
-		private static Canvas2 Blur(Canvas2 canvas, int xa, int ya)
+		private static readonly int[,] DIRECTIONS = new int[,]
+		{
+			{ -1, -1 },
+			{ -1, 0 },
+			{ -1, 1 },
+			{ 0, 1 },
+			{ 1, 1 },
+			{ 1, 0 },
+			{ 1, -1 },
+			{ 0, -1 },
+		};
+
+		private static Canvas2 BlurOnce(Canvas2 canvas, int phase)
 		{
 			Canvas2 dest = new Canvas2(canvas.GetWidth(), canvas.GetHeight());
 
 			using (Graphics g = dest.GetGraphics())
 			{
-				g.DrawImage(canvas.GetImage(), -xa, -ya);
-				g.DrawImage(
-					canvas.GetImage(),
-					new Rectangle(0, 0, canvas.GetWidth(), canvas.GetHeight()),
-					0, 0, canvas.GetWidth(), canvas.GetHeight(),
-					GraphicsUnit.Pixel,
-					GetIA_Alpha(0.5)
-					);
-				g.DrawImage(
-					canvas.GetImage(),
-					new Rectangle(xa, ya, canvas.GetWidth(), canvas.GetHeight()),
-					0, 0, canvas.GetWidth(), canvas.GetHeight(),
-					GraphicsUnit.Pixel,
-					GetIA_Alpha(1 / 3.0)
-					);
+				g.DrawImage(canvas.GetImage(), 0, 0);
+
+				for (int count = 0; count < 8; count++)
+				{
+					int direction = (count + phase) % 8;
+
+					int xa = DIRECTIONS[direction, 0];
+					int ya = DIRECTIONS[direction, 1];
+
+					g.DrawImage(
+						canvas.GetImage(),
+						new Rectangle(xa, ya, canvas.GetWidth(), canvas.GetHeight()),
+						0, 0, canvas.GetWidth(), canvas.GetHeight(),
+						GraphicsUnit.Pixel,
+						GetIA_Alpha(1.0 / (2.0 + count))
+						);
+				}
 			}
 			return dest;
 		}
@@ -58,7 +70,7 @@ namespace Charlotte.AudioPicMP4s
 			return ia;
 		}
 
-		public static void Filter_Color(Canvas2 canvas, Color color, double rate)
+		public static void Filter_Color(Canvas2 canvas, Color color, double a)
 		{
 			Canvas2 maskImg = new Canvas2(canvas.GetWidth(), canvas.GetHeight());
 
@@ -73,9 +85,9 @@ namespace Charlotte.AudioPicMP4s
 				g.DrawImage(
 					maskImg.GetImage(),
 					new Rectangle(0, 0, canvas.GetWidth(), canvas.GetHeight()),
-					0, 0, canvas.GetWidth(), canvas.GetHeight(),
+					0, 0, maskImg.GetWidth(), maskImg.GetHeight(),
 					GraphicsUnit.Pixel,
-					GetIA_Alpha(rate)
+					GetIA_Alpha(a)
 					);
 			}
 		}

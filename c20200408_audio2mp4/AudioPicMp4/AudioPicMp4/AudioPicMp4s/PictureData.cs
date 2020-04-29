@@ -12,19 +12,40 @@ namespace Charlotte.AudioPicMP4s
 	/// </summary>
 	public class PictureData
 	{
-		private Canvas2 MainImage;
+		private const double R1 = 0.2;
+		private const double R2 = 0.1;
+		private const double WALL_DARKNESS_RATE = 0.5;
+		private const int BLUR_DEPTH = 30;
+		private const int MARGIN = 10;
+
+		private Canvas2 DiscJacket;
+		private Canvas2 BluredDiscJacket;
+		private Canvas2 MarginedDiscJacket;
 		private Canvas2 Frame;
 
-		public PictureData(Canvas2 mainImage, int frame_w, int frame_h)
+		public PictureData(Canvas2 discJacket, int frame_w, int frame_h)
 		{
-			if (mainImage == null)
-				throw new Exception("mainImage is null");
+			if (discJacket == null)
+				throw new Exception("discJacket is null");
 
-			this.MainImage = mainImage;
+			this.DiscJacket = discJacket;
+			this.BluredDiscJacket = PictureUtils.Blur(discJacket, BLUR_DEPTH);
+			PictureUtils.Filter_Color(this.BluredDiscJacket, Color.Black, 0.5);
+			this.MarginedDiscJacket = PutMargin(discJacket);
 			this.Frame = new Canvas2(frame_w, frame_h);
 		}
 
-		private const int BLUR_DEEP = 30;
+		private static Canvas2 PutMargin(Canvas2 canvas)
+		{
+			Canvas2 dest = new Canvas2(canvas.GetWidth() + MARGIN * 2, canvas.GetHeight() + MARGIN * 2);
+
+			using (Graphics g = dest.GetGraphics())
+			{
+				g.FillRectangle(new SolidBrush(Color.Transparent), 0, 0, dest.GetWidth(), dest.GetHeight());
+				g.DrawImage(canvas.GetImage(), MARGIN, MARGIN, canvas.GetWidth(), canvas.GetHeight());
+			}
+			return dest;
+		}
 
 		public void SetFrame(double rate)
 		{
@@ -32,45 +53,46 @@ namespace Charlotte.AudioPicMP4s
 
 			{
 				double w = this.Frame.GetWidth();
-				double h = this.MainImage.GetHeight() * this.Frame.GetWidth() * 1.0 / this.MainImage.GetWidth();
+				double h = this.BluredDiscJacket.GetHeight() * this.Frame.GetWidth() * 1.0 / this.BluredDiscJacket.GetWidth();
 
 				if (h < this.Frame.GetHeight()) // ? はみ出さない -> はみ出すようにする。
 				{
-					w = this.MainImage.GetWidth() * this.Frame.GetHeight() * 1.0 / this.MainImage.GetHeight();
+					w = this.BluredDiscJacket.GetWidth() * this.Frame.GetHeight() * 1.0 / this.BluredDiscJacket.GetHeight();
 					h = this.Frame.GetHeight();
 				}
-				w += w * 0.2 * rate;
-				h += h * 0.2 * rate;
+				w += w * R1 * rate;
+				h += h * R1 * rate;
 
 				double l = (this.Frame.GetWidth() - w) / 2.0;
 				double t = (this.Frame.GetHeight() - h) / 2.0;
 
 				using (Graphics g = this.Frame.GetGraphics())
 				{
-					g.DrawImage(this.MainImage.GetImage(), (float)l, (float)t, (float)w, (float)h);
+					g.DrawImage(this.BluredDiscJacket.GetImage(), (float)l, (float)t, (float)w, (float)h);
 				}
 			}
 
-			this.Frame = PictureUtils.Blur(this.Frame, BLUR_DEEP); // TODO 重い
-
 			{
 				double w = this.Frame.GetWidth();
-				double h = this.MainImage.GetHeight() * this.Frame.GetWidth() * 1.0 / this.MainImage.GetWidth();
+				double h = this.DiscJacket.GetHeight() * this.Frame.GetWidth() * 1.0 / this.DiscJacket.GetWidth();
 
 				if (this.Frame.GetHeight() < h) // ? はみ出す -> はみ出さないようにする。
 				{
-					w = this.MainImage.GetWidth() * this.Frame.GetHeight() * 1.0 / this.MainImage.GetHeight();
+					w = this.DiscJacket.GetWidth() * this.Frame.GetHeight() * 1.0 / this.DiscJacket.GetHeight();
 					h = this.Frame.GetHeight();
 				}
-				w += w * 0.1 * invRate;
-				h += h * 0.1 * invRate;
+				w *= this.MarginedDiscJacket.GetWidth() * 1.0 / this.DiscJacket.GetWidth();
+				h *= this.MarginedDiscJacket.GetHeight() * 1.0 / this.DiscJacket.GetHeight();
+
+				w += w * R2 * invRate;
+				h += h * R2 * invRate;
 
 				double l = (this.Frame.GetWidth() - w) / 2.0;
 				double t = (this.Frame.GetHeight() - h) / 2.0;
 
 				using (Graphics g = this.Frame.GetGraphics())
 				{
-					g.DrawImage(this.MainImage.GetImage(), (float)l, (float)t, (float)w, (float)h);
+					g.DrawImage(this.MarginedDiscJacket.GetImage(), (float)l, (float)t, (float)w, (float)h);
 				}
 			}
 		}
