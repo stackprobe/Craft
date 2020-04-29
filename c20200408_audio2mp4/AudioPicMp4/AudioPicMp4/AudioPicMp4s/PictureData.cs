@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Charlotte.Tools;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Charlotte.AudioPicMP4s
 {
@@ -15,8 +16,11 @@ namespace Charlotte.AudioPicMP4s
 		private const double R1 = 0.2;
 		private const double R2 = 0.1;
 		private const double WALL_DARKNESS_RATE = 0.5;
-		private const int BLUR_DEPTH = 30;
+		//private const int BLUR_DEPTH = 30;
+		//private const int BLUR_DEPTH = 10;
+		private const int BLUR_DEPTH = 5;
 		private const int MARGIN = 10;
+		private const int JPEG_QUARITY = 90;
 
 		private Canvas2 DiscJacket;
 		private Canvas2 BluredDiscJacket;
@@ -104,7 +108,7 @@ namespace Charlotte.AudioPicMP4s
 
 		public void Save(string file)
 		{
-			this.Frame.Save(file);
+			this.Frame.Save(file, ImageFormat.Jpeg, JPEG_QUARITY);
 		}
 	}
 }
