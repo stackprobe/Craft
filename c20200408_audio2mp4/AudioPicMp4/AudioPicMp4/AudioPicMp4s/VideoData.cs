@@ -70,7 +70,7 @@ namespace Charlotte.AudioPicMP4s
 			}
 		}
 
-		public void MakeImages(FadeInOutInfo fadeInOut, SpectrumEffectData se, FadeInOutInfo seFadeInOut)
+		public void MakeImages(FadeInOutInfo fadeInOut, IEffect se, FadeInOutInfo seFadeInOut)
 		{
 			fadeInOut.Reset();
 			seFadeInOut.Reset();
@@ -79,7 +79,7 @@ namespace Charlotte.AudioPicMP4s
 			{
 				this.MainPicture.SetFrame(frame * 1.0 / (this.FrameNum - 1));
 				fadeInOut.EachFrame(frame, this.FrameNum, this.MainPicture);
-				se.DrawTo(this.MainPicture, frame * 1.0 / FPS);
+				se.DrawTo(this.MainPicture, frame, this.FrameNum);
 				seFadeInOut.EachFrame(frame, this.FrameNum, this.MainPicture);
 				this.MainPicture.Save(this.GetImageFile(frame));
 			}

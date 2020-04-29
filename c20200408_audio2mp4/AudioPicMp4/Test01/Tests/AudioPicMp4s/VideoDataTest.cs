@@ -5,6 +5,7 @@ using System.Text;
 using Charlotte.AudioPicMP4s;
 using Charlotte.Tools;
 using System.IO;
+using Charlotte.AudioPicMP4s.Effects;
 
 namespace Charlotte.Tests.AudioPicMP4s
 {
@@ -18,16 +19,19 @@ namespace Charlotte.Tests.AudioPicMP4s
 
 				FileTools.CreateDir(imgDir);
 
-				PictureData picture = new PictureData(new Canvas2(@"C:\wb2\20191204_ジャケット的な\バンドリ_イニシャル.jpg"), 1920, 1080);
-				VideoData video = new VideoData(picture, 200, imgDir);
+				PictureData picture = new PictureData(new Canvas2(@"C:\wb2\20191204_ジャケット的な\北へ.jpg"), 1920, 1080);
+				WaveData wave = new WaveData(@"C:\var\mp4\mp4\ddd.wav");
+
+				VideoData video = new VideoData(picture, (wave.Length * VideoData.FPS) / wave.WavHz, imgDir);
+				IEffect effect = new SpectrumEffect01(wave);
 
 				video.MakeImages(new VideoData.FadeInOutInfo()
 				{
-					StartMargin = 3 * VideoData.FPS,
+					StartMargin = 2 * VideoData.FPS,
 					EndMargin = -1,
-					FadeInOutSpan = 10,
+					FadeInOutSpan = 20,
 				},
-				new SpectrumEffectData(),
+				effect,
 				new VideoData.FadeInOutInfo()
 				{
 					StartMargin = 10,
@@ -37,7 +41,7 @@ namespace Charlotte.Tests.AudioPicMP4s
 
 				ProcessTools.Batch(new string[]
 				{
-					@"C:\app\ffmpeg-4.1.3-win64-shared\bin\ffmpeg.exe -r 20 -i %%d.jpg ..\out.mp4",
+					@"C:\app\ffmpeg-4.1.3-win64-shared\bin\ffmpeg.exe -r 20 -i %%d.jpg -i C:\var\mp4\mp4\ddd.wav ..\out.mp4",
 				},
 				imgDir
 				);
