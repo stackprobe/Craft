@@ -73,20 +73,11 @@ namespace Charlotte.AudioPicMP4s.Effects
 					double v1 = this.ShadowSpectra[i];
 					double v2 = spectra[i];
 
-					v1 /= 10000.0;
-					v2 /= 10000.0;
+					v1 /= 5000.0;
+					v2 /= 5000.0;
 
-					v1 = DoubleTools.ToRange(v1, 0.0, 1.0);
-					v1 = 1.0 - v1;
-					v1 *= v1;
-					v1 *= v1;
-					v1 = 1.0 - v1;
-
-					v2 = DoubleTools.ToRange(v2, 0.0, 1.0);
-					v2 = 1.0 - v2;
-					v2 *= v2;
-					v2 *= v2;
-					v2 = 1.0 - v2;
+					v1 = Vf(v1);
+					v2 = Vf(v2);
 
 					int h1 = DoubleTools.ToInt(v1 * dr_h);
 					int h2 = DoubleTools.ToInt(v2 * dr_h);
@@ -104,6 +95,26 @@ namespace Charlotte.AudioPicMP4s.Effects
 			{
 				g.DrawImage(dest.GetImage(), 0, 0);
 			}
+		}
+
+		private static double Vf(double v)
+		{
+			v = Vf_b(v, 0.875);
+			v = Vf_b(v, 0.75);
+			v = Vf_b(v, 0.5);
+
+			return v;
+		}
+
+		private static double Vf_b(double v, double b)
+		{
+			if (b < v)
+			{
+				v -= b;
+				v /= 2.0;
+				v += b;
+			}
+			return v;
 		}
 	}
 }
