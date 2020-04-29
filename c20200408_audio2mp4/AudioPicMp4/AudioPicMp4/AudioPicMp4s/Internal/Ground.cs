@@ -22,6 +22,7 @@ namespace Charlotte.AudioPicMp4s.Internal
 		}
 
 		public string wavCsvExeFile;
+		public string ImgToolsExeFile;
 
 		private Ground()
 		{
@@ -33,6 +34,16 @@ namespace Charlotte.AudioPicMp4s.Internal
 
 				if (File.Exists(this.wavCsvExeFile) == false)
 					throw new Exception("no wavCsv.exe");
+			}
+
+			this.ImgToolsExeFile = Path.Combine(Directory.GetCurrentDirectory(), "ImgTools.exe");
+
+			if (File.Exists(this.ImgToolsExeFile) == false)
+			{
+				this.ImgToolsExeFile = @"C:\app\Kit\ImgTools\ImgTools.exe";
+
+				if (File.Exists(this.ImgToolsExeFile) == false)
+					throw new Exception("no ImgTools.exe");
 			}
 		}
 	}
