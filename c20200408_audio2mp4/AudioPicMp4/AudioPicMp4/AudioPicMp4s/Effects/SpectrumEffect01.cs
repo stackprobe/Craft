@@ -40,6 +40,10 @@ namespace Charlotte.AudioPicMP4s.Effects
 						spectrum = Math.Max(spectrum, this.Wave.GetSpectrum(hz));
 						hz += 10;
 					}
+
+					spectrum /= 5000.0;
+					spectrum = Vf(spectrum);
+
 					spectra.Add(spectrum);
 				}
 			}
@@ -47,7 +51,7 @@ namespace Charlotte.AudioPicMP4s.Effects
 			{
 				double v = this.ShadowSpectra[i];
 
-				v -= 50.0;
+				v -= 0.01;
 				v = Math.Max(v, spectra[i]);
 
 				this.ShadowSpectra[i] = v;
@@ -72,12 +76,6 @@ namespace Charlotte.AudioPicMP4s.Effects
 
 					double v1 = this.ShadowSpectra[i];
 					double v2 = spectra[i];
-
-					v1 /= 5000.0;
-					v2 /= 5000.0;
-
-					v1 = Vf(v1);
-					v2 = Vf(v2);
 
 					int h1 = DoubleTools.ToInt(v1 * dr_h);
 					int h2 = DoubleTools.ToInt(v2 * dr_h);
