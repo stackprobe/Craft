@@ -36,7 +36,7 @@ namespace Charlotte.AudioPicMP4s
 
 		public class FadeInOutInfo
 		{
-			public int StartMargin;
+			public int StartMargin; // -1 == 無効
 			public int EndMargin; // -1 == 無効
 			public int FadeInOutSpan;
 
@@ -49,13 +49,13 @@ namespace Charlotte.AudioPicMP4s
 			public void Reset()
 			{
 				this.Max = this.FadeInOutSpan;
-				this.Target = this.Max;
-				this.Level = this.Max;
+				this.Target = this.StartMargin == -1 ? 0 : this.Max;
+				this.Level = this.Target;
 			}
 
 			public void EachFrame(int frame, int frameNum, PictureData picture)
 			{
-				if (frame == this.StartMargin)
+				if (this.StartMargin != -1 && frame == this.StartMargin)
 					this.Target = 0;
 				else if (this.EndMargin != -1 && frame == frameNum - this.EndMargin - this.FadeInOutSpan)
 					this.Target = this.Max;

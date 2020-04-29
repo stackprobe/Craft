@@ -34,7 +34,7 @@ namespace Charlotte.Tests.AudioPicMP4s
 				effect,
 				new VideoData.FadeInOutInfo()
 				{
-					StartMargin = 10,
+					StartMargin = -1,
 					EndMargin = 10,
 					FadeInOutSpan = 10,
 				});

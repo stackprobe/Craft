@@ -76,6 +76,18 @@ namespace Charlotte.AudioPicMP4s.Effects
 					v1 /= 10000.0;
 					v2 /= 10000.0;
 
+					v1 = DoubleTools.ToRange(v1, 0.0, 1.0);
+					v1 = 1.0 - v1;
+					v1 *= v1;
+					v1 *= v1;
+					v1 = 1.0 - v1;
+
+					v2 = DoubleTools.ToRange(v2, 0.0, 1.0);
+					v2 = 1.0 - v2;
+					v2 *= v2;
+					v2 *= v2;
+					v2 = 1.0 - v2;
+
 					int h1 = DoubleTools.ToInt(v1 * dr_h);
 					int h2 = DoubleTools.ToInt(v2 * dr_h);
 
