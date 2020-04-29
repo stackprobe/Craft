@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +49,7 @@
     <Compile Include="AudioPicMP4s\Internal\Ground.cs" />
     <Compile Include="AudioPicMP4s\MovieData.cs" />
     <Compile Include="AudioPicMP4s\PictureData.cs" />
+    <Compile Include="AudioPicMP4s\PictureUtils.cs" />
     <Compile Include="AudioPicMP4s\VideoData.cs" />
     <Compile Include="AudioPicMP4s\WaveData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
