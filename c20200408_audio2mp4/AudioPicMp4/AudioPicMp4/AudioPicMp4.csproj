@@ -50,8 +50,6 @@
     <Compile Include="AudioPicMp4s\PictureData.cs" />
     <Compile Include="AudioPicMp4s\VideoData.cs" />
     <Compile Include="AudioPicMp4s\WaveData.cs" />
-    <Compile Include="AudioPicMp4s\WavMixedData.cs" />
-    <Compile Include="AudioPicMp4s\WavMonoData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -13,9 +13,9 @@ namespace Charlotte.AudioPicMp4s
 	/// </summary>
 	public class WaveData
 	{
-		public double[] WavData_L;
-		public double[] WavData_R;
-		public int WavHz;
+		private double[] WavData_L;
+		private double[] WavData_R;
+		private int WavHz;
 
 		public WaveData(string wavFile)
 		{
@@ -58,50 +58,71 @@ namespace Charlotte.AudioPicMp4s
 			}
 		}
 
-		private WavMonoData WavMono_L = null;
-		private WavMonoData WavMono_R = null;
+		private const int WINDOW_SIZE = 1000;
 
-		public WavMonoData L
+		private double[] WavPart_L = new double[WINDOW_SIZE];
+		private double[] WavPart_R = new double[WINDOW_SIZE];
+
+		public void SetWavPart(int startPos)
 		{
-			get
+			if (startPos < 0 || this.WavData_L.Length - WINDOW_SIZE < startPos) // ? startPos out of range
 			{
-				if (this.WavMono_L == null)
+				for (int offset = 0; offset < WINDOW_SIZE; offset++)
 				{
-					this.WavMono_L = new WavMonoData()
-					{
-						Parent = this,
-						WavData = this.WavData_L,
-					};
+					this.WavPart_L[offset] = 0.0;
+					this.WavPart_R[offset] = 0.0;
 				}
-				return this.WavMono_L;
+			}
+			else
+			{
+				for (int offset = 0; offset < WINDOW_SIZE; offset++)
+				{
+					this.WavPart_L[offset] = this.WavData_L[startPos + offset];
+					this.WavPart_R[offset] = this.WavData_R[startPos + offset];
+				}
 			}
 		}
 
-		public WavMonoData R
+		public double GetSpectrum(int hz)
 		{
-			get
-			{
-				if (this.WavMono_R == null)
-				{
-					this.WavMono_R = new WavMonoData()
-					{
-						Parent = this,
-						WavData = this.WavData_R,
-					};
-				}
-				return this.WavMono_R;
-			}
+			return (this.GetSpectrum_L(hz) + this.GetSpectrum_R(hz)) / 2.0;
 		}
 
-		public const int DEFAULT_WINDOW_SIZE = 1000;
-		public const bool DEFAULT_HAMMING_FLAG = true;
-
-		public double GetSpectrum(int hz, int offset, int windowSize = DEFAULT_WINDOW_SIZE, bool hammingFlag = DEFAULT_HAMMING_FLAG)
+		public double GetSpectrum_L(int hz)
 		{
-			return (
-				this.L.GetSpectrum(hz, offset, windowSize, hammingFlag) +
-				this.R.GetSpectrum(hz, offset, windowSize, hammingFlag)
-				) / 2.0;
+			return this.GetSpectrum(hz, this.WavPart_L);
+		}
+
+		public double GetSpectrum_R(int hz)
+		{
+			return this.GetSpectrum(hz, this.WavPart_R);
+		}
+
+		private double GetSpectrum(int hz, double[] windowData)
+		{
+			if (hz < 1 || IntTools.IMAX < hz)
+				throw new Exception("Bad hz: " + hz);
+
+			double monHz = hz * (Math.PI * 2.0) / this.WavHz;
+			double cc = 0.0;
+			double ss = 0.0;
+
+			for (int offset = 0; offset < WINDOW_SIZE; offset++)
+			{
+				double aa = offset * hz * (Math.PI * 2.0) / this.WavHz;
+				double vv = windowData[offset];
+				double rate = offset * 1.0 / (WINDOW_SIZE - 1);
+				double hh = Hamming(rate);
+
+				cc += Math.Cos(aa) * vv * hh;
+				ss += Math.Sin(aa) * vv * hh;
+			}
+			return cc * cc + ss * ss;
+		}
+
+		private static double Hamming(double rate)
+		{
+			return 0.5 - 0.5 * Math.Cos(rate * Math.PI * 2.0);
 		}
 	}
 }
