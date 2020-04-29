@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AudioPicMP4s\SpectrumEffectData.cs" />
     <Compile Include="AudioPicMP4s\Internal\Ground.cs" />
     <Compile Include="AudioPicMP4s\MovieData.cs" />
     <Compile Include="AudioPicMP4s\PictureData.cs" />

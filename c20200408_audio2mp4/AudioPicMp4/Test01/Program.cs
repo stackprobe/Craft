@@ -28,7 +28,8 @@ namespace Charlotte
 		private void Main2(ArgsReader ar)
 		{
 			//new WaveDataTest().Test01();
-			new PictureDataTest().Test01();
+			//new PictureDataTest().Test01();
+			new VideoDataTest().Test01();
 		}
 	}
 }

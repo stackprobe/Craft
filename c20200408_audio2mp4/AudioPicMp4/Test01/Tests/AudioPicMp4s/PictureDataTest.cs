@@ -13,7 +13,8 @@ namespace Charlotte.Tests.AudioPicMP4s
 		public void Test01()
 		{
 			PictureData picture = new PictureData(new Canvas2(@"C:\wb2\20191204_ジャケット的な\バンドリ_イニシャル.jpg"), 1920, 1080);
-			const int frameNum = 200;
+
+			const int FRAME_NUM = 200;
 
 			const int D_MAX = 20;
 			int dTarg = D_MAX;
@@ -23,17 +24,17 @@ namespace Charlotte.Tests.AudioPicMP4s
 			{
 				FileTools.CreateDir(wd.GetPath("img"));
 
-				for (int frameCount = 0; frameCount < frameNum; frameCount++)
+				for (int frame = 0; frame < FRAME_NUM; frame++)
 				{
-					Console.WriteLine(frameCount); // test
+					Console.WriteLine(frame); // test
 
-					picture.SetFrame(frameCount * 1.0 / frameNum);
+					picture.SetFrame(frame * 1.0 / FRAME_NUM);
 
-					// ---- darkness ---
+					// ---- 暗くする ----
 
-					if (frameCount == 10)
+					if (frame == 10)
 						dTarg = 0;
-					else if (frameCount + 10 + D_MAX == frameNum)
+					else if (frame + 10 + D_MAX == FRAME_NUM)
 						dTarg = D_MAX;
 
 					if (d < dTarg)
@@ -46,7 +47,7 @@ namespace Charlotte.Tests.AudioPicMP4s
 
 					// ----
 
-					picture.Save(wd.GetPath("img\\" + frameCount + ".jpg"));
+					picture.Save(wd.GetPath("img\\" + frame + ".jpg"));
 				}
 
 				ProcessTools.Batch(new string[]

@@ -13,13 +13,11 @@ namespace Charlotte.AudioPicMP4s
 	/// </summary>
 	public class PictureData
 	{
+		private const int BLUR_DEPTH = 5;
+		private const double WALL_DARKNESS_RATE = 0.5;
+		private const int MARGIN = 10;
 		private const double R1 = 0.2;
 		private const double R2 = 0.1;
-		private const double WALL_DARKNESS_RATE = 0.5;
-		//private const int BLUR_DEPTH = 30;
-		//private const int BLUR_DEPTH = 10;
-		private const int BLUR_DEPTH = 5;
-		private const int MARGIN = 10;
 		private const int JPEG_QUARITY = 90;
 
 		private Canvas2 DiscJacket;
@@ -34,21 +32,9 @@ namespace Charlotte.AudioPicMP4s
 
 			this.DiscJacket = discJacket;
 			this.BluredDiscJacket = PictureUtils.Blur(discJacket, BLUR_DEPTH);
-			PictureUtils.Filter_Color(this.BluredDiscJacket, Color.Black, 0.5);
-			this.MarginedDiscJacket = PutMargin(discJacket);
+			PictureUtils.Filter_Color(this.BluredDiscJacket, Color.Black, WALL_DARKNESS_RATE);
+			this.MarginedDiscJacket = PictureUtils.PutMargin(discJacket, MARGIN);
 			this.Frame = new Canvas2(frame_w, frame_h);
-		}
-
-		private static Canvas2 PutMargin(Canvas2 canvas)
-		{
-			Canvas2 dest = new Canvas2(canvas.GetWidth() + MARGIN * 2, canvas.GetHeight() + MARGIN * 2);
-
-			using (Graphics g = dest.GetGraphics())
-			{
-				g.FillRectangle(new SolidBrush(Color.Transparent), 0, 0, dest.GetWidth(), dest.GetHeight());
-				g.DrawImage(canvas.GetImage(), MARGIN, MARGIN, canvas.GetWidth(), canvas.GetHeight());
-			}
-			return dest;
 		}
 
 		public void SetFrame(double rate)
@@ -109,6 +95,11 @@ namespace Charlotte.AudioPicMP4s
 		public void Save(string file)
 		{
 			this.Frame.Save(file, ImageFormat.Jpeg, JPEG_QUARITY);
+		}
+
+		public Canvas2 GetFrame()
+		{
+			return this.Frame;
 		}
 	}
 }
