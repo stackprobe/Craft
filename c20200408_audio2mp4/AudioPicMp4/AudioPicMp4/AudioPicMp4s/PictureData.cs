@@ -15,7 +15,6 @@ namespace Charlotte.AudioPicMP4s
 	{
 		private const int BLUR_DEPTH = 5;
 		private const double WALL_DARKNESS_RATE = 0.5;
-		private const int MARGIN = 10;
 		private const double R1 = 0.2;
 		private const double R2 = 0.1;
 		private const int JPEG_QUARITY = 90;
@@ -33,7 +32,7 @@ namespace Charlotte.AudioPicMP4s
 			this.DiscJacket = discJacket;
 			this.BluredDiscJacket = PictureUtils.Blur(discJacket, BLUR_DEPTH);
 			PictureUtils.Filter_Color(this.BluredDiscJacket, Color.Black, WALL_DARKNESS_RATE);
-			this.MarginedDiscJacket = PictureUtils.PutMargin(discJacket, MARGIN);
+			this.MarginedDiscJacket = PictureUtils.PutMargin(discJacket, discJacket.GetWidth(), discJacket.GetHeight());
 			this.Frame = new Canvas2(frame_w, frame_h);
 		}
 
@@ -55,6 +54,8 @@ namespace Charlotte.AudioPicMP4s
 
 				double l = (this.Frame.GetWidth() - w) / 2.0;
 				double t = (this.Frame.GetHeight() - h) / 2.0;
+
+				//ProcMain.WriteLog("LTWH_B: " + string.Join(", ", l, t, w, h)); // test
 
 				using (Graphics g = this.Frame.GetGraphics())
 				{
@@ -79,6 +80,8 @@ namespace Charlotte.AudioPicMP4s
 
 				double l = (this.Frame.GetWidth() - w) / 2.0;
 				double t = (this.Frame.GetHeight() - h) / 2.0;
+
+				//ProcMain.WriteLog("LTWH_F: " + string.Join(", ", l, t, w, h)); // test
 
 				using (Graphics g = this.Frame.GetGraphics())
 				{

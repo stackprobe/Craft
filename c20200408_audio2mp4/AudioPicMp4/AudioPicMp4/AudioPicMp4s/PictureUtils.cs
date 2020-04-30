@@ -90,14 +90,14 @@ namespace Charlotte.AudioPicMP4s
 			}
 		}
 
-		public static Canvas2 PutMargin(Canvas2 canvas, int margin)
+		public static Canvas2 PutMargin(Canvas2 canvas, int xMargin, int yMargin)
 		{
-			Canvas2 dest = new Canvas2(canvas.GetWidth() + margin * 2, canvas.GetHeight() + margin * 2);
+			Canvas2 dest = new Canvas2(canvas.GetWidth() + xMargin * 2, canvas.GetHeight() + yMargin * 2);
 
-			using (Graphics g = dest.GetGraphics())
+			using (Graphics g = dest.GetGraphics(false))
 			{
 				g.FillRectangle(new SolidBrush(Color.Transparent), 0, 0, dest.GetWidth(), dest.GetHeight());
-				g.DrawImage(canvas.GetImage(), margin, margin, canvas.GetWidth(), canvas.GetHeight());
+				g.DrawImage(canvas.GetImage(), xMargin, yMargin, canvas.GetWidth(), canvas.GetHeight());
 			}
 			return dest;
 		}
