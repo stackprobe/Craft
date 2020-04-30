@@ -123,6 +123,17 @@ namespace Charlotte.AudioPicMP4s
 
 		public static void Paste(Canvas2 dest, Canvas2 src, double l, double t, double w, double h)
 		{
+#if true
+			const double MARGIN = 10;
+
+			if (w < src.GetWidth() + MARGIN || h < src.GetHeight() + MARGIN)
+				src = Expand(src, (int)(w * 0.99), (int)(h * 0.99));
+
+			using (Graphics g = dest.GetGraphics())
+			{
+				g.DrawImage(src.GetImage(), (float)l, (float)t, (float)w, (float)h);
+			}
+#else // 試していない。
 			using (Graphics g = dest.GetGraphics())
 			{
 				g.DrawImage(
@@ -135,6 +146,7 @@ namespace Charlotte.AudioPicMP4s
 					}
 					);
 			}
+#endif
 		}
 	}
 }
