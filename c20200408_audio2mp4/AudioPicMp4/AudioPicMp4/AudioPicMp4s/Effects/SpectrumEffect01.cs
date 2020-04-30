@@ -41,7 +41,7 @@ namespace Charlotte.AudioPicMP4s.Effects
 						hz += 10;
 					}
 
-					spectrum /= 5000.0;
+					spectrum /= 1000.0;
 					spectrum = Vf(spectrum);
 
 					spectra.Add(spectrum);
@@ -97,9 +97,13 @@ namespace Charlotte.AudioPicMP4s.Effects
 
 		private static double Vf(double v)
 		{
-			v = Vf_b(v, 0.875);
-			v = Vf_b(v, 0.75);
-			v = Vf_b(v, 0.5);
+			v = Vf_b(v, 0.333);
+			v = Vf_b(v, 0.555);
+			v = Vf_b(v, 0.7);
+			v = Vf_b(v, 0.8);
+			v = Vf_b(v, 0.85);
+			v = Vf_b(v, 0.9);
+			v = Vf_b(v, 0.95);
 
 			return v;
 		}
