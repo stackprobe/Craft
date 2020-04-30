@@ -41,7 +41,7 @@ namespace Charlotte.AudioPicMP4s.Effects
 						hz += 10;
 					}
 
-					spectrum /= 1000.0;
+					spectrum /= 30.0; // 要調整
 					spectrum = Vf(spectrum);
 
 					spectra.Add(spectrum);
@@ -70,12 +70,15 @@ namespace Charlotte.AudioPicMP4s.Effects
 
 				for (int i = 0; i < spectra.Count; i++)
 				{
-					int x1 = (((i * 2 + 0) * dr_w) / (spectra.Count * 2 - 1));
-					int x2 = (((i * 2 + 1) * dr_w) / (spectra.Count * 2 - 1));
+					int x1 = (((i * 3 + 0) * dr_w) / (spectra.Count * 3 - 2));
+					int x2 = (((i * 3 + 1) * dr_w) / (spectra.Count * 3 - 2));
 					int w = x2 - x1;
 
 					double v1 = this.ShadowSpectra[i];
 					double v2 = spectra[i];
+
+					v1 /= 2.0; // 要調整
+					v2 /= 2.0; // 要調整
 
 					int h1 = DoubleTools.ToInt(v1 * dr_h);
 					int h2 = DoubleTools.ToInt(v2 * dr_h);
@@ -97,13 +100,31 @@ namespace Charlotte.AudioPicMP4s.Effects
 
 		private static double Vf(double v)
 		{
-			v = Vf_b(v, 0.333);
-			v = Vf_b(v, 0.555);
+			v = Vf_b(v, 0.1);
+			v = Vf_b(v, 0.2);
+			v = Vf_b(v, 0.3);
+			v = Vf_b(v, 0.35);
+			v = Vf_b(v, 0.4);
+			v = Vf_b(v, 0.45);
+			v = Vf_b(v, 0.5);
+			v = Vf_b(v, 0.5333);
+			v = Vf_b(v, 0.5666);
+			v = Vf_b(v, 0.6);
+			v = Vf_b(v, 0.6333);
+			v = Vf_b(v, 0.6666);
 			v = Vf_b(v, 0.7);
+			v = Vf_b(v, 0.725);
+			v = Vf_b(v, 0.75);
+			v = Vf_b(v, 0.775);
 			v = Vf_b(v, 0.8);
+			v = Vf_b(v, 0.825);
 			v = Vf_b(v, 0.85);
+			v = Vf_b(v, 0.875);
 			v = Vf_b(v, 0.9);
-			v = Vf_b(v, 0.95);
+			v = Vf_b(v, 0.92);
+			v = Vf_b(v, 0.94);
+			v = Vf_b(v, 0.96);
+			v = Vf_b(v, 0.98);
 
 			return v;
 		}
