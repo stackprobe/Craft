@@ -32,7 +32,10 @@ namespace Charlotte.AudioPicMP4s
 
 		private static Canvas2 BlurOnce(Canvas2 canvas, int phase)
 		{
-			Canvas2 dest = new Canvas2(canvas.GetWidth(), canvas.GetHeight());
+			int w = canvas.GetWidth();
+			int h = canvas.GetHeight();
+
+			Canvas2 dest = new Canvas2(w, h);
 
 			using (Graphics g = dest.GetGraphics())
 			{
@@ -47,8 +50,8 @@ namespace Charlotte.AudioPicMP4s
 
 					g.DrawImage(
 						canvas.GetImage(),
-						new Rectangle(xa, ya, canvas.GetWidth(), canvas.GetHeight()),
-						0, 0, canvas.GetWidth(), canvas.GetHeight(),
+						new Rectangle(xa, ya, w, h),
+						0, 0, w, h,
 						GraphicsUnit.Pixel,
 						GetIA_Alpha(1.0 / (2.0 + count))
 						);
@@ -70,34 +73,39 @@ namespace Charlotte.AudioPicMP4s
 			return ia;
 		}
 
-		public static void Filter_Color(Canvas2 canvas, Color color, double a)
+		public static void Filter(Canvas2 canvas, Color color, double a)
 		{
-			Canvas2 maskImg = new Canvas2(canvas.GetWidth(), canvas.GetHeight());
+			int w = canvas.GetWidth();
+			int h = canvas.GetHeight();
 
-			using (Graphics g = maskImg.GetGraphics(false))
+			Canvas2 mask = new Canvas2(w, h);
+
+			using (Graphics g = mask.GetGraphics(false))
 			{
-				g.FillRectangle(new SolidBrush(color), 0, 0, maskImg.GetWidth(), maskImg.GetHeight());
+				g.FillRectangle(new SolidBrush(color), 0, 0, w, h);
 			}
 			using (Graphics g = canvas.GetGraphics())
 			{
 				g.DrawImage(
-					maskImg.GetImage(),
-					new Rectangle(0, 0, canvas.GetWidth(), canvas.GetHeight()),
-					0, 0, maskImg.GetWidth(), maskImg.GetHeight(),
+					mask.GetImage(),
+					new Rectangle(0, 0, w, h),
+					0, 0, w, h,
 					GraphicsUnit.Pixel,
 					GetIA_Alpha(a)
 					);
 			}
 		}
 
-		public static Canvas2 PutMargin(Canvas2 canvas, int xMargin, int yMargin)
+		public static Canvas2 PutMargin(Canvas2 canvas)
 		{
-			Canvas2 dest = new Canvas2(canvas.GetWidth() + xMargin * 2, canvas.GetHeight() + yMargin * 2);
+			const int MARGIN = 10;
+
+			Canvas2 dest = new Canvas2(canvas.GetWidth() + MARGIN * 2, canvas.GetHeight() + MARGIN * 2);
 
 			using (Graphics g = dest.GetGraphics(false))
 			{
 				g.FillRectangle(new SolidBrush(Color.Transparent), 0, 0, dest.GetWidth(), dest.GetHeight());
-				g.DrawImage(canvas.GetImage(), xMargin, yMargin, canvas.GetWidth(), canvas.GetHeight());
+				g.DrawImage(canvas.GetImage(), MARGIN, MARGIN, canvas.GetWidth(), canvas.GetHeight());
 			}
 			return dest;
 		}
@@ -111,6 +119,22 @@ namespace Charlotte.AudioPicMP4s
 				g.DrawImage(canvas.GetImage(), 0, 0, w, h);
 			}
 			return dest;
+		}
+
+		public static void Paste(Canvas2 dest, Canvas2 src, double l, double t, double w, double h)
+		{
+			using (Graphics g = dest.GetGraphics())
+			{
+				g.DrawImage(
+					src.GetImage(),
+					new PointF[]
+					{
+						new PointF((float)l, (float)t),
+						new PointF((float)(l + w), (float)t),
+						new PointF((float)l, (float)(t + h)),
+					}
+					);
+			}
 		}
 	}
 }
