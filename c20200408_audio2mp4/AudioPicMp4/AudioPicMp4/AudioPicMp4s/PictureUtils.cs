@@ -101,5 +101,16 @@ namespace Charlotte.AudioPicMP4s
 			}
 			return dest;
 		}
+
+		public static Canvas2 Expand(Canvas2 canvas, int w, int h)
+		{
+			Canvas2 dest = new Canvas2(w, h);
+
+			using (Graphics g = dest.GetGraphics())
+			{
+				g.DrawImage(canvas.GetImage(), 0, 0, w, h);
+			}
+			return dest;
+		}
 	}
 }

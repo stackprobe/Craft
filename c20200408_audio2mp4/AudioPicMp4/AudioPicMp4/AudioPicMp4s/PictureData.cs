@@ -15,6 +15,7 @@ namespace Charlotte.AudioPicMP4s
 	{
 		private const int BLUR_DEPTH = 5;
 		private const double WALL_DARKNESS_RATE = 0.5;
+		private const int MARGIN = 10;
 		private const double R1 = 0.2;
 		private const double R2 = 0.1;
 		private const int JPEG_QUARITY = 90;
@@ -29,10 +30,26 @@ namespace Charlotte.AudioPicMP4s
 			if (discJacket == null)
 				throw new Exception("discJacket is null");
 
+			// g.DrawImage で「縮小」すると座標を整数にキャストしたようになるで、常に拡大されるように frame_wh より少し小さくする。
+			{
+				int targ_w = frame_w - MARGIN;
+				int targ_h = frame_h - MARGIN;
+
+				int w = targ_w;
+				int h = (int)(discJacket.GetHeight() * targ_w * 1.0 / discJacket.GetWidth());
+
+				if (targ_h < h)
+				{
+					w = (int)(discJacket.GetWidth() * targ_h * 1.0 / discJacket.GetHeight());
+					h = targ_h;
+				}
+				discJacket = PictureUtils.Expand(discJacket, w, h);
+			}
+
 			this.DiscJacket = discJacket;
 			this.BluredDiscJacket = PictureUtils.Blur(discJacket, BLUR_DEPTH);
 			PictureUtils.Filter_Color(this.BluredDiscJacket, Color.Black, WALL_DARKNESS_RATE);
-			this.MarginedDiscJacket = PictureUtils.PutMargin(discJacket, discJacket.GetWidth(), discJacket.GetHeight());
+			this.MarginedDiscJacket = PictureUtils.PutMargin(discJacket, MARGIN, MARGIN);
 			this.Frame = new Canvas2(frame_w, frame_h);
 		}
 
