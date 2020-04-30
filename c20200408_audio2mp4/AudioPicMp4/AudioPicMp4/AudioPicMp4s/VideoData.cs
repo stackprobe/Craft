@@ -77,6 +77,8 @@ namespace Charlotte.AudioPicMP4s
 
 			for (int frame = 0; frame < this.FrameNum; frame++)
 			{
+				Console.WriteLine(frame * 1.0 / this.FrameNum); // test
+
 				this.MainPicture.SetFrame(frame * 1.0 / (this.FrameNum - 1));
 				fadeInOut.EachFrame(frame, this.FrameNum, this.MainPicture);
 				se.DrawTo(this.MainPicture, frame, this.FrameNum);

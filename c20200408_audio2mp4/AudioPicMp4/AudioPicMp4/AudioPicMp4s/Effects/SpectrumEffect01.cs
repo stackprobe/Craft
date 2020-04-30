@@ -100,39 +100,17 @@ namespace Charlotte.AudioPicMP4s.Effects
 
 		private static double Vf(double v)
 		{
-			v = Vf_b(v, 0.1);
-			v = Vf_b(v, 0.2);
-			v = Vf_b(v, 0.3);
-			v = Vf_b(v, 0.35);
-			v = Vf_b(v, 0.4);
-			v = Vf_b(v, 0.45);
-			v = Vf_b(v, 0.5);
-			v = Vf_b(v, 0.5333);
-			v = Vf_b(v, 0.5666);
-			v = Vf_b(v, 0.6);
-			v = Vf_b(v, 0.6333);
-			v = Vf_b(v, 0.6666);
-			v = Vf_b(v, 0.7);
-			v = Vf_b(v, 0.725);
-			v = Vf_b(v, 0.75);
-			v = Vf_b(v, 0.775);
-			v = Vf_b(v, 0.8);
-			v = Vf_b(v, 0.825);
-			v = Vf_b(v, 0.85);
-			v = Vf_b(v, 0.875);
-			v = Vf_b(v, 0.9);
-			v = Vf_b(v, 0.92);
-			v = Vf_b(v, 0.94);
-			v = Vf_b(v, 0.96);
-			v = Vf_b(v, 0.98);
+			double r = 1.0;
 
-			return v;
-		}
-
-		private static double Vf_b(double v, double b)
-		{
-			if (b < v)
+			for (; ; )
 			{
+				r *= 0.9;
+
+				double b = 1.0 - r;
+
+				if (v <= b)
+					break;
+
 				v -= b;
 				v /= 2.0;
 				v += b;
