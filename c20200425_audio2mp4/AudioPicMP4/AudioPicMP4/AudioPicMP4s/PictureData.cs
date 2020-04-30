@@ -21,9 +21,6 @@ namespace Charlotte.AudioPicMP4s
 		private const int JPEG_QUARITY = 90;
 
 		private Canvas2 DiscJacket;
-		private Canvas2 BluredDiscJacket;
-		private Canvas2 MarginedDiscJacket;
-		private Canvas2 Frame;
 
 		public PictureData(Canvas2 discJacket, int frame_w, int frame_h)
 		{

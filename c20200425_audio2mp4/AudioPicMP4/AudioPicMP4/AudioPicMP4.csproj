@@ -46,12 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AudioPicMP4s\SpectrumEffect01.cs" />
+    <Compile Include="AudioPicMP4s\MovieMakers\Spectrum0001.cs" />
     <Compile Include="AudioPicMP4s\Internal\Ground.cs" />
-    <Compile Include="AudioPicMP4s\MovieData.cs" />
+    <Compile Include="AudioPicMP4s\MovieWorkbench.cs" />
     <Compile Include="AudioPicMP4s\PictureData.cs" />
     <Compile Include="AudioPicMP4s\PictureUtils.cs" />
-    <Compile Include="AudioPicMP4s\VideoData.cs" />
     <Compile Include="AudioPicMP4s\WaveData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

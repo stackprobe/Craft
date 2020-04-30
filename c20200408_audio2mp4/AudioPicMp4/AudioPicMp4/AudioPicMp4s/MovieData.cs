@@ -10,5 +10,6 @@ namespace Charlotte.AudioPicMP4s
 	/// </summary>
 	public class MovieData
 	{
+		// none
 	}
 }

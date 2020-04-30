@@ -67,7 +67,6 @@ namespace Charlotte.AudioPicMP4s
 		}
 
 		public const int WINDOW_SIZE = 1000;
-		//public const int WINDOW_SIZE = 2000;
 
 		private double[] WavPart_L = new double[WINDOW_SIZE];
 		private double[] WavPart_R = new double[WINDOW_SIZE];
