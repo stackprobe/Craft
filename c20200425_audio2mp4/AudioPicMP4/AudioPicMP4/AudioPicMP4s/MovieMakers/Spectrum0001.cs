@@ -4,25 +4,46 @@ using System.Linq;
 using System.Text;
 using Charlotte.Tools;
 using System.Drawing;
+using System.IO;
 
 namespace Charlotte.AudioPicMP4s.MovieMakers
 {
 	public class Spectrum0001
 	{
-		private PictureData Picture;
-		private WaveData Wave;
-		private string DestMP4File;
+		public Canvas2 DiscJacket;
+		public WaveData Wave;
+		public string DestMP4File;
 
-		public Spectrum0001(PictureData picture, WaveData wave, string destMP4File)
-		{
-			this.Picture = picture;
-			this.Wave = wave;
-			this.DestMP4File = destMP4File;
-		}
+		// <---- prm
+
+		private FFmpeg FFmpeg;
 
 		public void Perform()
 		{
-			// TODO
+			this.FFmpeg = new FFmpeg();
+			try
+			{
+				this.FFmpeg.Audio = new FFmpegAudio();
+				try
+				{
+					this.Perform2();
+				}
+				finally
+				{
+					this.FFmpeg.Audio.Dispose();
+					this.FFmpeg.Audio = null;
+				}
+			}
+			finally
+			{
+				this.FFmpeg.Dispose();
+				this.FFmpeg = null;
+			}
+		}
+
+		private void Perform2()
+		{
+
 		}
 	}
 }

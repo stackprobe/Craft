@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Charlotte.AudioPicMP4s.Internal
 {
-	public class Ground
+	internal class Ground
 	{
 		private static Ground _i = null;
 
@@ -22,7 +22,7 @@ namespace Charlotte.AudioPicMP4s.Internal
 		}
 
 		public string wavCsvExeFile;
-		public string ImgToolsExeFile;
+		public string MasterExeFile;
 
 		private Ground()
 		{
@@ -36,14 +36,14 @@ namespace Charlotte.AudioPicMP4s.Internal
 					throw new Exception("no wavCsv.exe");
 			}
 
-			this.ImgToolsExeFile = Path.Combine(Directory.GetCurrentDirectory(), "ImgTools.exe");
+			this.MasterExeFile = Path.Combine(Directory.GetCurrentDirectory(), "Master.exe");
 
-			if (File.Exists(this.ImgToolsExeFile) == false)
+			if (File.Exists(this.MasterExeFile) == false)
 			{
-				this.ImgToolsExeFile = @"C:\app\Kit\ImgTools\ImgTools.exe";
+				this.MasterExeFile = @"C:\Factory\Program\WavMaster\Master.exe";
 
-				if (File.Exists(this.ImgToolsExeFile) == false)
-					throw new Exception("no ImgTools.exe");
+				if (File.Exists(this.MasterExeFile) == false)
+					throw new Exception("no Master.exe");
 			}
 		}
 	}

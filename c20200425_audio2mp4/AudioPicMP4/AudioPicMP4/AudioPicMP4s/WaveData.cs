@@ -8,9 +8,6 @@ using Charlotte.AudioPicMP4s.Internal;
 
 namespace Charlotte.AudioPicMP4s
 {
-	/// <summary>
-	/// 音声
-	/// </summary>
 	public class WaveData
 	{
 		private double[] WavData_L;

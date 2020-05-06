@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Charlotte.Tests.AudioPicMP4s
+namespace Charlotte.Tests.AudioPicMP4s.MovieMakers
 {
-	public class PictureDataTest
+	public class Spectrum0001Test
 	{
 		public void Test01()
 		{
-			// TOOD ???
+			// TODO
 		}
 	}
 }

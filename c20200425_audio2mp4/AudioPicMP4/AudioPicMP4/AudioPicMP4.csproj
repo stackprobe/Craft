@@ -46,10 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AudioPicMP4s\FFmpeg.cs" />
+    <Compile Include="AudioPicMP4s\AudioPicMP4Props.cs" />
+    <Compile Include="AudioPicMP4s\FFmpegAudio.cs" />
+    <Compile Include="AudioPicMP4s\FFmpegAudioInfo.cs" />
+    <Compile Include="AudioPicMP4s\FFmpegConv.cs" />
+    <Compile Include="AudioPicMP4s\MasterUtils.cs" />
     <Compile Include="AudioPicMP4s\MovieMakers\Spectrum0001.cs" />
     <Compile Include="AudioPicMP4s\Internal\Ground.cs" />
-    <Compile Include="AudioPicMP4s\MovieWorkbench.cs" />
-    <Compile Include="AudioPicMP4s\PictureData.cs" />
     <Compile Include="AudioPicMP4s\PictureUtils.cs" />
     <Compile Include="AudioPicMP4s\WaveData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

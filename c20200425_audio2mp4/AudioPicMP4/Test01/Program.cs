@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Charlotte.Tools;
-using Charlotte.Tests.AudioPicMP4s;
+using Charlotte.Tests.AudioPicMP4s.MovieMakers;
 
 namespace Charlotte
 {
@@ -27,9 +27,7 @@ namespace Charlotte
 
 		private void Main2(ArgsReader ar)
 		{
-			//new WaveDataTest().Test01();
-			//new PictureDataTest().Test01();
-			new VideoDataTest().Test01();
+			new Spectrum0001Test().Test01();
 		}
 	}
 }
