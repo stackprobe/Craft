@@ -24,6 +24,10 @@ namespace Charlotte.AudioPicMP4s.MovieMakers.VideoMakers
 				videoImageMaker.FrameNum = frameNum;
 				videoImageMaker.Wave = wave;
 				videoImageMaker.WD = wd;
+
+				// ----
+
+				videoImageMaker.GetImage = EnumerableTools.Supplier(videoImageMaker.GetImageSequence());
 			}
 			for (int frame = 0; frame < frameNum; frame++)
 			{
@@ -57,6 +61,10 @@ namespace Charlotte.AudioPicMP4s.MovieMakers.VideoMakers
 				videoImageMaker.FrameNum = -1;
 				videoImageMaker.Wave = null;
 				videoImageMaker.WD = null;
+
+				// ----
+
+				videoImageMaker.GetImage = null;
 			}
 		}
 	}

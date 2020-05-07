@@ -21,10 +21,14 @@ namespace Charlotte.AudioPicMP4s.MovieMakers.VideoMakers
 
 		// <---- GetImage() を呼び出す前に設定される。
 
+		public abstract IEnumerable<Canvas2> GetImageSequence();
+
+		// 作業用 ---->
+
 		/// <summary>
 		/// フレーム数と同じ回数呼び出される。
 		/// </summary>
-		/// <returns>フレーム画像に上書きするイメージ, null == 不要</returns>
-		public abstract Canvas2 GetImage();
+		/// <returns>フレーム画像に上書きするイメージ, null == 上書き不要</returns>
+		public Func<Canvas2> GetImage;
 	}
 }
