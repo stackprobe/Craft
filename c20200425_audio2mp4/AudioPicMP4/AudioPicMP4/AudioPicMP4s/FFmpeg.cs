@@ -47,7 +47,7 @@ namespace Charlotte.AudioPicMP4s
 
 		// ---- Audio ----
 
-		public FFmpegAudio Audio = null;
+		public FFmpegMedia Audio = null;
 
 		// ---- Video ----
 
@@ -84,41 +84,36 @@ namespace Charlotte.AudioPicMP4s
 			);
 
 			if (File.Exists(this.GetVideoFile()) == false)
-				throw new Exception("VidoeFile generate error");
+				throw new Exception();
 
 			ProcessTools.Batch(new string[]
 			{
 				string.Format(@"{0}ffmpeg.exe -i video.mp4 -i {1} -map 0:0 -map 1:{2} -vcodec copy -codec:a copy movie.mp4",
 					AudioPicMP4Props.FFmpegPathBase,
-					this.Audio.GetAudioFile(),
-					this.Audio.GetAudioInfo().AudioStreamIndex
+					this.Audio.GetFile(),
+					this.Audio.GetInfo().GetAudioStreamIndex()
 					),
 			},
 			this.WD.GetPath(".")
 			);
 
-			if (IsNotExistFileOrEmptyFile(this.GetMovieFile()))
+			if (Utils.IsEmptyFile(this.GetMovieFile()))
 			{
 				ProcessTools.Batch(new string[]
 				{
 					// -codec:a copy を除去
 					string.Format(@"{0}ffmpeg.exe -i video.mp4 -i {1} -map 0:0 -map 1:{2} -vcodec copy movie.mp4",
 						AudioPicMP4Props.FFmpegPathBase,
-						this.Audio.GetAudioFile(),
-						this.Audio.GetAudioInfo().AudioStreamIndex
+						this.Audio.GetFile(),
+						this.Audio.GetInfo().GetAudioStreamIndex()
 						),
 				},
 				this.WD.GetPath(".")
 				);
 
-				if (IsNotExistFileOrEmptyFile(this.GetMovieFile()))
-					throw new Exception("MovieFile generate error");
+				if (Utils.IsEmptyFile(this.GetMovieFile()))
+					throw new Exception();
 			}
-		}
-
-		private static bool IsNotExistFileOrEmptyFile(string file)
-		{
-			return File.Exists(file) == false || new FileInfo(file).Length == 0;
 		}
 	}
 }

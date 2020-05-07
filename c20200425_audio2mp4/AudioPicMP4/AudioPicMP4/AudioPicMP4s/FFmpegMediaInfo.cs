@@ -8,12 +8,13 @@ using System.Text.RegularExpressions;
 
 namespace Charlotte.AudioPicMP4s
 {
-	public class FFmpegAudioInfo
+	public class FFmpegMediaInfo
 	{
-		public int TotalTimeCentisecond = -1;
-		public int AudioStreamIndex = -1;
+		private int TotalTimeCentisecond = -1;
+		private int AudioStreamIndex = -1; // -1 == no audio stream
+		private int VideoStreamIndex = -1; // -1 == no video stream
 
-		public FFmpegAudioInfo(string file)
+		public FFmpegMediaInfo(string file)
 		{
 			string[] lines;
 
@@ -61,13 +62,53 @@ namespace Charlotte.AudioPicMP4s
 
 					this.AudioStreamIndex = int.Parse(tokens[1]);
 				}
+				else if (Regex.IsMatch(line, "^Stream.*Video:"))
+				{
+					string[] tokens = StringTools.Tokenize(line, StringTools.DECIMAL, true, true);
+
+					this.VideoStreamIndex = int.Parse(tokens[1]);
+				}
 			}
 
 			if (this.TotalTimeCentisecond < 0 || IntTools.IMAX < this.TotalTimeCentisecond)
 				throw new Exception("Bad TotalTimeCentisecond: " + this.TotalTimeCentisecond);
 
 			if (this.AudioStreamIndex < 0 || IntTools.IMAX < this.AudioStreamIndex)
-				throw new Exception("Bad AudioStreamIndex: " + this.AudioStreamIndex);
+				this.AudioStreamIndex = -1;
+
+			if (this.VideoStreamIndex < 0 || IntTools.IMAX < this.VideoStreamIndex)
+				this.VideoStreamIndex = -1;
+		}
+
+		public int GetTotalTileCentisecond()
+		{
+			return this.TotalTimeCentisecond;
+		}
+
+		public bool HasAudioStream()
+		{
+			return this.AudioStreamIndex != -1;
+		}
+
+		public int GetAudioStreamIndex()
+		{
+			if (this.AudioStreamIndex == -1)
+				throw new Exception("no audio stream");
+
+			return this.AudioStreamIndex;
+		}
+
+		public bool HasVideoStream()
+		{
+			return this.VideoStreamIndex != -1;
+		}
+
+		public int GetVideoStreamIndex()
+		{
+			if (this.VideoStreamIndex == -1)
+				throw new Exception("no video stream");
+
+			return this.VideoStreamIndex;
 		}
 	}
 }

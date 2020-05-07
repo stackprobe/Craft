@@ -23,7 +23,7 @@ namespace Charlotte.AudioPicMP4s.MovieMakers
 			this.FFmpeg = new FFmpeg();
 			try
 			{
-				this.FFmpeg.Audio = new FFmpegAudio();
+				this.FFmpeg.Audio = new FFmpegMedia();
 				try
 				{
 					this.Perform2();

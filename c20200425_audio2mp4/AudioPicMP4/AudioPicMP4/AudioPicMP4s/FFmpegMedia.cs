@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace Charlotte.AudioPicMP4s
 {
-	public class FFmpegAudio : IDisposable
+	public class FFmpegMedia : IDisposable
 	{
 		private WorkingDir WD = new WorkingDir();
 
@@ -24,9 +24,9 @@ namespace Charlotte.AudioPicMP4s
 		/// <summary>
 		/// フルパス SJIS 空白を含まないこと。
 		/// </summary>
-		private string AudioFile = null;
+		private string MFile = null;
 
-		private FFmpegAudioInfo AudioInfo = null;
+		private FFmpegMediaInfo MInfo = null;
 
 		public void PutAudioFile(string file)
 		{
@@ -35,11 +35,11 @@ namespace Charlotte.AudioPicMP4s
 			if (Regex.IsMatch(ext, @"^\.[0-9A-Za-z]+$") == false)
 				throw new Exception("Bad (audio) ext: " + ext);
 
-			if (this.AudioFile != null)
+			if (this.MFile != null)
 			{
-				FileTools.Delete(this.AudioFile);
-				this.AudioFile = null;
-				this.AudioInfo = null;
+				FileTools.Delete(this.MFile);
+				this.MFile = null;
+				this.MInfo = null;
 			}
 
 			{
@@ -47,24 +47,24 @@ namespace Charlotte.AudioPicMP4s
 
 				File.Copy(file, wFile);
 
-				this.AudioFile = wFile;
+				this.MFile = wFile;
 			}
 		}
 
-		public string GetAudioFile()
+		public string GetFile()
 		{
-			if (this.AudioFile == null)
-				throw new Exception("AudioFile is null");
+			if (this.MFile == null)
+				throw new Exception("MediaFile is null");
 
-			return this.AudioFile;
+			return this.MFile;
 		}
 
-		public FFmpegAudioInfo GetAudioInfo()
+		public FFmpegMediaInfo GetInfo()
 		{
-			if (this.AudioInfo == null)
-				this.AudioInfo = new FFmpegAudioInfo(this.GetAudioFile());
+			if (this.MInfo == null)
+				this.MInfo = new FFmpegMediaInfo(this.GetFile());
 
-			return this.AudioInfo;
+			return this.MInfo;
 		}
 	}
 }
