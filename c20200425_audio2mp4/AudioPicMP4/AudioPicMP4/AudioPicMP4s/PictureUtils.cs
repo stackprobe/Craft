@@ -129,6 +129,14 @@ namespace Charlotte.AudioPicMP4s
 			return dest;
 		}
 
+		public static void Paste(Canvas2 dest, Canvas2 src)
+		{
+			using (Graphics g = dest.GetGraphics(false))
+			{
+				g.DrawImage(src.GetImage(), 0, 0, dest.GetWidth(), dest.GetHeight());
+			}
+		}
+
 		public static void Paste(Canvas2 dest, Canvas2 src, D4Rect rect)
 		{
 			Paste(dest, src, rect.L, rect.T, rect.W, rect.H);
@@ -136,7 +144,7 @@ namespace Charlotte.AudioPicMP4s
 
 		public static void Paste(Canvas2 dest, Canvas2 src, double l, double t, double w, double h)
 		{
-#if true
+#if !true
 			const double MARGIN = 10;
 
 			if (w < src.GetWidth() + MARGIN || h < src.GetHeight() + MARGIN)
