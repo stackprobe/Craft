@@ -7,6 +7,7 @@ using Charlotte.AudioPicMP4s.MovieMakers.VideoMakers;
 using Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Backgrounds01;
 using Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Foregrounds;
 using Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Options;
+using Charlotte.AudioPicMP4s;
 
 namespace Charlotte.Tests.AudioPicMP4s.MovieMakers.VideoMakers
 {
@@ -23,8 +24,9 @@ namespace Charlotte.Tests.AudioPicMP4s.MovieMakers.VideoMakers
 		private void Test01_a(string mediaFile, string imgFile, string mp4File)
 		{
 			new MovieMaker0002().MakeMovie(mediaFile, mp4File, false, new VideoMaker0002(
-				new Background0001(),
-				new VIMFadeIn(10, 20),
+				new Background0001(imgFile),
+				new VIMFadeIn(AudioPicMP4Props.FPS * 2, 20),
+				new VIMCurtain(0.1),
 				new Foreground0001(),
 				new VIMFadeOut(10, 10)
 				));

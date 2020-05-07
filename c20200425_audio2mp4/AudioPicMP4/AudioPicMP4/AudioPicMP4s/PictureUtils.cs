@@ -144,7 +144,7 @@ namespace Charlotte.AudioPicMP4s
 
 		public static void Paste(Canvas2 dest, Canvas2 src, double l, double t, double w, double h)
 		{
-#if !true
+#if true
 			const double MARGIN = 10;
 
 			if (w < src.GetWidth() + MARGIN || h < src.GetHeight() + MARGIN)
