@@ -11,19 +11,25 @@ namespace Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Foregr
 {
 	public class Foreground0001 : AbstractVideoImageMaker
 	{
+		private const int MARGIN_TB = 10;
+		private const int BAR_WIDTH = 10;
+		private const int BAR_INTERVAL = 20;
+
 		public override IEnumerable<Canvas2> GetImageSequence()
 		{
 			ShadowSpectraData ss = new ShadowSpectraData();
 
 			for (; ; )
 			{
-				Canvas2 frameImg = new Canvas2(AudioPicMP4Props.VIDEO_W, AudioPicMP4Props.VIDEO_H);
-
-				PictureUtils.Fill(frameImg, Color.Transparent);
-
 				this.Wave.SetWavPart(DoubleTools.ToInt((this.Frame * 1.0 / AudioPicMP4Props.FPS + AudioPicMP4Props.AUDIO_DELAY_SEC) * this.Wave.WavHz));
 				SpectrumGraph0001 sg = new SpectrumGraph0001(this.Wave);
 				ss.Projection(sg.Spectra);
+				int w = sg.Spectra.Length * (BAR_WIDTH + BAR_INTERVAL) + BAR_INTERVAL;
+
+				Canvas2 frameImg = new Canvas2(w, AudioPicMP4Props.VIDEO_H);
+
+				PictureUtils.Fill(frameImg, Color.Transparent);
+
 				this.DrawSpectra(frameImg, sg, ss);
 
 				yield return frameImg;
@@ -34,16 +40,15 @@ namespace Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Foregr
 		{
 			using (Graphics g = frameImg.GetGraphics(false))
 			{
-				int dr_l = 10;
-				int dr_t = 10;
-				int dr_w = frameImg.GetWidth() - 20;
-				int dr_h = frameImg.GetHeight() - 20;
+				int dr_l = 0;
+				int dr_t = MARGIN_TB;
+				int dr_w = frameImg.GetWidth();
+				int dr_h = frameImg.GetHeight() - MARGIN_TB * 2;
 
 				for (int index = 0; index < sg.Spectra.Length; index++)
 				{
-					int x1 = (((index * 3 + 0) * dr_w) / (sg.Spectra.Length * 3 - 2));
-					int x2 = (((index * 3 + 1) * dr_w) / (sg.Spectra.Length * 3 - 2));
-					int w = x2 - x1;
+					int x = index * (BAR_WIDTH + BAR_INTERVAL) + BAR_INTERVAL;
+					int w = BAR_WIDTH;
 
 					double v1 = ss.ShadowSpectra[index];
 					double v2 = sg.Spectra[index];
@@ -58,9 +63,9 @@ namespace Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Foregr
 					int y2 = dr_h - h2;
 
 					g.FillRectangle(new SolidBrush(Color.FromArgb(128, 255, 255, 255)),
-						dr_l + x1, dr_t + y1, w, h1);
+						dr_l + x, dr_t + y1, w, h1);
 					g.FillRectangle(new SolidBrush(Color.White),
-						dr_l + x1, dr_t + y2, w, h2);
+						dr_l + x, dr_t + y2, w, h2);
 				}
 			}
 		}

@@ -14,19 +14,25 @@ namespace Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Backgr
 		private Canvas2 BluredDiscJacket;
 		private Canvas2 MarginedDiscJacket;
 
-		public Background0001(string discJacketFile)
+		private double R1; // def: 0.2
+		private double R2; // def: 0.1
+
+		public Background0001(string discJacketFile, double r1 = 0.2, double r2 = 0.1)
 		{
 			this.DiscJacket = new Canvas2(discJacketFile);
 			this.BluredDiscJacket = PictureUtils.Blur(this.DiscJacket, 5); // 要調整
 			this.MarginedDiscJacket = PictureUtils.PutMargin(this.DiscJacket);
+
+			this.R1 = r1;
+			this.R2 = r2;
 		}
 
 		public override IEnumerable<Canvas2> GetImageSequence()
 		{
 			for (; ; )
 			{
-				double r1 = 1.0 + 0.2 * this.Rate;
-				double r2 = 1.0 + 0.1 * this.InvRate;
+				double r1 = 1.0 + this.R1 * this.Rate;
+				double r2 = 1.0 + this.R2 * this.InvRate;
 
 				D4Rect wallRect;
 				D4Rect frntRect;

@@ -31,5 +31,20 @@ namespace Charlotte.Tests.AudioPicMP4s.MovieMakers.VideoMakers
 				new VIMFadeOut(10, 10)
 				));
 		}
+
+		public void Test02()
+		{
+			new MovieMaker0002().MakeMovie(
+				@"C:\wb2\20200423_動画テストデータ\新田美恵子のMINELVAカメラのCF.wav",
+				@"C:\temp\2-1.mp4",
+				false,
+				new VideoMaker0002(
+					new Background0001(@"C:\wb2\20200423_動画テストデータ\新田美恵子のMINELVAカメラのCF.jpg", 1.0, 0.5),
+					new VIMFadeIn(10, 20),
+					new VIMCurtain(0.25),
+					new Foreground0001(),
+					new VIMFadeOut(10, 10)
+				));
+		}
 	}
 }
