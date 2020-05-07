@@ -9,7 +9,7 @@ namespace Charlotte.AudioPicMP4s
 	{
 		public static void MakeWavFile(string movieOrAudioFile, string destWavFile)
 		{
-			throw null; // TODO
+			//
 		}
 	}
 }
