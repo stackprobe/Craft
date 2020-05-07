@@ -5,9 +5,9 @@ using System.Text;
 using Charlotte.AudioPicMP4s.MovieMakers;
 using Charlotte.AudioPicMP4s.MovieMakers.VideoMakers;
 
-namespace Charlotte.Tests.AudioPicMP4s.MovieMakers
+namespace Charlotte.Tests.AudioPicMP4s.MovieMakers.VideoMakers
 {
-	public class MovieMaker0002Test
+	public class VideoMaker0002Test
 	{
 		public void Test01()
 		{
@@ -19,27 +19,10 @@ namespace Charlotte.Tests.AudioPicMP4s.MovieMakers
 
 		private void Test01_a(string mediaFile, string imgFile, string mp4File)
 		{
-			new MovieMaker0002().MakeMovie(mediaFile, mp4File, false, new VideoMaker0001()
-			{
-				DiscJacketFile = imgFile,
-			});
-		}
+			//IVideoImageMaker bg = new Background0001(); // TODO
+			//IVideoImageMaker fg = new Foreground0001(); // TODO
 
-		public void Test02()
-		{
-			// 要処理
-			Test02_a(@"C:\wb2\20200423_動画テストデータ\まちぶせ.wav", @"C:\wb2\20200423_動画テストデータ\まちぶせ.jpg", @"C:\temp\2-1.mp4");
-
-			// 処理不要
-			Test02_a(@"C:\wb2\20200423_動画テストデータ\新田美恵子のMINELVAカメラのCF.wav", @"C:\wb2\20200423_動画テストデータ\新田美恵子のMINELVAカメラのCF.jpg", @"C:\temp\2-2.mp4");
-		}
-
-		private void Test02_a(string mediaFile, string imgFile, string mp4File)
-		{
-			new MovieMaker0002().MakeMovie(mediaFile, mp4File, true, new VideoMaker0001()
-			{
-				DiscJacketFile = imgFile,
-			});
+			//new MovieMaker0002().MakeMovie(mediaFile, mp4File, false, new VideoMaker0002(bg, fg));
 		}
 	}
 }

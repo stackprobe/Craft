@@ -96,6 +96,14 @@ namespace Charlotte.AudioPicMP4s
 			}
 		}
 
+		public static void Fill(Canvas2 canvas, Color color)
+		{
+			using (Graphics g = canvas.GetGraphics())
+			{
+				g.FillRectangle(new SolidBrush(color), 0, 0, canvas.GetWidth(), canvas.GetHeight());
+			}
+		}
+
 		public static Canvas2 PutMargin(Canvas2 canvas)
 		{
 			const int MARGIN = 10;

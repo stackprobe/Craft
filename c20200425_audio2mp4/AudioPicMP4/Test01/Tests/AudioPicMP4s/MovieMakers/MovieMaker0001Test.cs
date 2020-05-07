@@ -16,7 +16,7 @@ namespace Charlotte.Tests.AudioPicMP4s.MovieMakers
 			Test01_a(@"C:\wb2\20200423_動画テストデータ\まちぶせ.wav", @"C:\wb2\20200423_動画テストデータ\まちぶせ.jpg", @"C:\temp\4.mp4");
 		}
 
-		public void Test01_a(string mediaFile, string imgFile, string mp4File)
+		private void Test01_a(string mediaFile, string imgFile, string mp4File)
 		{
 			MovieMaker0001 mm = new MovieMaker0001()
 			{

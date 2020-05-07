@@ -60,8 +60,6 @@ namespace Charlotte.AudioPicMP4s.MovieMakers
 			}
 		}
 
-		private const int JPEG_QUALITY = 90;
-
 		private void MakeMovie_Main(string mediaFile, string destMP4File, bool masterFlag, IVideoMaker videoMaker)
 		{
 			WaveData wave;
@@ -90,7 +88,7 @@ namespace Charlotte.AudioPicMP4s.MovieMakers
 			{
 				videoMaker.MakeVideo(wave, mvWd, image =>
 				{
-					image.Save(this.FFmpeg.GetImageFile(frame), ImageFormat.Jpeg, JPEG_QUALITY);
+					image.Save(this.FFmpeg.GetImageFile(frame), ImageFormat.Jpeg, AudioPicMP4Props.JPEG_QUALITY);
 					frame++;
 
 					GC.Collect();

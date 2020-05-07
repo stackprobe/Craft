@@ -5,6 +5,7 @@ using System.Text;
 using Charlotte.Tools;
 using Charlotte.Tests.AudioPicMP4s.MovieMakers;
 using Charlotte.Tests.AudioPicMP4s;
+using Charlotte.Tests.AudioPicMP4s.MovieMakers.VideoMakers;
 
 namespace Charlotte
 {
@@ -34,7 +35,8 @@ namespace Charlotte
 			//new MasterUtilsTest().Test02();
 			//new MovieMaker0001Test().Test01();
 			//new MovieMaker0002Test().Test01();
-			new MovieMaker0002Test().Test02();
+			//new MovieMaker0002Test().Test02();
+			new VideoMaker0002Test().Test01();
 		}
 	}
 }

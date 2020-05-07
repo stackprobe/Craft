@@ -55,11 +55,6 @@ namespace Charlotte.AudioPicMP4s.MovieMakers
 			}
 		}
 
-		private const int VIDEO_W = 1920;
-		private const int VIDEO_H = 1080;
-		private const double AUDIO_DELAY_SEC = 0.2;
-		private const int JPEG_QUALITY = 90;
-
 		private Canvas2 DiscJacket;
 		private Canvas2 BluredDiscJacket;
 		private Canvas2 MarginedDiscJacket;
@@ -117,16 +112,24 @@ namespace Charlotte.AudioPicMP4s.MovieMakers
 				D4Rect frntRect;
 
 				{
-					D2Size size = Utils.TangentSize(new D2Size(VIDEO_W, VIDEO_H), new D2Size(this.DiscJacket.GetWidth(), this.DiscJacket.GetHeight()), false);
+					D2Size size = Utils.TangentSize(
+						new D2Size(AudioPicMP4Props.VIDEO_W, AudioPicMP4Props.VIDEO_H),
+						new D2Size(this.DiscJacket.GetWidth(), this.DiscJacket.GetHeight()),
+						false
+						);
 
 					size.W *= r1;
 					size.H *= r1;
 
-					wallRect = Utils.Centering(new D2Size(VIDEO_W, VIDEO_H), size);
+					wallRect = Utils.Centering(new D2Size(AudioPicMP4Props.VIDEO_W, AudioPicMP4Props.VIDEO_H), size);
 				}
 
 				{
-					D2Size size = Utils.TangentSize(new D2Size(VIDEO_W, VIDEO_H), new D2Size(this.DiscJacket.GetWidth(), this.DiscJacket.GetHeight()), true);
+					D2Size size = Utils.TangentSize(
+						new D2Size(AudioPicMP4Props.VIDEO_W, AudioPicMP4Props.VIDEO_H),
+						new D2Size(this.DiscJacket.GetWidth(), this.DiscJacket.GetHeight()),
+						true
+						);
 
 					size.W *= r2;
 					size.H *= r2;
@@ -135,10 +138,10 @@ namespace Charlotte.AudioPicMP4s.MovieMakers
 					size.W *= this.MarginedDiscJacket.GetWidth() * 1.0 / this.DiscJacket.GetWidth();
 					size.H *= this.MarginedDiscJacket.GetHeight() * 1.0 / this.DiscJacket.GetHeight();
 
-					frntRect = Utils.Centering(new D2Size(VIDEO_W, VIDEO_H), size);
+					frntRect = Utils.Centering(new D2Size(AudioPicMP4Props.VIDEO_W, AudioPicMP4Props.VIDEO_H), size);
 				}
 
-				Canvas2 frameImg = new Canvas2(VIDEO_W, VIDEO_H);
+				Canvas2 frameImg = new Canvas2(AudioPicMP4Props.VIDEO_W, AudioPicMP4Props.VIDEO_H);
 
 				PictureUtils.Paste(frameImg, this.BluredDiscJacket, wallRect);
 				PictureUtils.Filter(frameImg, Color.Black, 0.5); // 要調整
@@ -147,14 +150,14 @@ namespace Charlotte.AudioPicMP4s.MovieMakers
 
 				PictureUtils.Filter(frameImg, Color.Black, f1.Rate); // 背景カーテン
 
-				this.Wave.SetWavPart(DoubleTools.ToInt((frame * 1.0 / AudioPicMP4Props.FPS + AUDIO_DELAY_SEC) * this.Wave.WavHz));
+				this.Wave.SetWavPart(DoubleTools.ToInt((frame * 1.0 / AudioPicMP4Props.FPS + AudioPicMP4Props.AUDIO_DELAY_SEC) * this.Wave.WavHz));
 				SpectrumGraph0001 sg = new SpectrumGraph0001(this.Wave);
 				ss.Projection(sg.Spectra);
-				DrawSpectra(frameImg, sg, ss);
+				this.DrawSpectra(frameImg, sg, ss);
 
 				PictureUtils.Filter(frameImg, Color.Black, f2.Rate); // 前景カーテン
 
-				frameImg.Save(this.FFmpeg.GetImageFile(frame), ImageFormat.Jpeg, JPEG_QUALITY);
+				frameImg.Save(this.FFmpeg.GetImageFile(frame), ImageFormat.Jpeg, AudioPicMP4Props.JPEG_QUALITY);
 
 				GC.Collect();
 			}
