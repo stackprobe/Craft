@@ -30,7 +30,7 @@ namespace Charlotte.AudioPicMP4s
 			{ 0, -1 },
 		};
 
-		public static Canvas2 BlurOnce(Canvas2 canvas, int phase)
+		private static Canvas2 BlurOnce(Canvas2 canvas, int phase)
 		{
 			int w = canvas.GetWidth();
 			int h = canvas.GetHeight();

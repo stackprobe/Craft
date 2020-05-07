@@ -9,7 +9,7 @@ namespace Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Backgr
 {
 	public class Background0002 : AbstractVideoImageMaker
 	{
-		private const int BLUR_COUNT = 30;
+		private const int BLUR_COUNT = 40;
 
 		private Canvas2[] DiscJackets = new Canvas2[BLUR_COUNT];
 		private bool LeftToRight;
@@ -20,7 +20,7 @@ namespace Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Backgr
 
 			for (int index = 1; index < BLUR_COUNT; index++)
 			{
-				this.DiscJackets[index] = PictureUtils.BlurOnce(this.DiscJackets[index - 1], index);
+				this.DiscJackets[index] = PictureUtils.Blur(this.DiscJackets[index - 1], index);
 			}
 			this.LeftToRight = leftToRight;
 		}
