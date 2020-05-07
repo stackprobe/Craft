@@ -30,7 +30,7 @@ namespace Charlotte.AudioPicMP4s
 				wd.GetPath(".")
 				);
 
-				string text = File.ReadAllText(file, Encoding.UTF8);
+				string text = File.ReadAllText(wd.GetPath("stderr.tmp"), Encoding.UTF8);
 
 				lines = FileTools.TextToLines(text);
 			}
@@ -59,25 +59,27 @@ namespace Charlotte.AudioPicMP4s
 				else if (Regex.IsMatch(line, "^Stream.*Audio:"))
 				{
 					string[] tokens = StringTools.Tokenize(line, StringTools.DECIMAL, true, true);
+					int strmIdx = int.Parse(tokens[1]);
 
-					this.AudioStreamIndex = int.Parse(tokens[1]);
+					if (strmIdx < 0 || IntTools.IMAX < strmIdx)
+						throw new Exception("Bad strmIdx: " + strmIdx);
+
+					this.AudioStreamIndex = strmIdx;
 				}
 				else if (Regex.IsMatch(line, "^Stream.*Video:"))
 				{
 					string[] tokens = StringTools.Tokenize(line, StringTools.DECIMAL, true, true);
+					int strmIdx = int.Parse(tokens[1]);
 
-					this.VideoStreamIndex = int.Parse(tokens[1]);
+					if (strmIdx < 0 || IntTools.IMAX < strmIdx)
+						throw new Exception("Bad strmIdx: " + strmIdx);
+
+					this.VideoStreamIndex = strmIdx;
 				}
 			}
 
 			if (this.TotalTimeCentisecond < 0 || IntTools.IMAX < this.TotalTimeCentisecond)
 				throw new Exception("Bad TotalTimeCentisecond: " + this.TotalTimeCentisecond);
-
-			if (this.AudioStreamIndex < 0 || IntTools.IMAX < this.AudioStreamIndex)
-				this.AudioStreamIndex = -1;
-
-			if (this.VideoStreamIndex < 0 || IntTools.IMAX < this.VideoStreamIndex)
-				this.VideoStreamIndex = -1;
 		}
 
 		public int GetTotalTileCentisecond()

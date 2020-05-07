@@ -13,12 +13,18 @@ namespace Charlotte.AudioPicMP4s
 		{
 			FileTools.Delete(destWavFile);
 
-			using (FFmpegMedia audio = new FFmpegMedia())
-			using (WorkingDir wd = new WorkingDir())
+			if (Path.GetExtension(movieOrAudioFile).ToLower() == ".wav")
 			{
-				audio.PutAudioFile(movieOrAudioFile);
+				File.Copy(movieOrAudioFile, destWavFile);
+			}
+			else
+			{
+				using (FFmpegMedia audio = new FFmpegMedia())
+				using (WorkingDir wd = new WorkingDir())
+				{
+					audio.PutAudioFile(movieOrAudioFile);
 
-				ProcessTools.Batch(new string[]
+					ProcessTools.Batch(new string[]
 				{
 					// ステレオにする。
 					string.Format(@"{0}ffmpeg.exe -i {1} -map 0:{2} -ac 2 out.wav",
@@ -27,16 +33,17 @@ namespace Charlotte.AudioPicMP4s
 						audio.GetInfo().GetAudioStreamIndex()
 						),
 				},
-				wd.GetPath(".")
-				);
+					wd.GetPath(".")
+					);
 
-				{
-					string midFile = wd.GetPath("out.wav");
+					{
+						string midFile = wd.GetPath("out.wav");
 
-					if (File.Exists(midFile) == false)
-						throw new Exception();
+						if (File.Exists(midFile) == false)
+							throw new Exception();
 
-					File.Copy(midFile, destWavFile);
+						File.Copy(midFile, destWavFile);
+					}
 				}
 			}
 		}

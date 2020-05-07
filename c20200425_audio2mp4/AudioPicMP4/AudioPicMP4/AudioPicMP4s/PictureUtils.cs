@@ -121,6 +121,11 @@ namespace Charlotte.AudioPicMP4s
 			return dest;
 		}
 
+		public static void Paste(Canvas2 dest, Canvas2 src, D4Rect rect)
+		{
+			Paste(dest, src, rect.L, rect.T, rect.W, rect.H);
+		}
+
 		public static void Paste(Canvas2 dest, Canvas2 src, double l, double t, double w, double h)
 		{
 #if true

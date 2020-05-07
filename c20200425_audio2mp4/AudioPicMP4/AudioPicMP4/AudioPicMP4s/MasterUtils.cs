@@ -12,17 +12,13 @@ namespace Charlotte.AudioPicMP4s
 	{
 		public const string CANCEL_EV_NAME = "{3f8c34fe-ef63-43dc-87e1-aba025777fe7}";
 
-		/// <summary>
-		/// 音量の均一化を行う。
-		/// 既に適切な音量であれば何もしない。
-		/// </summary>
-		/// <param name="targetWavFile">対象[.wav]ファイル</param>
-		/// <returns>音量の均一化を行った場合 true そうでない場合 false</returns>
-		public static bool Mastering(string targetWavFile, Action<string[]> writeReport = null)
+		public static bool Mastering(string sourceWavFile, string destWavFile, Action<string[]> writeReport = null)
 		{
+			FileTools.Delete(destWavFile);
+
 			using (WorkingDir wd = new WorkingDir())
 			{
-				File.Copy(targetWavFile, wd.GetPath("in.wav"));
+				File.Copy(sourceWavFile, wd.GetPath("in.wav"));
 
 				ProcessTools.Batch(new string[]
 				{
@@ -34,8 +30,15 @@ namespace Charlotte.AudioPicMP4s
 				wd.GetPath(".")
 				);
 
-				if (writeReport != null)
-					writeReport(File.ReadAllLines(wd.GetPath("report.txt"), StringTools.ENCODING_SJIS));
+				{
+					string reportFile = wd.GetPath("report.txt");
+
+					if (File.Exists(reportFile) == false)
+						throw new Exception("[Mastering]レポートファイルが出力されませんでした。");
+
+					if (writeReport != null)
+						writeReport(File.ReadAllLines(reportFile, StringTools.ENCODING_SJIS));
+				}
 
 				{
 					string midFile = wd.GetPath("out.wav");
@@ -43,7 +46,7 @@ namespace Charlotte.AudioPicMP4s
 					if (File.Exists(midFile) == false)
 						return false;
 
-					File.Copy(midFile, targetWavFile, true);
+					File.Copy(midFile, destWavFile);
 				}
 			}
 			return true;

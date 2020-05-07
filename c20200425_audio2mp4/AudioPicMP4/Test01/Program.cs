@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using Charlotte.Tools;
 using Charlotte.Tests.AudioPicMP4s.MovieMakers;
+using Charlotte.Tests.AudioPicMP4s;
 
 namespace Charlotte
 {
 	class Program
 	{
-		public const string APP_IDENT = "{5fac1e8a-3300-4834-aad4-70ba3523df82}";
+		public const string APP_IDENT = "{777c6a92-7305-4c43-8200-23fc4344644a}";
 		public const string APP_TITLE = "AudioPicMP4";
 
 		static void Main(string[] args)
@@ -27,7 +28,11 @@ namespace Charlotte
 
 		private void Main2(ArgsReader ar)
 		{
-			new Spectrum0001Test().Test01();
+			//new FFmpegConvTest().Test01();
+			//new FFmpegConvTest().Test02();
+			//new MasterUtilsTest().Test01();
+			//new MasterUtilsTest().Test02();
+			new MovieMaker0001Test().Test01();
 		}
 	}
 }

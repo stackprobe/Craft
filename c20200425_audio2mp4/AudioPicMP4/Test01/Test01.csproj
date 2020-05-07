@@ -51,7 +51,9 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\AudioPicMP4s\MovieMakers\Spectrum0001Test.cs" />
+    <Compile Include="Tests\AudioPicMP4s\FFmpegConvTest.cs" />
+    <Compile Include="Tests\AudioPicMP4s\MasterUtilsTest.cs" />
+    <Compile Include="Tests\AudioPicMP4s\MovieMakers\MovieMaker0001Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AudioPicMP4\AudioPicMP4.csproj">

@@ -5,6 +5,7 @@ using System.Text;
 using Charlotte.Tools;
 using System.IO;
 using System.Text.RegularExpressions;
+using Charlotte.AudioPicMP4s.Internal;
 
 namespace Charlotte.AudioPicMP4s
 {
@@ -34,7 +35,7 @@ namespace Charlotte.AudioPicMP4s
 
 		public string GetImageDir()
 		{
-			if (this.ImageDir != null)
+			if (this.ImageDir == null)
 			{
 				string dir = this.WD.GetPath("img");
 
@@ -99,6 +100,8 @@ namespace Charlotte.AudioPicMP4s
 
 			if (Utils.IsEmptyFile(this.GetMovieFile()))
 			{
+				FileTools.Delete(this.GetMovieFile());
+
 				ProcessTools.Batch(new string[]
 				{
 					// -codec:a copy を除去

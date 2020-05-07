@@ -51,11 +51,14 @@
     <Compile Include="AudioPicMP4s\FFmpegMedia.cs" />
     <Compile Include="AudioPicMP4s\FFmpegMediaInfo.cs" />
     <Compile Include="AudioPicMP4s\FFmpegConv.cs" />
+    <Compile Include="AudioPicMP4s\Internal\FadeInOutData.cs" />
     <Compile Include="AudioPicMP4s\MasterUtils.cs" />
-    <Compile Include="AudioPicMP4s\MovieMakers\Spectrum0001.cs" />
+    <Compile Include="AudioPicMP4s\MovieMakers\MovieMaker0001.cs" />
     <Compile Include="AudioPicMP4s\Internal\Ground.cs" />
     <Compile Include="AudioPicMP4s\PictureUtils.cs" />
-    <Compile Include="AudioPicMP4s\Utils.cs" />
+    <Compile Include="AudioPicMP4s\Internal\Utils.cs" />
+    <Compile Include="AudioPicMP4s\Internal\ShadowSpectraData.cs" />
+    <Compile Include="AudioPicMP4s\Internal\SpectrumGraphs\SpectrumGraph0001.cs" />
     <Compile Include="AudioPicMP4s\WaveData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
