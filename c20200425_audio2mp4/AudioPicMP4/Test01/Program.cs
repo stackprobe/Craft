@@ -33,7 +33,8 @@ namespace Charlotte
 			//new MasterUtilsTest().Test01();
 			//new MasterUtilsTest().Test02();
 			//new MovieMaker0001Test().Test01();
-			new MovieMaker0002Test().Test01();
+			//new MovieMaker0002Test().Test01();
+			new MovieMaker0002Test().Test02();
 		}
 	}
 }
