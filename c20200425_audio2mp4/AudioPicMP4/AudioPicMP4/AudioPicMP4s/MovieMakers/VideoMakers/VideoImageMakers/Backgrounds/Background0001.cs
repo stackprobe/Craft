@@ -6,7 +6,7 @@ using Charlotte.Tools;
 using Charlotte.AudioPicMP4s.Internal;
 using System.Drawing;
 
-namespace Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Backgrounds01
+namespace Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Backgrounds
 {
 	public class Background0001 : AbstractVideoImageMaker
 	{

@@ -59,6 +59,7 @@
     <Compile Include="AudioPicMP4s\Internal\Ground.cs" />
     <Compile Include="AudioPicMP4s\MovieMakers\VideoMakers\AbstractVideoImageMaker.cs" />
     <Compile Include="AudioPicMP4s\MovieMakers\VideoMakers\VideoImageMakers\Backgrounds\Background0001.cs" />
+    <Compile Include="AudioPicMP4s\MovieMakers\VideoMakers\VideoImageMakers\Backgrounds\Background0002.cs" />
     <Compile Include="AudioPicMP4s\MovieMakers\VideoMakers\VideoImageMakers\Foregrounds\Foreground0001.cs" />
     <Compile Include="AudioPicMP4s\MovieMakers\VideoMakers\VideoImageMakers\Options\VIMFadeIn.cs" />
     <Compile Include="AudioPicMP4s\MovieMakers\VideoMakers\VideoImageMakers\Options\VIMFadeInOut.cs" />
