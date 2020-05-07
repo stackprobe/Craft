@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using Charlotte.AudioPicMP4s.MovieMakers;
 using Charlotte.AudioPicMP4s.MovieMakers.VideoMakers;
+using Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Backgrounds01;
+using Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Foregrounds;
+using Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Options;
 
 namespace Charlotte.Tests.AudioPicMP4s.MovieMakers.VideoMakers
 {
@@ -19,10 +22,12 @@ namespace Charlotte.Tests.AudioPicMP4s.MovieMakers.VideoMakers
 
 		private void Test01_a(string mediaFile, string imgFile, string mp4File)
 		{
-			//IVideoImageMaker bg = new Background0001(); // TODO
-			//IVideoImageMaker fg = new Foreground0001(); // TODO
-
-			//new MovieMaker0002().MakeMovie(mediaFile, mp4File, false, new VideoMaker0002(bg, fg));
+			new MovieMaker0002().MakeMovie(mediaFile, mp4File, false, new VideoMaker0002(
+				new Background0001(),
+				new VIMFadeIn(10, 20),
+				new Foreground0001(),
+				new VIMFadeOut(10, 10)
+				));
 		}
 	}
 }
