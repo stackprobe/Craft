@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Charlotte.AudioPicMP4s.MovieMakers;
+using Charlotte.AudioPicMP4s.MovieMakers.VideoMakers;
 
 namespace Charlotte.Tests.AudioPicMP4s.MovieMakers
 {
-	public class MovieMaker0001Test
+	public class MovieMaker0002Test
 	{
 		public void Test01()
 		{
@@ -18,14 +19,10 @@ namespace Charlotte.Tests.AudioPicMP4s.MovieMakers
 
 		public void Test01_a(string mediaFile, string imgFile, string mp4File)
 		{
-			MovieMaker0001 mm = new MovieMaker0001()
+			new MovieMaker0002().MakeMovie(mediaFile, mp4File, false, new VideoMaker0001()
 			{
 				DiscJacketFile = imgFile,
-				SourceMediaFile = mediaFile,
-				DestMP4File = mp4File,
-			};
-
-			mm.MakeMovie();
+			});
 		}
 	}
 }

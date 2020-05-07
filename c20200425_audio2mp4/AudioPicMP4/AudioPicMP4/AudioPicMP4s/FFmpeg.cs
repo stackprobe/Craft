@@ -24,8 +24,6 @@ namespace Charlotte.AudioPicMP4s
 
 		// ---- Image ----
 
-		public int FPS = 20; // 1～
-
 		public string GetImageFile(int frame)
 		{
 			return Path.Combine(this.GetImageDir(), frame + ".jpg");
@@ -78,7 +76,7 @@ namespace Charlotte.AudioPicMP4s
 			{
 				string.Format(@"{0}ffmpeg.exe -r {1} -i %%d.jpg ..\video.mp4",
 					AudioPicMP4Props.FFmpegPathBase,
-					this.FPS
+					AudioPicMP4Props.FPS
 					),
 			},
 			this.GetImageDir()

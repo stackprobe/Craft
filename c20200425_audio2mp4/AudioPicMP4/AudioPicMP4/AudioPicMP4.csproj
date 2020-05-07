@@ -53,8 +53,11 @@
     <Compile Include="AudioPicMP4s\FFmpegConv.cs" />
     <Compile Include="AudioPicMP4s\Internal\FadeInOutData.cs" />
     <Compile Include="AudioPicMP4s\MasterUtils.cs" />
+    <Compile Include="AudioPicMP4s\MovieMakers\IVideoMaker.cs" />
+    <Compile Include="AudioPicMP4s\MovieMakers\MovieMaker0002.cs" />
     <Compile Include="AudioPicMP4s\MovieMakers\MovieMaker0001.cs" />
     <Compile Include="AudioPicMP4s\Internal\Ground.cs" />
+    <Compile Include="AudioPicMP4s\MovieMakers\VideoMakers\VideoMaker0001.cs" />
     <Compile Include="AudioPicMP4s\PictureUtils.cs" />
     <Compile Include="AudioPicMP4s\Internal\Utils.cs" />
     <Compile Include="AudioPicMP4s\Internal\ShadowSpectraData.cs" />

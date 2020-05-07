@@ -11,5 +11,10 @@ namespace Charlotte.AudioPicMP4s
 		/// フルパス SJIS 空白を含まないこと。
 		/// </summary>
 		public static string FFmpegPathBase = @"C:\app\ffmpeg-3.2.4-win64-shared\bin\";
+
+		/// <summary>
+		/// 1～
+		/// </summary>
+		public static int FPS = 20;
 	}
 }

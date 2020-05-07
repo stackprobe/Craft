@@ -54,6 +54,7 @@
     <Compile Include="Tests\AudioPicMP4s\FFmpegConvTest.cs" />
     <Compile Include="Tests\AudioPicMP4s\MasterUtilsTest.cs" />
     <Compile Include="Tests\AudioPicMP4s\MovieMakers\MovieMaker0001Test.cs" />
+    <Compile Include="Tests\AudioPicMP4s\MovieMakers\MovieMaker0002Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AudioPicMP4\AudioPicMP4.csproj">
