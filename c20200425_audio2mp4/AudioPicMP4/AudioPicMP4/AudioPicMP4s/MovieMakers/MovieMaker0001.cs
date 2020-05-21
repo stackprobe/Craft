@@ -151,7 +151,7 @@ namespace Charlotte.AudioPicMP4s.MovieMakers
 				PictureUtils.Filter(frameImg, Color.Black, f1.Rate); // 背景カーテン
 
 				this.Wave.SetWavPart(DoubleTools.ToInt((frame * 1.0 / AudioPicMP4Props.FPS + AudioPicMP4Props.AUDIO_DELAY_SEC) * this.Wave.WavHz));
-				SpectrumGraph0001 sg = new SpectrumGraph0001(this.Wave);
+				SpectrumGraph0001 sg = new SpectrumGraph0001(hz => this.Wave.GetSpectrum(hz));
 				ss.Projection(sg.Spectra);
 				this.DrawSpectra(frameImg, sg, ss);
 

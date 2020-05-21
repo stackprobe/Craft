@@ -7,9 +7,14 @@ namespace Charlotte.AudioPicMP4s.Internal.SpectrumGraphs
 {
 	internal class SpectrumGraph0001
 	{
+		public double R1 = 1.0;
+		public double R2 = 1.0;
+
+		// <---- prm
+
 		public double[] Spectra;
 
-		public SpectrumGraph0001(WaveData wave)
+		public SpectrumGraph0001(Func<int, double> getSpectrumByHz)
 		{
 			List<double> spectra = new List<double>();
 			int hz = 10;
@@ -22,11 +27,12 @@ namespace Charlotte.AudioPicMP4s.Internal.SpectrumGraphs
 
 					for (int i = 0; i < c; i++)
 					{
-						spectrum = Math.Max(spectrum, wave.GetSpectrum(hz));
+						spectrum = Math.Max(spectrum, getSpectrumByHz(hz));
 						hz += 10;
 					}
 
 					spectrum *= 0.035; // 要調整
+					spectrum *= R1;
 					spectrum = Vf(spectrum);
 
 					spectra.Add(spectrum);
@@ -35,13 +41,14 @@ namespace Charlotte.AudioPicMP4s.Internal.SpectrumGraphs
 			this.Spectra = spectra.ToArray();
 		}
 
-		private static double Vf(double v)
+		private double Vf(double v)
 		{
 			double r = 1.0;
 
 			for (; ; )
 			{
 				r *= 0.9;
+				r *= R2;
 
 				double b = 1.0 - r;
 

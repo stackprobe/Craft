@@ -22,7 +22,7 @@ namespace Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Foregr
 			for (; ; )
 			{
 				this.Wave.SetWavPart(DoubleTools.ToInt((this.Frame * 1.0 / AudioPicMP4Props.FPS + AudioPicMP4Props.AUDIO_DELAY_SEC) * this.Wave.WavHz));
-				SpectrumGraph0001 sg = new SpectrumGraph0001(this.Wave);
+				SpectrumGraph0001 sg = new SpectrumGraph0001(hz => this.Wave.GetSpectrum(hz));
 				ss.Projection(sg.Spectra);
 				int w = sg.Spectra.Length * (BAR_WIDTH + BAR_INTERVAL) + BAR_INTERVAL;
 
@@ -53,8 +53,8 @@ namespace Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Foregr
 					double v1 = ss.ShadowSpectra[index];
 					double v2 = sg.Spectra[index];
 
-					v1 /= 2.0; // 要調整
-					v2 /= 2.0; // 要調整
+					v1 *= 0.5; // 要調整
+					v2 *= 0.5; // 要調整
 
 					int h1 = DoubleTools.ToInt(v1 * dr_h);
 					int h2 = DoubleTools.ToInt(v2 * dr_h);
