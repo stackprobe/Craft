@@ -15,7 +15,7 @@ namespace Charlotte.AudioPicMP4s.MovieMakers.VideoMakers.VideoImageMakers.Foregr
 		private const int BAR_WIDTH = 10;
 		private const int BAR_INTERVAL = 10;
 
-		public override IEnumerable<Tools.Canvas2> GetImageSequence()
+		public override IEnumerable<Canvas2> GetImageSequence()
 		{
 			ShadowSpectraData ssL = new ShadowSpectraData();
 			ShadowSpectraData ssR = new ShadowSpectraData();
