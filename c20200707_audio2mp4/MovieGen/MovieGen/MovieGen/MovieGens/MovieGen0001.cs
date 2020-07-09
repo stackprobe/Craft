@@ -37,6 +37,9 @@ namespace Charlotte.MovieGens
 
 		public void Main01()
 		{
+			FileTools.Delete(W_DIR);
+			FileTools.CreateDir(W_DIR);
+
 			this.SpData = new SpectrumData(Path.Combine(R_DIR, "Spectrum.csv"));
 
 			while (this.Frame < this.SpData.Rows.Length)
@@ -63,31 +66,6 @@ namespace Charlotte.MovieGens
 
 				this.MG_EachFrame();
 			}
-		}
-
-		public void Main02()
-		{
-			this.SpData = new SpectrumData(Path.Combine(R_DIR, "Spectrum.csv"));
-
-			foreach (DDScene scene in DDSceneUtils.Create(20))
-			{
-				// TODO ???
-
-				this.MG_EachFrame();
-			}
-		}
-
-		public void Perform()
-		{
-			FileTools.Delete(W_DIR);
-			FileTools.CreateDir(W_DIR);
-
-			// ---- choose one !
-
-			//this.Main01();
-			this.Main02();
-
-			// ----
 		}
 	}
 }

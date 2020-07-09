@@ -35,6 +35,12 @@ namespace Charlotte.MovieGens.MGEngines
 				}
 			}
 			this.Rows = dest.ToArray();
+
+			{
+				double valMax = this.Rows.Select(row => row.Max()).Max();
+
+				this.Rows = this.Rows.Select(row => row.Select(v => v / valMax).ToArray()).ToArray();
+			}
 		}
 	}
 }
