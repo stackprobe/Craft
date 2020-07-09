@@ -79,9 +79,9 @@ namespace Charlotte.MP4Gens
 		public void Main01()
 		{
 			Main_Go(
-				@"C:\temp\a0001",
 				@"C:\temp\a1001",
-				@"C:\temp\a2001"
+				@"C:\temp\a2001",
+				@"C:\temp\a3001"
 				);
 		}
 	}

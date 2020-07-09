@@ -74,7 +74,7 @@ namespace Charlotte.SpectrumGens
 		{
 			Main_Go(
 				@"C:\wb2\20200708_動画テストデータ\小田和正 - ラブ・ストーリーは突然に.wav",
-				@"C:\temp\a0001"
+				@"C:\temp\a1001"
 				);
 		}
 	}

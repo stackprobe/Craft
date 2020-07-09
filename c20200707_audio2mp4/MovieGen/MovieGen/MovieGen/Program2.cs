@@ -85,7 +85,7 @@ namespace Charlotte
 		private void Main4_Release()
 		{
 			//new Test0001().Test01();
-			new MovieGen0001().Main01();
+			new MovieGen0001().Perform();
 		}
 	}
 }
