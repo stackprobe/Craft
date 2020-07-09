@@ -6,6 +6,7 @@ using DxLibDLL;
 using Charlotte.Common;
 using Charlotte.Tools;
 using Charlotte.Tests;
+using Charlotte.MovieGens;
 
 namespace Charlotte
 {
@@ -78,12 +79,13 @@ namespace Charlotte
 
 		private void Main4_Debug()
 		{
-			new Test0001().Test01();
+			this.Main4_Release();
 		}
 
 		private void Main4_Release()
 		{
-			throw null;
+			//new Test0001().Test01();
+			new MovieGen0001().Main01();
 		}
 	}
 }
