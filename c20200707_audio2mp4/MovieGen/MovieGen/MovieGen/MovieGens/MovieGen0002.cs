@@ -240,8 +240,8 @@ namespace Charlotte.MovieGens
 				DDUtils.Approach(ref y, 190.0, 0.9995);
 				DDUtils.Approach(ref a, 1.0, 0.9);
 
-				if (20 < frmcnt)
-					DDUtils.Approach(ref spa, 1.0, 0.9);
+				if (60 < frmcnt)
+					DDUtils.Approach(ref spa, 1.0, 0.95);
 
 				yield return true;
 			}

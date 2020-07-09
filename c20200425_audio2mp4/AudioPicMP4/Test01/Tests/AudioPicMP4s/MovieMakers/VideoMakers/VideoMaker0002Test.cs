@@ -82,5 +82,37 @@ namespace Charlotte.Tests.AudioPicMP4s.MovieMakers.VideoMakers
 				vm
 				);
 		}
+
+		public void Test04_01()
+		{
+			new MovieMaker0002().MakeMovie(
+				@"C:\wb2\20200423_動画テストデータ\まちぶせ.wav",
+				@"C:\temp\荒井由実 - まちぶせ (A).mp4",
+				false,
+				new VideoMaker0002(
+					new Background0001(@"C:\wb2\20200423_動画テストデータ\まちぶせ.jpg"),
+					new VIMFadeIn(10, 10),
+					new VIMCurtain(0.25),
+					new Foreground0001(),
+					new VIMFadeOut(10, 10)
+					)
+				);
+		}
+
+		public void Test04_02()
+		{
+			new MovieMaker0002().MakeMovie(
+				@"C:\wb2\20200423_動画テストデータ\まちぶせ.wav",
+				@"C:\temp\荒井由実 - まちぶせ (B).mp4",
+				false,
+				new VideoMaker0002(
+					new Background0002(@"C:\wb2\20200423_動画テストデータ\まちぶせ_02.png", false),
+					new VIMFadeIn(10, 10),
+					new VIMCurtain(0.25),
+					new Foreground0002(),
+					new VIMFadeOut(10, 10)
+					)
+				);
+		}
 	}
 }

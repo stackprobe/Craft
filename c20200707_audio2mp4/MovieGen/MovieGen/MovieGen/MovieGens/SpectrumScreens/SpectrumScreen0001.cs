@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Charlotte.Common;
 using DxLibDLL;
+using Charlotte.MovieGens.MGEngines;
 
 namespace Charlotte.MovieGens.SpectrumScreens
 {
@@ -11,6 +12,7 @@ namespace Charlotte.MovieGens.SpectrumScreens
 	{
 		public DDSubScreen Screen;
 		public DDSubScreen GraphScreen;
+		public ShadowSpectraData ShadowSpectra = null;
 
 		public SpectrumScreen0001()
 		{
@@ -23,9 +25,35 @@ namespace Charlotte.MovieGens.SpectrumScreens
 			if (spectra.Length != 90)
 				throw null; // souteigai !!!
 
+			if (this.ShadowSpectra == null)
+				this.ShadowSpectra = new ShadowSpectraData();
+
+			this.ShadowSpectra.Projection(spectra);
+
 			DDSubScreenUtils.ChangeDrawScreen(this.GraphScreen);
 			DX.ClearDrawScreen();
 
+			for (int c = 0; c < 30; c++)
+			{
+				double v =
+					this.ShadowSpectra.ShadowSpectra[c * 3 + 0] +
+					this.ShadowSpectra.ShadowSpectra[c * 3 + 1] +
+					this.ShadowSpectra.ShadowSpectra[c * 3 + 2];
+
+				v /= 3.0;
+
+				int x1 = c * 30;
+				int x2 = x1 + 10;
+				int y1 = (int)((1.0 - v) * 600);
+				int y2 = 600;
+
+				if (y1 + 1 < y2)
+				{
+					DDDraw.SetBright(0.4, 0.5, 0.6);
+					DDDraw.DrawRect(DDGround.GeneralResource.WhiteBox, x1, y1, x2 - x1, y2 - y1);
+					DDDraw.Reset();
+				}
+			}
 			for (int c = 0; c < 30; c++)
 			{
 				double v =
@@ -40,7 +68,10 @@ namespace Charlotte.MovieGens.SpectrumScreens
 				int y1 = (int)((1.0 - v) * 600);
 				int y2 = 600;
 
-				DDDraw.DrawRect(DDGround.GeneralResource.WhiteBox, x1, y1, x2 - x1, y2 - y1);
+				if (y1 + 1 < y2)
+				{
+					DDDraw.DrawRect(DDGround.GeneralResource.WhiteBox, x1, y1, x2 - x1, y2 - y1);
+				}
 			}
 
 			DDDraw.DrawRect(DDGround.GeneralResource.WhiteBox, 0, 620, 880, 10);

@@ -39,7 +39,9 @@ namespace Charlotte
 			//new VideoMaker0002Test().Test01();
 			//new VideoMaker0002Test().Test02();
 			//new VideoMaker0002Test().Test03();
-			new VideoMaker0002Test().Test03_2();
+			//new VideoMaker0002Test().Test03_2();
+			//new VideoMaker0002Test().Test04_01();
+			new VideoMaker0002Test().Test04_02();
 		}
 	}
 }
