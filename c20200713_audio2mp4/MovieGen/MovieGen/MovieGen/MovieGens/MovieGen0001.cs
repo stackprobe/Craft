@@ -21,7 +21,7 @@ namespace Charlotte.MovieGens
 
 		private void MG_EachFrame()
 		{
-#if !true // 本番・生成用
+#if true // 本番・生成用
 			DX.SaveDrawScreen(0, 0, DDConsts.Screen_W, DDConsts.Screen_H, Path.Combine(this.WDir, string.Format("{0}.bmp", this.Frame)));
 
 			DDEngine.EachFrame();
@@ -124,7 +124,8 @@ namespace Charlotte.MovieGens
 				if (this.SpData.Rows.Length - 40 < this.Frame)
 					DDUtils.Approach(ref foa, -1.0, 0.9);
 
-				DDUtils.Approach(ref z1, 1.2, 0.999);
+				//DDUtils.Approach(ref z1, 1.2, 0.999);
+				z1 += 0.0001;
 				DDUtils.Approach(ref z2, 1.0, 0.9985);
 
 				this.MG_EachFrame();

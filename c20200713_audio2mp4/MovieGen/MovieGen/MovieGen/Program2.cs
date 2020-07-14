@@ -86,7 +86,7 @@ namespace Charlotte
 		{
 			//new Test0001().Test01();
 			Main4_01(@"C:\temp\a1001", @"C:\temp\a2001");
-			//Main4_01(@"C:\temp\a1002", @"C:\temp\a2002");
+			Main4_01(@"C:\temp\a1002", @"C:\temp\a2002");
 		}
 
 		private void Main4_01(string rDir, string wDir)
