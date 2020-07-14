@@ -83,6 +83,12 @@ namespace Charlotte.MP4Gens
 				@"C:\temp\a2001",
 				@"C:\temp\a3001"
 				);
+
+			Main_Go(
+				@"C:\temp\a1002",
+				@"C:\temp\a2002",
+				@"C:\temp\a3002"
+				);
 		}
 	}
 }

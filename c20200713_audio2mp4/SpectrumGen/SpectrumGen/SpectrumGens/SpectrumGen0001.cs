@@ -18,13 +18,17 @@ namespace Charlotte.SpectrumGens
 			writer.EndRow();
 		}
 
-		private void Main_Go(string rWavFile, string wDir)
+		private void Main_Go(string rMP3File, string rJpgFile, string wDir)
 		{
-			Console.WriteLine("< " + rWavFile); // test
+			Console.WriteLine("< " + rMP3File); // test
+			Console.WriteLine("< " + rJpgFile); // test
 			Console.WriteLine("> " + wDir); // test
 
-			if (File.Exists(rWavFile) == false)
-				throw new Exception("no rWavFile: " + rWavFile);
+			if (File.Exists(rMP3File) == false)
+				throw new Exception("no rMP3File: " + rMP3File);
+
+			if (File.Exists(rJpgFile) == false)
+				throw new Exception("no rImgFile: " + rJpgFile);
 
 			FileTools.Delete(wDir);
 			FileTools.CreateDir(wDir);
@@ -33,10 +37,13 @@ namespace Charlotte.SpectrumGens
 			string wCsvFile_L = Path.Combine(wDir, "Spectrum_L.csv");
 			string wCsvFile_R = Path.Combine(wDir, "Spectrum_R.csv");
 			string wWavFile = Path.Combine(wDir, "Wave.wav");
+			string wJpgFile = Path.Combine(wDir, "Jacket.jpg");
 
 			Console.WriteLine("*1"); // test
-			WaveData wavDat = new WaveData(rWavFile);
+			MP3Conv.MP3FileToWavFile(rMP3File, wWavFile);
 			Console.WriteLine("*2"); // test
+			WaveData wavDat = new WaveData(wWavFile);
+			Console.WriteLine("*3"); // test
 
 			using (CsvFileWriter writer = new CsvFileWriter(wCsvFile))
 			using (CsvFileWriter writer_L = new CsvFileWriter(wCsvFile_L))
@@ -63,9 +70,9 @@ namespace Charlotte.SpectrumGens
 					WriteRow(writer_R, graph_R);
 				}
 			}
-			Console.WriteLine("*3"); // test
+			Console.WriteLine("*4"); // test
 
-			File.Copy(rWavFile, wWavFile);
+			File.Copy(rJpgFile, wJpgFile);
 
 			Console.WriteLine("done"); // test
 		}
@@ -73,8 +80,15 @@ namespace Charlotte.SpectrumGens
 		public void Main01()
 		{
 			Main_Go(
-				@"C:\wb2\20200708_動画テストデータ\小田和正 - ラブ・ストーリーは突然に.wav",
+				@"C:\wb2\20200710_動画よっしーさんからのテスト用データ\2-04 Rock'n Rouge.mp3",
+				@"C:\wb2\20200710_動画よっしーさんからのテスト用データ\2-04 Rock'n Rouge.jpg",
 				@"C:\temp\a1001"
+				);
+
+			Main_Go(
+				@"C:\wb2\20200710_動画よっしーさんからのテスト用データ\悪女.mp3",
+				@"C:\wb2\20200710_動画よっしーさんからのテスト用データ\悪女.jpg",
+				@"C:\temp\a1002"
 				);
 		}
 	}

@@ -85,9 +85,13 @@ namespace Charlotte
 		private void Main4_Release()
 		{
 			//new Test0001().Test01();
-			//new MovieGen0001().Main01();
-			new MovieGen0002().Main01();
-			//new MovieGen0003().Main01();
+			Main4_01(@"C:\temp\a1001", @"C:\temp\a2001");
+			//Main4_01(@"C:\temp\a1002", @"C:\temp\a2002");
+		}
+
+		private void Main4_01(string rDir, string wDir)
+		{
+			new MovieGen0001().Main01(rDir, wDir);
 		}
 	}
 }
