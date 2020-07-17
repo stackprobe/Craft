@@ -10,7 +10,7 @@ namespace Charlotte.MP4Gens
 {
 	public class MP4Gen0001
 	{
-		private void Main_Go(string audioDir, string videoDir, string wDir)
+		private void Main_Go_2(string audioDir, string videoDir, string wDir)
 		{
 			if (Directory.Exists(audioDir) == false)
 				throw null;
@@ -76,18 +76,38 @@ namespace Charlotte.MP4Gens
 			Console.WriteLine("*4"); // test
 		}
 
+		private void Main_Go(string audioDir, string videoRootDir, string wRootDir, string title)
+		{
+			FileTools.Delete(wRootDir);
+			FileTools.CreateDir(wRootDir);
+
+			// ----
+
+			foreach (string videoDir in Directory.GetDirectories(videoRootDir))
+			{
+				string videoLocalDir = Path.GetFileName(videoDir);
+				string wDir = Path.Combine(wRootDir, videoLocalDir);
+
+				Main_Go_2(audioDir, videoDir, wDir);
+
+				File.Move(Path.Combine(wDir, "movie.mp4"), Path.Combine(wRootDir, title + "_" + videoLocalDir + ".mp4"));
+			}
+		}
+
 		public void Main01()
 		{
 			Main_Go(
 				@"C:\temp\a1001",
 				@"C:\temp\a2001",
-				@"C:\temp\a3001"
+				@"C:\temp\a3001",
+				"Rock7n-Rouge"
 				);
 
 			Main_Go(
 				@"C:\temp\a1002",
 				@"C:\temp\a2002",
-				@"C:\temp\a3002"
+				@"C:\temp\a3002",
+				"悪女"
 				);
 		}
 	}

@@ -91,7 +91,7 @@ namespace Charlotte.MovieGens.SpectrumScreens
 
 			for (int c = 0; c < 2; c++)
 			{
-				DDDraw.DrawBegin(DDPictureLoaders2.Wrapper(this.GraphScreen), this.Screen.GetSize().W / 2, this.Screen.GetSize().H / 2);
+				DDDraw.DrawBegin(this.GraphScreen.ToPicture(), this.Screen.GetSize().W / 2, this.Screen.GetSize().H / 2);
 				DDDraw.SetBright(0, 0, 0);
 				DDDraw.DrawEnd();
 				DDDraw.Reset();
@@ -99,7 +99,7 @@ namespace Charlotte.MovieGens.SpectrumScreens
 				DX.GraphFilter(this.Screen.GetHandle(), DX.DX_GRAPH_FILTER_GAUSS, 16, 1000);
 			}
 
-			DDDraw.DrawCenter(DDPictureLoaders2.Wrapper(this.GraphScreen), this.Screen.GetSize().W / 2, this.Screen.GetSize().H / 2);
+			DDDraw.DrawCenter(this.GraphScreen.ToPicture(), this.Screen.GetSize().W / 2, this.Screen.GetSize().H / 2);
 
 			DDSubScreenUtils.RestoreDrawScreen();
 		}

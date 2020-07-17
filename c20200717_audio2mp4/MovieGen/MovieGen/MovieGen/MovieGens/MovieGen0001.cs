@@ -36,10 +36,12 @@ namespace Charlotte.MovieGens
 			this.Frame++;
 		}
 
-		public void Main01(string rDir, string wDir)
+		public void Main01(string rDir, string wRootDir, int spBarNum, int spBarWidth, int spBarHeight, I3Color spBarColor, double spBarAlpha)
 		{
+			string wLocalDir = string.Format("Bar={0:D2}_Bar-W={1:D2}_Bar-H={2:D3}_Bar-C={3}_Bar-A={4:F3}", spBarNum, spBarWidth, spBarHeight, spBarColor, spBarAlpha);
+
 			this.RDir = rDir;
-			this.WDir = wDir;
+			this.WDir = Path.Combine(wRootDir, wLocalDir);
 
 			if (Directory.Exists(this.RDir) == false)
 				throw new Exception("no RDir: " + this.RDir);
@@ -79,7 +81,7 @@ namespace Charlotte.MovieGens
 
 			// ----
 
-			SpectrumScreen0001 spScr = new SpectrumScreen0001();
+			SpectrumScreen0001 spScr = new SpectrumScreen0001(spBarNum, spBarWidth, spBarHeight, spBarColor);
 
 			while (this.Frame < this.SpData.Rows.Length)
 			{
@@ -99,12 +101,12 @@ namespace Charlotte.MovieGens
 
 				// ----
 
-				DDDraw.DrawSimple(DDPictureLoaders2.Wrapper(workScreen), 0, 0);
+				DDDraw.DrawSimple(workScreen.ToPicture(), 0, 0);
 
 				DDCurtain.DrawCurtain(-0.5);
 
 				DDDraw.DrawBegin(
-					DDPictureLoaders2.Wrapper(jacketScreen),
+					jacketScreen.ToPicture(),
 					//jacket,
 					DDConsts.Screen_W / 2, DDConsts.Screen_H / 2);
 				DDDraw.DrawZoom(bz2 * z2);
@@ -114,8 +116,8 @@ namespace Charlotte.MovieGens
 
 				spScr.Draw(this.SpData.Rows[this.Frame]);
 
-				DDDraw.SetAlpha(0.6); // ★要調整
-				DDDraw.DrawCenter(DDPictureLoaders2.Wrapper(spScr.Screen), DDConsts.Screen_W / 2, DDConsts.Screen_H - 110);
+				DDDraw.SetAlpha(spBarAlpha); // ★要調整
+				DDDraw.DrawCenter(spScr.Screen.ToPicture(), DDConsts.Screen_W / 2, DDConsts.Screen_H - spBarHeight / 2 - 10);
 				DDDraw.Reset();
 
 				if (40 < this.Frame)
@@ -125,10 +127,16 @@ namespace Charlotte.MovieGens
 					DDUtils.Approach(ref foa, -1.0, 0.9);
 
 				//DDUtils.Approach(ref z1, 1.2, 0.999);
-				z1 += 0.0001;
+				//z1 += 0.0001;
 				DDUtils.Approach(ref z2, 1.0, 0.9985);
 
 				this.MG_EachFrame();
+			}
+
+			// ゴミ内のハンドルだけでも開放する。
+			{
+				DDPictureUtils.UnloadAll();
+				DDSubScreenUtils.UnloadAll();
 			}
 		}
 	}

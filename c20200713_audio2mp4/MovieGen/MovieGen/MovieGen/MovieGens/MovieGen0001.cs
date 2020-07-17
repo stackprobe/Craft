@@ -99,12 +99,12 @@ namespace Charlotte.MovieGens
 
 				// ----
 
-				DDDraw.DrawSimple(DDPictureLoaders2.Wrapper(workScreen), 0, 0);
+				DDDraw.DrawSimple(workScreen.ToPicture(), 0, 0);
 
 				DDCurtain.DrawCurtain(-0.5);
 
 				DDDraw.DrawBegin(
-					DDPictureLoaders2.Wrapper(jacketScreen),
+					jacketScreen.ToPicture(),
 					//jacket,
 					DDConsts.Screen_W / 2, DDConsts.Screen_H / 2);
 				DDDraw.DrawZoom(bz2 * z2);
@@ -115,7 +115,7 @@ namespace Charlotte.MovieGens
 				spScr.Draw(this.SpData.Rows[this.Frame]);
 
 				DDDraw.SetAlpha(0.6); // ★要調整
-				DDDraw.DrawCenter(DDPictureLoaders2.Wrapper(spScr.Screen), DDConsts.Screen_W / 2, DDConsts.Screen_H - 110);
+				DDDraw.DrawCenter(spScr.Screen.ToPicture(), DDConsts.Screen_W / 2, DDConsts.Screen_H - 110);
 				DDDraw.Reset();
 
 				if (40 < this.Frame)

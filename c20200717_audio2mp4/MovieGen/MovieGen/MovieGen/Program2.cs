@@ -91,7 +91,66 @@ namespace Charlotte
 
 		private void Main4_01(string rDir, string wDir)
 		{
-			new MovieGen0001().Main01(rDir, wDir);
+			FileTools.Delete(wDir);
+			FileTools.CreateDir(wDir);
+
+			//this.Main4_01_A(rDir, wDir); // 時間掛かりすぎ！
+			this.Main4_01_B(rDir, wDir);
+		}
+
+		private void Main4_01_A(string rDir, string wDir)
+		{
+			foreach (int spBarNum in new int[] { 15, 20, 25, 30 })
+			{
+				foreach (int spBarWidth in new int[] { 10, 12, 14, 16 })
+				{
+					foreach (int spBarHeight in new int[] { 200, 230, 260, 290 })
+					{
+						foreach (I3Color spBarColor in new I3Color[]
+						{
+							new I3Color(200, 200, 255),
+							new I3Color(200, 255, 255),
+							new I3Color(200, 255, 200),
+							new I3Color(255, 200, 200),
+						})
+						{
+							foreach (double spBarAlpha in new double[] { 0.4, 0.6, 0.8, 1.0 })
+							{
+								new MovieGen0001().Main01(rDir, wDir, spBarNum, spBarWidth, spBarHeight, spBarColor, spBarAlpha);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		private void Main4_01_B(string rDir, string wDir)
+		{
+			int[] spBarNums = new int[] { 15, 20, 25, 30 };
+			int[] spBarWidths = new int[] { 10, 12, 14, 16 };
+			int[] spBarHeights = new int[] { 200, 230, 260, 290 };
+			I3Color[] spBarColors = new I3Color[]
+			{
+				new I3Color(200, 200, 255),
+				new I3Color(200, 255, 255),
+				new I3Color(200, 255, 200),
+				new I3Color(255, 200, 200),
+			};
+			double[] spBarAlphas = new double[] { 0.4, 0.6, 0.8, 1.0 };
+
+			new MovieGen0001().Main01(rDir, wDir, spBarNums[1], spBarWidths[1], spBarHeights[1], spBarColors[1], spBarAlphas[1]);
+
+			for (int x = 0; x < 4; x++)
+			{
+				if (x == 1)
+					continue;
+
+				new MovieGen0001().Main01(rDir, wDir, spBarNums[x], spBarWidths[1], spBarHeights[1], spBarColors[1], spBarAlphas[1]);
+				new MovieGen0001().Main01(rDir, wDir, spBarNums[1], spBarWidths[x], spBarHeights[1], spBarColors[1], spBarAlphas[1]);
+				new MovieGen0001().Main01(rDir, wDir, spBarNums[1], spBarWidths[1], spBarHeights[x], spBarColors[1], spBarAlphas[1]);
+				new MovieGen0001().Main01(rDir, wDir, spBarNums[1], spBarWidths[1], spBarHeights[1], spBarColors[x], spBarAlphas[1]);
+				new MovieGen0001().Main01(rDir, wDir, spBarNums[1], spBarWidths[1], spBarHeights[1], spBarColors[1], spBarAlphas[x]);
+			}
 		}
 	}
 }
