@@ -1,0 +1,6 @@
+----
+以下の順で実行
+
+	SpecrtrumGen
+	MovieGen
+	MP4Gen
