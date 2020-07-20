@@ -11,7 +11,7 @@ namespace Charlotte
 {
 	class Program
 	{
-		public const string APP_IDENT = "{6f82d885-20ca-406b-9738-89fd83dec3f6}";
+		public const string APP_IDENT = "{d840d295-f562-4fc0-8698-98d2fc3d5b73}";
 		public const string APP_TITLE = "SpectrumGen";
 
 		static void Main(string[] args)

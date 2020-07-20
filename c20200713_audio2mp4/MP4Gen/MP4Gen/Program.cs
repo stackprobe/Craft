@@ -11,7 +11,7 @@ namespace Charlotte
 {
 	class Program
 	{
-		public const string APP_IDENT = "{be2af3f0-69b8-4927-9b35-3a2b23584a09}";
+		public const string APP_IDENT = "{778c09f4-f0e5-4c5c-9b55-0b65947f50b9}";
 		public const string APP_TITLE = "MP4Gen";
 
 		static void Main(string[] args)

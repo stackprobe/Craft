@@ -17,7 +17,7 @@ namespace Charlotte
 			ProcMain.GUIMain(() => new MainWin(), APP_IDENT, APP_TITLE);
 		}
 
-		public const string APP_IDENT = "{677dd784-c153-4309-b3dc-68d56d569ccb}";
+		public const string APP_IDENT = "{7721b161-4da1-4d78-be58-113194b1e60f}";
 		public const string APP_TITLE = "MovieGen";
 	}
 }
