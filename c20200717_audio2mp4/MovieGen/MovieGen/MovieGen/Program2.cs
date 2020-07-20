@@ -95,7 +95,8 @@ namespace Charlotte
 			FileTools.CreateDir(wDir);
 
 			//this.Main4_01_A(rDir, wDir); // 時間掛かりすぎ！
-			this.Main4_01_B(rDir, wDir);
+			//this.Main4_01_B(rDir, wDir);
+			this.Main4_02(rDir, wDir);
 		}
 
 		private void Main4_01_A(string rDir, string wDir)
@@ -124,7 +125,7 @@ namespace Charlotte
 			}
 		}
 
-		private void Main4_01_B(string rDir, string wDir)
+		private void Main4_01_B(string rDir, string wDir) // 2020.7.18 ver
 		{
 			int[] spBarNums = new int[] { 15, 20, 25, 30 };
 			int[] spBarWidths = new int[] { 10, 12, 14, 16 };
@@ -151,6 +152,20 @@ namespace Charlotte
 				new MovieGen0001().Main01(rDir, wDir, spBarNums[1], spBarWidths[1], spBarHeights[1], spBarColors[x], spBarAlphas[1]);
 				new MovieGen0001().Main01(rDir, wDir, spBarNums[1], spBarWidths[1], spBarHeights[1], spBarColors[1], spBarAlphas[x]);
 			}
+		}
+
+		private void Main4_02(string rDir, string wDir) // 2020.7.19 ver
+		{
+			new MovieGen0001().Main01(
+				rDir,
+				wDir,
+				20,
+				12,
+				230,
+				new I3Color(0, 255, 255),
+				0.6,
+				3.0
+				);
 		}
 	}
 }

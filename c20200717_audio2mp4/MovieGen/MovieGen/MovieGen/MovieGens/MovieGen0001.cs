@@ -21,7 +21,7 @@ namespace Charlotte.MovieGens
 
 		private void MG_EachFrame()
 		{
-#if true // 本番・生成用
+#if !true // 本番・生成用
 			DX.SaveDrawScreen(0, 0, DDConsts.Screen_W, DDConsts.Screen_H, Path.Combine(this.WDir, string.Format("{0}.bmp", this.Frame)));
 
 			DDEngine.EachFrame();
@@ -36,7 +36,7 @@ namespace Charlotte.MovieGens
 			this.Frame++;
 		}
 
-		public void Main01(string rDir, string wRootDir, int spBarNum, int spBarWidth, int spBarHeight, I3Color spBarColor, double spBarAlpha)
+		public void Main01(string rDir, string wRootDir, int spBarNum, int spBarWidth, int spBarHeight, I3Color spBarColor, double spBarAlpha, double z2 = 2.0)
 		{
 			string wLocalDir = string.Format("Bar={0:D2}_Bar-W={1:D2}_Bar-H={2:D3}_Bar-C={3}_Bar-A={4:F3}", spBarNum, spBarWidth, spBarHeight, spBarColor, spBarAlpha);
 
@@ -63,7 +63,7 @@ namespace Charlotte.MovieGens
 			double bz2 = Math.Min(xz, yz);
 
 			double z1 = 1.0;
-			double z2 = 2.0;
+			//double z2 = 2.0; // 引数化 @ 2020.7.19
 
 			const int JACKET_MARGIN = 10;
 
