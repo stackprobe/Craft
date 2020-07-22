@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using Charlotte.Tools;
+using Charlotte.Tests;
 
 namespace Charlotte
 {
@@ -28,7 +29,43 @@ namespace Charlotte
 
 		private void Main2(ArgsReader ar)
 		{
-			MessageBox.Show(APP_TITLE); // ---- 0001
+			Ground.I = new Ground();
+			try
+			{
+#if DEBUG
+				new Test0001().Test01();
+#else
+				this.Main3(ar);
+#endif
+			}
+			finally
+			{
+				Ground.I.Dispose();
+				Ground.I = null;
+			}
+		}
+
+		private void Main3(ArgsReader ar)
+		{
+			try
+			{
+				if (ar.NextArg() != "CS-Conv")
+				{
+					throw new Exception("不正なコールサイン");
+				}
+
+				string inputDir = ar.NextArg();
+				string outputDir = ar.NextArg();
+				string successfulFile = ar.NextArg();
+
+				new ConvMain().Perform(inputDir, outputDir);
+
+				File.WriteAllBytes(successfulFile, BinTools.EMPTY);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
 		}
 	}
 }

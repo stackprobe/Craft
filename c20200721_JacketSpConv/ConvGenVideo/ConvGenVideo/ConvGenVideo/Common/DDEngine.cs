@@ -122,7 +122,7 @@ namespace Charlotte.Common
 
 			DX.ScreenFlip();
 
-			if (DX.CheckHitKey(DX.KEY_INPUT_ESCAPE) == 1 || DX.ProcessMessage() == -1)
+			if (DX.ProcessMessage() == -1)
 			{
 				throw new DDCoffeeBreak();
 			}

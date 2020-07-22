@@ -6,6 +6,7 @@ using DxLibDLL;
 using Charlotte.Common;
 using Charlotte.Tools;
 using Charlotte.Tests;
+using Charlotte.ConvMains;
 
 namespace Charlotte
 {
@@ -83,7 +84,12 @@ namespace Charlotte
 
 		private void Main4_Release()
 		{
-			throw null;
+			new ConvMain().Perform(
+				ProcMain.ArgsReader.GetArg(0),
+				ProcMain.ArgsReader.GetArg(1),
+				ProcMain.ArgsReader.GetArg(2),
+				ProcMain.ArgsReader.GetArg(3)
+				);
 		}
 	}
 }
