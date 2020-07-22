@@ -111,8 +111,6 @@ namespace Charlotte
 				this.VideoBmpDir = wd.MakePath();
 				this.VideoJpgDir = wd.MakePath();
 
-				// TODO キャンセルのチェック, Cancelled の throw
-
 				this.MakeWavFile();
 				this.MasteringWavFile();
 				this.MakeSpectrumFile();
@@ -131,7 +129,7 @@ namespace Charlotte
 #if true // .wav にもサラウンドとかある様なのでステレオにする。
 				File.Copy(this.AudioFile, wd.GetPath("1" + audioExt));
 
-				ProcessTools.Batch(new string[]
+				this.Run(new string[]
 				{
 					Consts.FFMPEG_FILE + " -i 1" + audioExt + " -ac 2 2.wav",
 				},
@@ -146,7 +144,7 @@ namespace Charlotte
 				{
 					File.Copy(this.AudioFile, wd.GetPath("1" + audioExt));
 
-					ProcessTools.Batch(new string[]
+					this.Run(new string[]
 					{
 						Consts.FFMPEG_FILE + " -i 1" + audioExt + " 2.wav",
 					},
@@ -164,14 +162,14 @@ namespace Charlotte
 			{
 				File.Copy(this.WavFile, wd.GetPath("1.wav"));
 
-				ProcessTools.Batch(new string[]
+				this.Run(new string[]
 				{
 					Consts.MASTER_FILE + " /E " + Consts.EV_STOP_MASTER + " 1.wav 2.wav 3.txt",
 				},
 				wd.GetPath(".")
 				);
 
-				// TODO log 3.txt as report
+				Ground.I.Logger.Info("Master.exe Log: " + File.ReadAllText("3.txt", StringTools.ENCODING_SJIS));
 
 				if (File.Exists(wd.GetPath("2.wav"))) // ? 音量調整した。
 				{
@@ -234,7 +232,7 @@ namespace Charlotte
 
 					FileTools.CreateDir(wd.GetPath("3"));
 
-					ProcessTools.Batch(new string[]
+					this.Run(new string[]
 					{
 						"START /WAIT " + Ground.I.ConvGenVideoFile + " CS-ConvGenVideo 1.csv " + Path.GetFileName(wdJacketFile) + " 3 4.flg",
 					},
@@ -242,7 +240,10 @@ namespace Charlotte
 					);
 
 					if (File.Exists(wd.GetPath("4.flg")) == false)
-						throw new Exception("映像データ生成プロセスが正常に動作しなかったようです。");
+					{
+						throw new Cancelled();
+						//throw new Exception("映像データ生成プロセスが正常に動作しなかったようです。"); // old
+					}
 
 					FileTools.MoveDir(wd.GetPath("3"), this.VideoBmpDir);
 				}
@@ -280,7 +281,7 @@ namespace Charlotte
 			{
 				FileTools.CopyDir(this.VideoJpgDir, wd.GetPath("1"));
 
-				ProcessTools.Batch(new string[]
+				this.Run(new string[]
 				{
 					Consts.FFMPEG_FILE + " -r " + Consts.FPS + " -i %%d.jpg ..\\2.mp4",
 				},
@@ -292,7 +293,7 @@ namespace Charlotte
 
 				File.Copy(this.MasterWavFile, wd.GetPath("3.wav"));
 
-				ProcessTools.Batch(new string[]
+				this.Run(new string[]
 				{
 					Consts.FFMPEG_FILE + " -i 2.mp4 -i 3.wav -map 0:0 -map 1:0 -vcodec copy 4.mp4",
 				},
@@ -302,7 +303,7 @@ namespace Charlotte
 				if (File.Exists(wd.GetPath("4.mp4")) == false)
 					throw new Exception("動画ファイルの生成に失敗しました。");
 
-				ProcessTools.Batch(new string[]
+				this.Run(new string[]
 				{
 					"ECHO Y|CACLS 4.mp4 /P Users:F Guest:F",
 				},
@@ -316,6 +317,21 @@ namespace Charlotte
 
 				if (File.Exists(this.MovieFile) == false)
 					throw new Exception("動画ファイルの書き出しに失敗しました。");
+			}
+		}
+
+		private void Run(string[] commands, string workingDir)
+		{
+			this.CheckCancel();
+			ProcessTools.Batch(commands, workingDir);
+			this.CheckCancel();
+		}
+
+		private void CheckCancel()
+		{
+			if (Ground.I.EvStopConv.WaitForMillis(0))
+			{
+				throw new Cancelled();
 			}
 		}
 	}

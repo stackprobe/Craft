@@ -11,7 +11,8 @@ namespace Charlotte.Tests
 		{
 			new ConvMain().Perform(
 				@"C:\wb2\20200710_動画よっしーさんからのテスト用データ",
-				@"C:\temp\Test0001_out"
+				@"C:\temp\Test0001_out",
+				@"C:\temp\Test0001_out.flg"
 				);
 		}
 	}

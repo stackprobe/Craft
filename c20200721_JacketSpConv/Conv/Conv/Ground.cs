@@ -12,6 +12,7 @@ namespace Charlotte
 		public static Ground I;
 
 		public string ConvGenVideoFile;
+		public Logger Logger;
 
 		// ---- 受信
 

@@ -4,12 +4,38 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Charlotte.Tools;
+using Charlotte.Utils;
 
 namespace Charlotte
 {
 	public class ConvMain
 	{
-		public void Perform(string inputDir, string outputDir)
+		public void Perform(string inputDir, string outputDir, string successfulFile)
+		{
+			using (LogWriter stat = new LogWriter(FileUtils.EraseExt(ProcMain.SelfFile) + "_01.log"))
+			using (LogWriter info = new LogWriter(FileUtils.EraseExt(ProcMain.SelfFile) + "_02.log"))
+			{
+				Ground.I.Logger = new Logger(stat, info);
+				try
+				{
+					Ground.I.Logger.Stat("ConvMain 開始");
+					this.Perform_02(inputDir, outputDir);
+					Ground.I.Logger.Stat("ConvMain 完了");
+					File.WriteAllBytes(successfulFile, BinTools.EMPTY); // 正常終了フラグ_作成
+					Ground.I.Logger.Stat("ConvMain 完了_2");
+				}
+				catch (Exception e)
+				{
+					Ground.I.Logger.Stat("ConvMain 異常終了：" + e);
+				}
+				finally
+				{
+					Ground.I.Logger = null;
+				}
+			}
+		}
+
+		private void Perform_02(string inputDir, string outputDir)
 		{
 			// 環境のチェック
 			{
@@ -36,8 +62,14 @@ namespace Charlotte
 				}
 			}
 
+			Ground.I.Logger.Stat("<1 " + inputDir);
+			Ground.I.Logger.Stat(">1 " + outputDir);
+
 			inputDir = FileTools.MakeFullPath(inputDir);
 			outputDir = FileTools.MakeFullPath(outputDir);
+
+			Ground.I.Logger.Stat("<2 " + inputDir);
+			Ground.I.Logger.Stat(">2 " + outputDir);
 
 			// memo: 出力フォルダが入力フォルダと同じ場合がある。
 
@@ -53,10 +85,10 @@ namespace Charlotte
 
 			foreach (string file in files)
 			{
-				// TODO log
-
 				try
 				{
+					Ground.I.Logger.Stat("ファイル：" + file);
+
 					new ConvFileMain()
 					{
 						InputDir = inputDir,
@@ -65,17 +97,16 @@ namespace Charlotte
 					}
 					.Perform();
 
-					// TODO log
+					Ground.I.Logger.Stat("成功");
 				}
 				catch (Cancelled)
 				{
-					// TODO log
-
+					Ground.I.Logger.Stat("中止");
 					break;
 				}
 				catch (Exception e)
 				{
-					// TODO log
+					Ground.I.Logger.Stat("失敗：" + e);
 				}
 			}
 		}

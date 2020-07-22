@@ -58,9 +58,7 @@ namespace Charlotte
 				string outputDir = ar.NextArg();
 				string successfulFile = ar.NextArg();
 
-				new ConvMain().Perform(inputDir, outputDir);
-
-				File.WriteAllBytes(successfulFile, BinTools.EMPTY);
+				new ConvMain().Perform(inputDir, outputDir, successfulFile);
 			}
 			catch (Exception e)
 			{
