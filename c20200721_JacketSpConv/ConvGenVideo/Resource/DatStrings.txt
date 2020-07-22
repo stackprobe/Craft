@@ -1,0 +1,3 @@
+Title=ConvGenVideo
+Author=cerulean.charlotte
+Copyright=(c) 20xx cerulean.charlotte
