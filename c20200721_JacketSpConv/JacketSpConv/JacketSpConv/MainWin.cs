@@ -10,6 +10,7 @@ using System.Threading;
 using System.Security.Permissions;
 using System.Windows.Forms;
 using Charlotte.Tools;
+using Charlotte.Chocomint.Dialogs;
 
 namespace Charlotte
 {
@@ -76,22 +77,11 @@ namespace Charlotte
 				{
 					// -- 9000
 
-					// test
-					if (MessageBox.Show(
-						"アプリケーションを終了して宜しいですか？",
-						"終了確認",
-						MessageBoxButtons.YesNo,
-						MessageBoxIcon.Question
-						)
-						!= System.Windows.Forms.DialogResult.Yes
-						)
-						return;
-
 					// ----
 				}
 				catch (Exception e)
 				{
-					MessageBox.Show("" + e, "Error @ CloseWindow()", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageDlgTools.Error("Error @ CloseWindow()", e);
 				}
 				this.MTBusy.Enter();
 				this.Close();
@@ -118,18 +108,11 @@ namespace Charlotte
 
 				// -- 3001
 
-				// test
-				if (this.MTCount == 150) // 15 sec
-				{
-					this.CloseWindow();
-					return;
-				}
-
 				// ----
 			}
 			catch (Exception ex)
 			{
-				ProcMain.WriteLog(ex);
+				MessageDlgTools.Error("Error @ Timer", ex);
 			}
 			finally
 			{
