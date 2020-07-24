@@ -10,8 +10,10 @@ namespace Charlotte.ConvMains
 {
 	public class ConvMain
 	{
-		public void Perform(string spectrumFile, string jacketFile, string wDir, string successfulFile)
+		public void Perform(string spectrumFile, string jacketFile, string wDir, string cancelledFile, string successfulFile)
 		{
+			// TODO cancelledFile
+
 			DDPicture jacket = DDPictureLoaders.Standard(jacketFile); // g
 
 			new MovieGen0001().Main01(

@@ -233,13 +233,16 @@ namespace Charlotte
 					FileTools.CreateDir(wd.GetPath("3"));
 
 					this.Batch(
-						"START /WAIT \"\" \"" + Ground.I.ConvGenVideoFile + "\" CS-ConvGenVideo 1.csv " + Path.GetFileName(wdJacketFile) + " 3 4.flg",
-						wd.GetPath(".")
+						"START /WAIT " + Ground.I.ConvGenVideoFile + " CS-ConvGenVideo " + wd.GetPath("1.csv") + " " + wdJacketFile + " " + wd.GetPath("3") + " " + wd.GetPath("4.flg") + " " + wd.GetPath("5.flg"),
+						ProcMain.SelfDir
 						);
 
-					if (File.Exists(wd.GetPath("4.flg")) == false)
+					if (File.Exists(wd.GetPath("5.flg")) == false)
+						throw new Exception("映像データ生成プロセスが正常に動作しなかったようです。");
+
+					if (File.Exists(wd.GetPath("4.flg")))
 					{
-						Ground.I.Logger.Info("映像データ生成プロセスが正常に動作しなかったようです。-> [✕]が押されたと判断し、中止します。");
+						Ground.I.Logger.Info("映像データ生成プロセスによってキャンセルされました。");
 
 						throw new Cancelled();
 					}

@@ -24,7 +24,7 @@ namespace Charlotte.Common
 		/// 2  == 3番目のモニタ
 		/// ...
 		/// </summary>
-		public static int DisplayIndex = 1;
+		public static int DisplayIndex = -1;
 
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c

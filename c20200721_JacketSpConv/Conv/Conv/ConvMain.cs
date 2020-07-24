@@ -49,20 +49,15 @@ namespace Charlotte
 					throw new Exception("no wavCsv.exe");
 
 				{
-					string file = @".\ConvGenVideo.exe";
+					string file = @".\ConvGenVideo\ConvGenVideo.exe";
 
 					if (File.Exists(file) == false)
 					{
-						file = @"..\..\..\..\ConvGenVideo\ConvGenVideo\ConvGenVideo\bin\Release\ConvGenVideo.exe";
+						file = @"..\..\..\..\ConvGenVideo\ConvGenVideo\ConvGenVideo\bin\Release\ConvGenVideo.exe"; // Dev-Env
 
 						if (File.Exists(file) == false)
 							throw new Exception("no ConvGenVideo.exe");
 					}
-					file = FileTools.MakeFullPath(file);
-
-					if (file != StringTools.ENCODING_SJIS.GetString(StringTools.ENCODING_SJIS.GetBytes(file)))
-						throw new Exception("Bad ConvGenVideo.exe");
-
 					Ground.I.ConvGenVideoFile = file;
 				}
 			}

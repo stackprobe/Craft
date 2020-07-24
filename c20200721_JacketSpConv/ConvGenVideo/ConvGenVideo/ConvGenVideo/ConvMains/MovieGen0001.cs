@@ -122,7 +122,7 @@ namespace Charlotte.ConvMains
 						double rate = this.Frame * 1.0 / this.SpData.Rows.Length;
 						const int PROGRESS_BAR_H = 10;
 
-						DDDraw.DrawRect(DDGround.GeneralResource.WhiteBox, 0, (DDConsts.Screen_H - PROGRESS_BAR_H) / 2, DDConsts.Screen_W * rate, PROGRESS_BAR_H);
+						DDDraw.DrawRect(DDGround.GeneralResource.WhiteBox, 0, (DDConsts.Screen_H - PROGRESS_BAR_H) / 2, Math.Max(5, DDConsts.Screen_W * rate), PROGRESS_BAR_H);
 					}
 
 					// ----
