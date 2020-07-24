@@ -24,12 +24,12 @@ namespace Charlotte.Common
 		/// 2  == 3番目のモニタ
 		/// ...
 		/// </summary>
-		public static int DisplayIndex = -1;
+		public static int DisplayIndex = 1;
 
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public static string LogFile = @".\ConvGenVideo_Game.log";
+		public static string LogFile = @"C:\tmp\Game.log";
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
@@ -41,7 +41,7 @@ namespace Charlotte.Common
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public static string ApplicationLogSaveDirectory = @".\.";
+		public static string ApplicationLogSaveDirectory = @"C:\tmp";
 
 		// < 設定項目
 
@@ -50,7 +50,6 @@ namespace Charlotte.Common
 		//
 		public static void Load()
 		{
-#if false // del
 			if (File.Exists(DDConsts.ConfigFile) == false)
 				return;
 
@@ -69,7 +68,6 @@ namespace Charlotte.Common
 			ApplicationLogSaveDirectory = lines[c++];
 
 			// < 設定項目
-#endif
 		}
 	}
 }

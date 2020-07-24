@@ -69,7 +69,7 @@ namespace Charlotte.Common
 		//
 		public void Fade(int frameMax = 30)
 		{
-			throw null; // todo
+			throw null; // TODO
 		}
 
 		//

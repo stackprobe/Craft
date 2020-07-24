@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Charlotte.Tools;
-using System.IO;
 
 namespace Charlotte
 {
@@ -15,14 +14,10 @@ namespace Charlotte
 		[STAThread]
 		static void Main()
 		{
-			BootDir = Directory.GetCurrentDirectory();
-
 			ProcMain.GUIMain(() => new MainWin(), APP_IDENT, APP_TITLE);
 		}
 
-		public static string BootDir;
-
-		public const string APP_IDENT = "{4ac26037-d5f7-4001-80c1-e50fb08d10e8}";
+		public const string APP_IDENT = "{ac611658-85fe-45fa-ab40-439c1f5ec6b8}";
 		public const string APP_TITLE = "ConvGenVideo";
 	}
 }

@@ -108,7 +108,7 @@ namespace Charlotte.Common
 
 			try // for Donut2
 			{
-				// todo int.Parse -> IntTools.ToInt
+				// TODO int.Parse -> IntTools.ToInt
 
 				DDGround.RealScreen_W = int.Parse(lines[c++]);
 				DDGround.RealScreen_H = int.Parse(lines[c++]);
