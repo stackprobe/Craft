@@ -123,6 +123,12 @@
     <Compile Include="Common\DDUserDatStrings.cs" />
     <Compile Include="Common\DDUtils.cs" />
     <Compile Include="Common\DDWin32.cs" />
+    <Compile Include="ConvMains\Consts.cs" />
+    <Compile Include="ConvMains\ConvMain.cs" />
+    <Compile Include="ConvMains\MovieGen0001.cs" />
+    <Compile Include="ConvMains\ShadowSpectraData.cs" />
+    <Compile Include="ConvMains\SpectrumData.cs" />
+    <Compile Include="ConvMains\SpectrumScreen0001.cs" />
     <Compile Include="Ground.cs" />
     <Compile Include="MainWin.cs">
       <SubType>Form</SubType>
