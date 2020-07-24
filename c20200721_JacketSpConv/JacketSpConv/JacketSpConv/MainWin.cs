@@ -278,7 +278,7 @@ namespace Charlotte
 
 				this.Visible = false;
 
-				new ConvMain().Perform(inputDir, outputDir);
+				new ConvMain().Perform(inputDir, outputDir, this.OutputOverwriteMode.Checked);
 
 				this.CloseWindow();
 				//this.Visible = true; // 再表示は不要
