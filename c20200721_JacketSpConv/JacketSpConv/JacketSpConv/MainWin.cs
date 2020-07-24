@@ -54,6 +54,19 @@ namespace Charlotte
 
 			Ground.I = new Ground();
 
+			{
+				string file = @".\Conv.exe";
+
+				if (File.Exists(file) == false)
+				{
+					file = @"..\..\..\..\Conv\Conv\bin\Release\Conv.exe";
+
+					if (File.Exists(file) == false)
+						throw new Exception();
+				}
+				Ground.I.ConvExeFile = file;
+			}
+
 			if (Ground.I.Load())
 			{
 				this.InputDir.Text = Ground.I.InputDir;

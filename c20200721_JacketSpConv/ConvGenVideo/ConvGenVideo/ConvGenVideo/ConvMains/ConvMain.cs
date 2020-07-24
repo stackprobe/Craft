@@ -12,7 +12,7 @@ namespace Charlotte.ConvMains
 	{
 		public void Perform(string spectrumFile, string jacketFile, string wDir, string cancelledFile, string successfulFile)
 		{
-			// TODO cancelledFile
+			Ground.I.CancelledFile = cancelledFile;
 
 			DDPicture jacket = DDPictureLoaders.Standard(jacketFile); // g
 

@@ -26,7 +26,7 @@ namespace Charlotte
 						{
 							ProcessTools.Batch(new string[]
 							{
-								string.Format("Conv.exe CS-Conv \"{0}\" \"{1}\" \"{2}\"", inputDir, outputDir, successfulFile),
+								string.Format(Ground.I.ConvExeFile + " CS-Conv \"{0}\" \"{1}\" \"{2}\"", inputDir, outputDir, successfulFile),
 							},
 							ProcMain.SelfDir
 							);

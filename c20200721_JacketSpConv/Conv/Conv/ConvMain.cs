@@ -83,8 +83,18 @@ namespace Charlotte
 
 			files = files.Select(v => FileTools.ChangeRoot(v, inputDir)).ToArray();
 
-			foreach (string file in files)
+			for (int index = 0; index < files.Length; index++)
 			{
+				string file = files[index];
+
+				{
+					double rate = index * 1.0 / (files.Length - 1);
+					string strRate = rate.ToString("F9");
+					byte[] bStrRate = Encoding.ASCII.GetBytes(strRate);
+
+					Ground.I.CmProgressRate.Send(bStrRate);
+				}
+
 				try
 				{
 					Ground.I.Logger.Stat("ファイル：" + file);

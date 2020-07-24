@@ -122,8 +122,14 @@ namespace Charlotte.Common
 
 			DX.ScreenFlip();
 
-			if (DX.CheckHitKey(DX.KEY_INPUT_ESCAPE) == 1 || DX.ProcessMessage() == -1)
+			if (DX.ProcessMessage() == -1)
+			//if (DX.CheckHitKey(DX.KEY_INPUT_ESCAPE) == 1 || DX.ProcessMessage() == -1) // orig
 			{
+				if (Ground.I.CancelledFile == null)
+					throw null;
+
+				File.WriteAllBytes(Ground.I.CancelledFile, BinTools.EMPTY);
+
 				throw new DDCoffeeBreak();
 			}
 

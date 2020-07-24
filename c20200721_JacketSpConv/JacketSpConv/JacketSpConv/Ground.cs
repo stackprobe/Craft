@@ -11,6 +11,8 @@ namespace Charlotte
 	{
 		public static Ground I;
 
+		public string ConvExeFile;
+
 		// 保存データ >
 
 		public string InputDir;

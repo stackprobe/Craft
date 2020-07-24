@@ -170,10 +170,12 @@ namespace Charlotte
 
 				if (File.Exists(wd.GetPath("2.wav"))) // ? 音量調整した。
 				{
-					// noop
+					Ground.I.Logger.Info("音量調整_Y");
 				}
 				else // ? 音量調整しなかった。
 				{
+					Ground.I.Logger.Info("音量調整_N");
+
 					File.Copy(wd.GetPath("1.wav"), wd.GetPath("2.wav")); // そのままコピー
 				}
 
@@ -237,15 +239,15 @@ namespace Charlotte
 						ProcMain.SelfDir
 						);
 
-					if (File.Exists(wd.GetPath("5.flg")) == false)
-						throw new Exception("映像データ生成プロセスが正常に動作しなかったようです。");
-
 					if (File.Exists(wd.GetPath("4.flg")))
 					{
 						Ground.I.Logger.Info("映像データ生成プロセスによってキャンセルされました。");
 
 						throw new Cancelled();
 					}
+					if (File.Exists(wd.GetPath("5.flg")) == false)
+						throw new Exception("映像データ生成プロセスが正常に動作しなかったようです。");
+
 					FileTools.MoveDir(wd.GetPath("3"), this.VideoBmpDir);
 				}
 			}
