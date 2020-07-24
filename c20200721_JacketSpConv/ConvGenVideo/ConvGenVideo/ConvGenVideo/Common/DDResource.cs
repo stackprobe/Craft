@@ -91,11 +91,15 @@ namespace Charlotte.Common
 			return LoadFile(resInfo.Offset, resInfo.Size);
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
+		public static bool Load_DirectMode = false; // added
+
 		public static byte[] Load(string file)
 		{
+			if (Load_DirectMode) // added
+			{
+				return File.ReadAllBytes(file);
+			}
+
 			if (ReleaseMode)
 			{
 				return LoadFile(File2ResInfo[file]);

@@ -16,6 +16,10 @@ namespace Charlotte.ConvMains
 
 			DDPicture jacket = DDPictureLoaders.Standard(jacketFile); // g
 
+			DDResource.Load_DirectMode = true;
+			jacket.GetHandle(); // pre-load
+			DDResource.Load_DirectMode = false;
+
 			new MovieGen0001().Main01(
 				spectrumFile,
 				jacket,

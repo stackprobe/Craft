@@ -52,7 +52,7 @@ namespace Charlotte
 					throw new Exception("no ImgTools.exe");
 
 				{
-					string file = @".\ConvGenVideo\ConvGenVideo.exe";
+					string file = @".\ConvGenVideo.exe";
 
 					if (File.Exists(file) == false)
 					{
@@ -88,12 +88,14 @@ namespace Charlotte
 
 			files = files.Select(v => FileTools.ChangeRoot(v, inputDir)).ToArray();
 
+			Ground.I.CmProgressRate.Clear();
+
 			for (int index = 0; index < files.Length; index++)
 			{
 				string file = files[index];
 
 				{
-					double rate = index * 1.0 / (files.Length - 1);
+					double rate = (index + 0.5) / files.Length;
 					string strRate = rate.ToString("F9");
 					byte[] bStrRate = Encoding.ASCII.GetBytes(strRate);
 

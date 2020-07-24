@@ -158,12 +158,10 @@ namespace Charlotte.Common
 			}
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void SetMainWindowTitle()
 		{
-			DX.SetMainWindowText(DDDatStrings.Title + " " + DDUserDatStrings.Version);
+			DX.SetMainWindowText(DDDatStrings.Title);
+			//DX.SetMainWindowText(DDDatStrings.Title + " " + DDUserDatStrings.Version); // orig
 		}
 
 		//

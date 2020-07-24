@@ -3,30 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Threading;
 
 namespace Charlotte.Utils
 {
 	public class LogWriter : IDisposable
 	{
-		private StreamWriter Writer;
+		private string LogFile;
 
 		public LogWriter(string file)
 		{
-			this.Writer = new StreamWriter(file, false, Encoding.UTF8);
+			this.LogFile = file;
 		}
 
 		public void Dispose()
 		{
-			if (this.Writer != null)
-			{
-				this.Writer.Dispose();
-				this.Writer = null;
-			}
+			// noop
 		}
+
+		private bool Wrote = false;
 
 		public void WriteLine(object message)
 		{
-			this.Writer.WriteLine("[" + DateTime.Now + "] " + message);
+			for (int c = 0; c < 3; c++)
+			{
+				if (1 <= c)
+				{
+					Thread.Sleep(2000);
+				}
+
+				try
+				{
+					using (StreamWriter writer = new StreamWriter(this.LogFile, this.Wrote, Encoding.UTF8))
+					{
+						writer.WriteLine("[" + DateTime.Now + "] " + message);
+					}
+					this.Wrote = true;
+					break;
+				}
+				catch
+				{ }
+			}
 		}
 	}
 }
