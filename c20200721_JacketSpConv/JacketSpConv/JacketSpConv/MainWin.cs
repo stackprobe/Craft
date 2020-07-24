@@ -54,6 +54,8 @@ namespace Charlotte
 
 			Ground.I = new Ground();
 
+			CommonUtils.AntiWindowsDefenderSmartScreen();
+
 			{
 				string file = @".\Conv.exe";
 

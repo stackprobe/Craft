@@ -1,0 +1,21 @@
+----
+リリース方法 (いつもの手順)
+
+準備
+	C:\Factory のビルド
+	newcsrr
+
+ここをビルド
+
+_Release.bat
+
+
+----
+実行に必要なファイル
+
+実行には以下が必要なので、リリース時にいっしょに持っていくことを忘れずに！
+
+C:\app\ffmpeg-4.1.3-win64-shared
+C:\app\Kit\ImgTools
+C:\Factory (最新の Factory.zip で良い)
+

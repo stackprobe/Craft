@@ -72,8 +72,10 @@ namespace Charlotte
 					if (File.Exists(successfulFile) == false)
 						throw new Exception("変換プロセスは正常に動作しませんでした。");
 
-					if (WaitDlg.LastCancelled)
-						MessageDlgTools.Information("変換中止", "変換プロセスを中止しました。");
+					bool userCancelled = Ground.I.EvMessage_UserCancelled.WaitForMillis(0);
+
+					if (WaitDlg.LastCancelled || userCancelled)
+						MessageDlgTools.Show(MessageDlg.Mode_e.Warning, "変換中止", "変換プロセスを中止しました。(" + (userCancelled ? 1 : 0) + ")");
 					else
 						MessageDlgTools.Information("変換完了", "変換プロセスは終了しました。");
 				}

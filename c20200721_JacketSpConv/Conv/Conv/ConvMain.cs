@@ -119,7 +119,9 @@ namespace Charlotte
 				}
 				catch (Cancelled)
 				{
-					Ground.I.Logger.Stat("中止");
+					Ground.I.Logger.Stat("中止・ユーザーによるキャンセル");
+
+					Ground.I.EvMessage_UserCancelled.Set();
 					break;
 				}
 				catch (Exception e)
