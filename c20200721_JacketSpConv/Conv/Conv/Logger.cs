@@ -20,13 +20,22 @@ namespace Charlotte
 
 		public void Stat(object message)
 		{
+			CoutLine("[Stat] " + message);
+
 			this.StatLog.WriteLine(message);
 			this.InfoLog.WriteLine(message);
 		}
 
 		public void Info(object message)
 		{
+			CoutLine("[Info] " + message);
+
 			this.InfoLog.WriteLine(message);
+		}
+
+		private void CoutLine(string message)
+		{
+			Console.WriteLine(message);
 		}
 	}
 }

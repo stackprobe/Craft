@@ -39,6 +39,7 @@
 			this.BtnOutputDir = new System.Windows.Forms.Button();
 			this.BtnStart = new System.Windows.Forms.Button();
 			this.OutputToInputDir = new System.Windows.Forms.CheckBox();
+			this.OutputOverwriteMode = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// MainTimer
@@ -114,7 +115,7 @@
 			this.BtnStart.Location = new System.Drawing.Point(450, 250);
 			this.BtnStart.Name = "BtnStart";
 			this.BtnStart.Size = new System.Drawing.Size(200, 60);
-			this.BtnStart.TabIndex = 7;
+			this.BtnStart.TabIndex = 8;
 			this.BtnStart.Text = "変換開始";
 			this.BtnStart.UseVisualStyleBackColor = true;
 			this.BtnStart.Click += new System.EventHandler(this.BtnStart_Click);
@@ -132,11 +133,23 @@
 			this.OutputToInputDir.UseVisualStyleBackColor = true;
 			this.OutputToInputDir.CheckedChanged += new System.EventHandler(this.OutputToInputDir_CheckedChanged);
 			// 
+			// OutputOverwriteMode
+			// 
+			this.OutputOverwriteMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.OutputOverwriteMode.AutoSize = true;
+			this.OutputOverwriteMode.Location = new System.Drawing.Point(54, 269);
+			this.OutputOverwriteMode.Name = "OutputOverwriteMode";
+			this.OutputOverwriteMode.Size = new System.Drawing.Size(197, 24);
+			this.OutputOverwriteMode.TabIndex = 7;
+			this.OutputOverwriteMode.Text = "変換済みの動画を上書きする";
+			this.OutputOverwriteMode.UseVisualStyleBackColor = true;
+			// 
 			// MainWin
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(684, 351);
+			this.Controls.Add(this.OutputOverwriteMode);
 			this.Controls.Add(this.OutputToInputDir);
 			this.Controls.Add(this.BtnStart);
 			this.Controls.Add(this.BtnOutputDir);
@@ -174,6 +187,7 @@
 		private System.Windows.Forms.Button BtnOutputDir;
 		private System.Windows.Forms.Button BtnStart;
 		private System.Windows.Forms.CheckBox OutputToInputDir;
+		private System.Windows.Forms.CheckBox OutputOverwriteMode;
 	}
 }
 

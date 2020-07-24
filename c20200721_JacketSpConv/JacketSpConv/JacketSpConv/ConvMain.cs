@@ -10,7 +10,7 @@ namespace Charlotte
 {
 	public class ConvMain
 	{
-		public void Perform(string inputDir, string outputDir)
+		public void Perform(string inputDir, string outputDir, bool outputOverwriteMode)
 		{
 			try
 			{
@@ -26,7 +26,7 @@ namespace Charlotte
 						{
 							ProcessTools.Batch(new string[]
 							{
-								string.Format(Ground.I.ConvExeFile + " CS-Conv \"{0}\" \"{1}\" \"{2}\"", inputDir, outputDir, successfulFile),
+								string.Format(Ground.I.ConvExeFile + " CS-Conv \"{0}\" \"{1}\" \"{2}\" \"{3}\"", inputDir, outputDir, outputOverwriteMode ? 1 : 0, successfulFile),
 							},
 							ProcMain.SelfDir
 							);

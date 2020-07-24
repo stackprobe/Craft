@@ -10,16 +10,16 @@ namespace Charlotte
 {
 	public class ConvMain
 	{
-		public void Perform(string inputDir, string outputDir, string successfulFile)
+		public void Perform(string inputDir, string outputDir, bool outputOverwriteMode, string successfulFile)
 		{
-			using (LogWriter stat = new LogWriter(FileUtils.EraseExt(ProcMain.SelfFile) + "_01.log"))
-			using (LogWriter info = new LogWriter(FileUtils.EraseExt(ProcMain.SelfFile) + "_02.log"))
+			using (LogWriter stat = new LogWriter(FileUtils.EraseExt(ProcMain.SelfFile) + "Stat.log"))
+			using (LogWriter info = new LogWriter(FileUtils.EraseExt(ProcMain.SelfFile) + "Info.log"))
 			{
 				Ground.I.Logger = new Logger(stat, info);
 				try
 				{
 					Ground.I.Logger.Stat("ConvMain 開始");
-					this.Perform_02(inputDir, outputDir);
+					this.Perform_02(inputDir, outputDir, outputOverwriteMode);
 					Ground.I.Logger.Stat("ConvMain 完了");
 					File.WriteAllBytes(successfulFile, BinTools.EMPTY); // 正常終了フラグ_作成
 					Ground.I.Logger.Stat("ConvMain 完了_2");
@@ -35,7 +35,7 @@ namespace Charlotte
 			}
 		}
 
-		private void Perform_02(string inputDir, string outputDir)
+		private void Perform_02(string inputDir, string outputDir, bool outputOverwriteMode)
 		{
 			// 環境のチェック
 			{
@@ -47,6 +47,9 @@ namespace Charlotte
 
 				if (File.Exists(Consts.wavCsv_FILE) == false)
 					throw new Exception("no wavCsv.exe");
+
+				if (File.Exists(Consts.ImgTools_FILE) == false)
+					throw new Exception("no ImgTools.exe");
 
 				{
 					string file = @".\ConvGenVideo\ConvGenVideo.exe";
@@ -70,6 +73,8 @@ namespace Charlotte
 
 			Ground.I.Logger.Stat("<2 " + inputDir);
 			Ground.I.Logger.Stat(">2 " + outputDir);
+
+			Ground.I.Logger.Stat("outputOverwriteMode: " + outputOverwriteMode);
 
 			// memo: 出力フォルダが入力フォルダと同じ場合がある。
 
@@ -103,6 +108,7 @@ namespace Charlotte
 					{
 						InputDir = inputDir,
 						OutputDir = outputDir,
+						OutputOverwriteMode = outputOverwriteMode,
 						PresumeAudioRelFile = file,
 					}
 					.Perform();

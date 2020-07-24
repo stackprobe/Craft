@@ -33,9 +33,9 @@ namespace Charlotte
 			try
 			{
 #if DEBUG
-				//new Test0001().Test00();
+				new Test0001().Test00();
 				//new Test0001().Test01();
-				new Test0001().Test02();
+				//new Test0001().Test02();
 #else
 				this.Main3(ar);
 #endif
@@ -58,9 +58,10 @@ namespace Charlotte
 
 				string inputDir = ar.NextArg();
 				string outputDir = ar.NextArg();
+				bool outputOverwriteMode = int.Parse(ar.NextArg()) != 0;
 				string successfulFile = ar.NextArg();
 
-				new ConvMain().Perform(inputDir, outputDir, successfulFile);
+				new ConvMain().Perform(inputDir, outputDir, outputOverwriteMode, successfulFile);
 			}
 			catch (Exception e)
 			{

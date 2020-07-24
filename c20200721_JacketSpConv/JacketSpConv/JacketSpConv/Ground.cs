@@ -18,6 +18,7 @@ namespace Charlotte
 		public string InputDir;
 		public string OutputDir;
 		public bool OutputToInputDir;
+		public bool OutputOverwriteMode;
 
 		// < 保存データ
 
@@ -36,6 +37,7 @@ namespace Charlotte
 			this.InputDir = lines[c++];
 			this.OutputDir = lines[c++];
 			this.OutputToInputDir = int.Parse(lines[c++]) != 0;
+			this.OutputOverwriteMode = int.Parse(lines[c++]) != 0;
 
 			// < 保存データ
 
@@ -51,6 +53,7 @@ namespace Charlotte
 			lines.Add(this.InputDir);
 			lines.Add(this.OutputDir);
 			lines.Add("" + (this.OutputToInputDir ? 1 : 0));
+			lines.Add("" + (this.OutputOverwriteMode ? 1 : 0));
 
 			// < 保存データ
 

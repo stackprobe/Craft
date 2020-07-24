@@ -72,6 +72,7 @@ namespace Charlotte
 				this.InputDir.Text = Ground.I.InputDir;
 				this.OutputDir.Text = Ground.I.OutputDir;
 				this.OutputToInputDir.Checked = Ground.I.OutputToInputDir;
+				this.OutputOverwriteMode.Checked = Ground.I.OutputOverwriteMode;
 			}
 
 			this.UIRefresh();
@@ -106,6 +107,7 @@ namespace Charlotte
 					Ground.I.InputDir = this.InputDir.Text;
 					Ground.I.OutputDir = this.OutputDir.Text;
 					Ground.I.OutputToInputDir = this.OutputToInputDir.Checked;
+					Ground.I.OutputOverwriteMode = this.OutputOverwriteMode.Checked;
 					Ground.I.Save();
 
 					Ground.I.Dispose();

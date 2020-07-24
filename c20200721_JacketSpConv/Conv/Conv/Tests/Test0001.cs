@@ -16,6 +16,7 @@ namespace Charlotte.Tests
 			new ConvMain().Perform(
 				inputDir,
 				outputDir,
+				false,
 				successfulFile
 				);
 		}

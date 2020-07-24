@@ -14,6 +14,7 @@ namespace Charlotte
 	{
 		public string InputDir;
 		public string OutputDir;
+		public bool OutputOverwriteMode;
 		public string PresumeAudioRelFile;
 
 		// <---- prm
@@ -53,6 +54,16 @@ namespace Charlotte
 				string file = Path.Combine(this.OutputDir, this.PresumeAudioRelFile);
 
 				file = FileUtils.EraseExt(file) + Consts.MOVIE_EXT;
+
+				if (this.OutputOverwriteMode)
+				{
+					Ground.I.Logger.Info("上書きチェック.1");
+
+					if (File.Exists(file))
+						throw new Exception("変換済みの動画ファイルが存在します。");
+
+					Ground.I.Logger.Info("上書きチェック.2");
+				}
 
 				string dir = Path.GetDirectoryName(file);
 
@@ -200,6 +211,13 @@ namespace Charlotte
 					if (wavDat.Length <= wavPartPos)
 						break;
 
+					if (frame % 200 == 0)
+					{
+						Ground.I.Logger.Info("MPF_frame: " + frame);
+
+						this.CheckCancel();
+					}
+
 					wavDat.SetWavPart(wavPartPos);
 
 					SpectrumGraph graph = new SpectrumGraph(hz => wavDat.GetSpectrum(hz));
@@ -227,15 +245,17 @@ namespace Charlotte
 
 				using (WorkingDir wd = new WorkingDir())
 				{
-					string wdJacketFile = wd.GetPath("2" + Path.GetExtension(this.JacketFile));
+					string wdJacketFile = wd.GetPath("2x" + Path.GetExtension(this.JacketFile));
 
 					File.Copy(this.SpectrumFile, wd.GetPath("1.csv"));
 					File.Copy(this.JacketFile, wdJacketFile);
 
+					this.AdjustJacketSize(wdJacketFile, wd.GetPath("2.png"));
+
 					FileTools.CreateDir(wd.GetPath("3"));
 
 					this.Batch(
-						"START /WAIT " + Ground.I.ConvGenVideoFile + " CS-ConvGenVideo " + wd.GetPath("1.csv") + " " + wdJacketFile + " " + wd.GetPath("3") + " " + wd.GetPath("4.flg") + " " + wd.GetPath("5.flg"),
+						"START /WAIT " + Ground.I.ConvGenVideoFile + " CS-ConvGenVideo " + wd.GetPath("1.csv") + " " + wd.GetPath("2.png") + " " + wd.GetPath("3") + " " + wd.GetPath("4.flg") + " " + wd.GetPath("5.flg"),
 						ProcMain.SelfDir
 						);
 
@@ -258,6 +278,65 @@ namespace Charlotte
 			}
 		}
 
+		private void AdjustJacketSize(string wdJacketFile, string wFile)
+		{
+			Ground.I.Logger.Info("ジャケット画像のサイズを矯正します。");
+
+			Canvas2 canvas = new Canvas2(wdJacketFile);
+
+			Ground.I.Logger.Info("ジャケット_W.1 = " + canvas.GetWidth());
+			Ground.I.Logger.Info("ジャケット_H.1 = " + canvas.GetHeight());
+
+			if (canvas.GetWidth() < Consts.JACKET_W_MIN)
+				throw new Exception("ジャケット画像の「幅」が小さすぎます。");
+
+			if (canvas.GetHeight() < Consts.JACKET_H_MIN)
+				throw new Exception("ジャケット画像の「高さ」が小さすぎます。");
+
+			if (
+				Consts.JACKET_W_MAX < canvas.GetWidth() ||
+				Consts.JACKET_H_MAX < canvas.GetHeight()
+				)
+			{
+				double xr_w = Consts.JACKET_W_MAX / canvas.GetWidth();
+				double xr_h = Consts.JACKET_H_MAX / canvas.GetHeight();
+
+				if (xr_w < xr_h) // ?　高さより幅の方をより小さくする。-> 幅に合わせる。
+				{
+					Ground.I.Logger.Info("幅(の上限値)に合わせる！");
+
+					this.Batch(
+						Consts.ImgTools_FILE + " /rf " + wdJacketFile + " /wf " + wFile + " /EW " + Consts.JACKET_W_MAX,
+						ProcMain.SelfDir
+						);
+				}
+				else // 高さに合わせる。
+				{
+					Ground.I.Logger.Info("高さ(の上限値)に合わせる！");
+
+					this.Batch(
+						Consts.ImgTools_FILE + " /rf " + wdJacketFile + " /wf " + wFile + " /EH " + Consts.JACKET_H_MAX,
+						ProcMain.SelfDir
+						);
+				}
+			}
+			else // サイズ変更不要
+			{
+				Ground.I.Logger.Info("サイズ変更不要！");
+
+				this.Batch(
+					Consts.ImgTools_FILE + " /rf " + wdJacketFile + " /wf " + wFile,
+					ProcMain.SelfDir
+					);
+			}
+
+			// 確認のため
+			canvas = new Canvas2(wFile);
+
+			Ground.I.Logger.Info("ジャケット_W.2 = " + canvas.GetWidth());
+			Ground.I.Logger.Info("ジャケット_H.2 = " + canvas.GetHeight());
+		}
+
 		private void MakeVideoJpg()
 		{
 			FileTools.CreateDir(this.VideoJpgDir);
@@ -271,6 +350,13 @@ namespace Charlotte
 
 				if (File.Exists(rFile) == false)
 					break;
+
+				if (frame % 200 == 0)
+				{
+					Ground.I.Logger.Info("B2J_frame: " + frame);
+
+					this.CheckCancel();
+				}
 
 				new Canvas2(rFile).Save(wFile, ImageFormat.Jpeg, Consts.JPEG_QUALITY);
 			}
@@ -343,6 +429,8 @@ namespace Charlotte
 				throw new Cancelled();
 			}
 			Ground.I.Logger.Info("中止リクエスト_N");
+
+			GC.Collect(); // 2bs
 		}
 	}
 }
