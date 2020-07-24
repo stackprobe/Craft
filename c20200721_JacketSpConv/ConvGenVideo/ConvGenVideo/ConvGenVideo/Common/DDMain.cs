@@ -84,7 +84,7 @@ namespace Charlotte.Common
 
 			//DX.SetFullSceneAntiAliasingMode(4, 2); // 適当な値が分からん。フルスクリーン廃止したので不要
 
-			DX.SetWindowIconHandle(GetAppIcon()); // ウィンドウ左上のアイコン
+			//DX.SetWindowIconHandle(GetAppIcon()); // ウィンドウ左上のアイコン // del
 
 			if (DDConfig.DisplayIndex != -1)
 				DX.SetUseDirectDrawDeviceIndex(DDConfig.DisplayIndex);
@@ -166,15 +166,16 @@ namespace Charlotte.Common
 			DX.SetMainWindowText(DDDatStrings.Title + " " + DDUserDatStrings.Version);
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		private static IntPtr GetAppIcon()
 		{
+#if true
+			throw null;
+#else // del
 			using (MemoryStream mem = new MemoryStream(DDResource.Load(@"General\game_app.ico")))
 			{
 				return new Icon(mem).Handle;
 			}
+#endif
 		}
 
 		//

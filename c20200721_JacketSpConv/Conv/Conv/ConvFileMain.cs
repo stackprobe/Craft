@@ -101,6 +101,8 @@ namespace Charlotte
 
 		private void Conv()
 		{
+			Ground.I.Logger.Info("Conv.1");
+
 			using (WorkingDir wd = new WorkingDir())
 			{
 				this.WavFile = wd.MakePath() + ".wav";
@@ -118,6 +120,7 @@ namespace Charlotte
 				this.MakeVideoJpg();
 				this.MakeMovieFile();
 			}
+			Ground.I.Logger.Info("Conv.2");
 		}
 
 		private void MakeWavFile()
@@ -129,12 +132,10 @@ namespace Charlotte
 #if true // .wav にもサラウンドとかある様なのでステレオにする。
 				File.Copy(this.AudioFile, wd.GetPath("1" + audioExt));
 
-				this.Run(new string[]
-				{
+				this.Batch(
 					Consts.FFMPEG_FILE + " -i 1" + audioExt + " -ac 2 2.wav",
-				},
-				wd.GetPath(".")
-				);
+					wd.GetPath(".")
+					);
 #else
 				if (StringTools.EqualsIgnoreCase(audioExt, ".wav"))
 				{
@@ -144,12 +145,10 @@ namespace Charlotte
 				{
 					File.Copy(this.AudioFile, wd.GetPath("1" + audioExt));
 
-					this.Run(new string[]
-					{
+					this.Run(
 						Consts.FFMPEG_FILE + " -i 1" + audioExt + " 2.wav",
-					},
-					wd.GetPath(".")
-					);
+						wd.GetPath(".")
+						);
 				}
 #endif
 				File.Move(wd.GetPath("2.wav"), this.WavFile);
@@ -162,14 +161,12 @@ namespace Charlotte
 			{
 				File.Copy(this.WavFile, wd.GetPath("1.wav"));
 
-				this.Run(new string[]
-				{
+				this.Batch(
 					Consts.MASTER_FILE + " /E " + Consts.EV_STOP_MASTER + " 1.wav 2.wav 3.txt",
-				},
-				wd.GetPath(".")
-				);
+					wd.GetPath(".")
+					);
 
-				Ground.I.Logger.Info("Master.exe Log: " + File.ReadAllText("3.txt", StringTools.ENCODING_SJIS));
+				Ground.I.Logger.Info("Master.exe Log: " + File.ReadAllText(wd.GetPath("3.txt"), StringTools.ENCODING_SJIS));
 
 				if (File.Exists(wd.GetPath("2.wav"))) // ? 音量調整した。
 				{
@@ -186,7 +183,9 @@ namespace Charlotte
 
 		private void MakeSpectrumFile()
 		{
+			Ground.I.Logger.Info("MakeSpectrumFile.1");
 			WaveData wavDat = new WaveData(this.MasterWavFile);
+			Ground.I.Logger.Info("MakeSpectrumFile.2");
 
 			using (CsvFileWriter writer = new CsvFileWriter(this.SpectrumFile))
 			//using (CsvFileWriter writer_L = new CsvFileWriter(this.SpectrumFile_L)) // 不使用
@@ -210,6 +209,7 @@ namespace Charlotte
 					//CsvUtils.WriteRow(writer_R, graph_R); // 不使用
 				}
 			}
+			Ground.I.Logger.Info("MakeSpectrumFile.3");
 		}
 
 		private void MakeVideoBmp()
@@ -232,19 +232,17 @@ namespace Charlotte
 
 					FileTools.CreateDir(wd.GetPath("3"));
 
-					this.Run(new string[]
-					{
-						"START /WAIT " + Ground.I.ConvGenVideoFile + " CS-ConvGenVideo 1.csv " + Path.GetFileName(wdJacketFile) + " 3 4.flg",
-					},
-					wd.GetPath(".")
-					);
+					this.Batch(
+						"START /WAIT \"\" \"" + Ground.I.ConvGenVideoFile + "\" CS-ConvGenVideo 1.csv " + Path.GetFileName(wdJacketFile) + " 3 4.flg",
+						wd.GetPath(".")
+						);
 
 					if (File.Exists(wd.GetPath("4.flg")) == false)
 					{
-						throw new Cancelled();
-						//throw new Exception("映像データ生成プロセスが正常に動作しなかったようです。"); // old
-					}
+						Ground.I.Logger.Info("映像データ生成プロセスが正常に動作しなかったようです。-> [✕]が押されたと判断し、中止します。");
 
+						throw new Cancelled();
+					}
 					FileTools.MoveDir(wd.GetPath("3"), this.VideoBmpDir);
 				}
 			}
@@ -281,34 +279,28 @@ namespace Charlotte
 			{
 				FileTools.CopyDir(this.VideoJpgDir, wd.GetPath("1"));
 
-				this.Run(new string[]
-				{
+				this.Batch(
 					Consts.FFMPEG_FILE + " -r " + Consts.FPS + " -i %%d.jpg ..\\2.mp4",
-				},
-				wd.GetPath("1")
-				);
+					wd.GetPath("1")
+					);
 
 				if (File.Exists(wd.GetPath("2.mp4")) == false)
 					throw new Exception("映像ファイルの生成に失敗しました。");
 
 				File.Copy(this.MasterWavFile, wd.GetPath("3.wav"));
 
-				this.Run(new string[]
-				{
+				this.Batch(
 					Consts.FFMPEG_FILE + " -i 2.mp4 -i 3.wav -map 0:0 -map 1:0 -vcodec copy 4.mp4",
-				},
-				wd.GetPath(".")
-				);
+					wd.GetPath(".")
+					);
 
 				if (File.Exists(wd.GetPath("4.mp4")) == false)
 					throw new Exception("動画ファイルの生成に失敗しました。");
 
-				this.Run(new string[]
-				{
+				this.Batch(
 					"ECHO Y|CACLS 4.mp4 /P Users:F Guest:F",
-				},
-				wd.GetPath(".")
-				);
+					wd.GetPath(".")
+					);
 
 				if (File.Exists(this.MovieFile)) // 2bs
 					throw null;
@@ -320,19 +312,32 @@ namespace Charlotte
 			}
 		}
 
-		private void Run(string[] commands, string workingDir)
+		private void Batch(string command, string workingDir)
 		{
+			Ground.I.Logger.Info("Batch.1");
+			Ground.I.Logger.Info("command: " + command);
+			Ground.I.Logger.Info("workingDir: " + workingDir);
+
 			this.CheckCancel();
-			ProcessTools.Batch(commands, workingDir);
+			Ground.I.Logger.Info("Batch.2");
+			ProcessTools.Batch(new string[] { command }, workingDir);
+			Ground.I.Logger.Info("Batch.3");
 			this.CheckCancel();
+
+			Ground.I.Logger.Info("Batch.4");
 		}
 
 		private void CheckCancel()
 		{
+			Ground.I.Logger.Info("中止リクエスト_Check");
+
 			if (Ground.I.EvStopConv.WaitForMillis(0))
 			{
+				Ground.I.Logger.Info("中止リクエスト_Y");
+
 				throw new Cancelled();
 			}
+			Ground.I.Logger.Info("中止リクエスト_N");
 		}
 	}
 }

@@ -24,8 +24,9 @@ namespace Charlotte.Common
 		//
 		public const string ResourceFile = "Resource.dat";
 
-		private const string RESOURCE_DIR_01 = @"..\..\..\..\Resource";
-		private const string RESOURCE_DIR_02 = @".\Resource";
+#if false // 使わないはず。
+		private const string RESOURCE_DIR_01 = @".\Resource";
+		private const string RESOURCE_DIR_02 = @"..\..\..\..\Resource";
 
 		private static string P_ResourceDir = null;
 
@@ -47,6 +48,7 @@ namespace Charlotte.Common
 				return P_ResourceDir;
 			}
 		}
+#endif
 
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c

@@ -16,11 +16,11 @@ namespace Charlotte.Common
 		//
 		private static Dictionary<string, string> Name2Value = DictionaryTools.Create<string>();
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void INIT()
 		{
+#if true
+			// noop
+#else // del
 			string[] lines = FileTools.TextToLines(StringTools.ENCODING_SJIS.GetString(DDResource.Load("DatStrings.txt")));
 
 			foreach (string line in lines)
@@ -35,17 +35,19 @@ namespace Charlotte.Common
 
 				Name2Value.Add(name, value);
 			}
+#endif
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		private static string GetValue(string name)
 		{
+#if true
+			return "####";
+#else // del
 			if (Name2Value.ContainsKey(name) == false)
 				throw new DDError(name);
 
 			return Name2Value[name];
+#endif
 		}
 
 		// Accessor >

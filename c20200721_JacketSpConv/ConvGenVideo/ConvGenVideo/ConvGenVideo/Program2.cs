@@ -7,6 +7,7 @@ using Charlotte.Common;
 using Charlotte.Tools;
 using Charlotte.Tests;
 using Charlotte.ConvMains;
+using System.IO;
 
 namespace Charlotte
 {
@@ -84,12 +85,27 @@ namespace Charlotte
 
 		private void Main4_Release()
 		{
-			new ConvMain().Perform(
-				ProcMain.ArgsReader.GetArg(0),
-				ProcMain.ArgsReader.GetArg(1),
-				ProcMain.ArgsReader.GetArg(2),
-				ProcMain.ArgsReader.GetArg(3)
-				);
+			if (ProcMain.ArgsReader.NextArg() != "CS-ConvGenVideo")
+			{
+				throw new Exception("不正なコールサイン");
+			}
+
+			string homeDir = Directory.GetCurrentDirectory();
+			try
+			{
+				Directory.SetCurrentDirectory(Program.BootDir);
+
+				new ConvMain().Perform(
+					ProcMain.ArgsReader.GetArg(0),
+					ProcMain.ArgsReader.GetArg(1),
+					ProcMain.ArgsReader.GetArg(2),
+					ProcMain.ArgsReader.GetArg(3)
+					);
+			}
+			finally
+			{
+				Directory.SetCurrentDirectory(homeDir);
+			}
 		}
 	}
 }

@@ -58,6 +58,11 @@ namespace Charlotte
 						if (File.Exists(file) == false)
 							throw new Exception("no ConvGenVideo.exe");
 					}
+					file = FileTools.MakeFullPath(file);
+
+					if (file != StringTools.ENCODING_SJIS.GetString(StringTools.ENCODING_SJIS.GetBytes(file)))
+						throw new Exception("Bad ConvGenVideo.exe");
+
 					Ground.I.ConvGenVideoFile = file;
 				}
 			}

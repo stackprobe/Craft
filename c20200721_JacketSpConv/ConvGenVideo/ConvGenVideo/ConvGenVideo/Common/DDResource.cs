@@ -91,9 +91,6 @@ namespace Charlotte.Common
 			return LoadFile(resInfo.Offset, resInfo.Size);
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static byte[] Load(string file)
 		{
 			if (ReleaseMode)
@@ -102,15 +99,16 @@ namespace Charlotte.Common
 			}
 			else
 			{
-				return File.ReadAllBytes(Path.Combine(DDConsts.ResourceDir, file));
+				return File.ReadAllBytes(file);
+				//return File.ReadAllBytes(Path.Combine(DDConsts.ResourceDir, file)); // orig
 			}
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void Save(string file, byte[] fileData)
 		{
+#if true
+			throw null;
+#else // orig
 			if (ReleaseMode)
 			{
 				throw new DDError();
@@ -119,11 +117,9 @@ namespace Charlotte.Common
 			{
 				File.WriteAllBytes(Path.Combine(DDConsts.ResourceDir, file), fileData);
 			}
+#endif
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		/// <summary>
 		/// ファイルリストを取得する。
 		/// ソート済み
@@ -132,6 +128,9 @@ namespace Charlotte.Common
 		/// <returns>ファイルリスト</returns>
 		public static IEnumerable<string> GetFiles()
 		{
+#if true
+			throw null;
+#else // orig
 			IEnumerable<string> files;
 
 			if (ReleaseMode)
@@ -154,6 +153,7 @@ namespace Charlotte.Common
 			return files.Where(file => Path.GetFileName(file)[0] != '_');
 
 			// memo: makeDDResourceFile はファイルリストを _index として保存するので、Where はどっちでもやっておく。
+#endif
 		}
 	}
 }
