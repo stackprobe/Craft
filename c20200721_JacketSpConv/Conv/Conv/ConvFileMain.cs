@@ -177,7 +177,7 @@ namespace Charlotte
 				File.Copy(this.WavFile, wd.GetPath("1.wav"));
 
 				this.Batch(
-					Consts.MASTER_FILE + " /E " + Consts.EV_STOP_MASTER + " 1.wav 2.wav 3.txt",
+					Consts.MASTER_FILE + " /E " + Consts.EV_STOP_MASTER + " /-LV 1.wav 2.wav 3.txt",
 					wd.GetPath(".")
 					);
 
