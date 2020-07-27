@@ -10,14 +10,20 @@ namespace Charlotte
 {
 	public class ConvMain
 	{
+		private const int REPORT_BUFF_MAX = 15;
+
 		public void Perform(string inputDir, string outputDir, bool outputOverwriteMode)
 		{
 			try
 			{
+				Ground.I.CmProgressRate.Clear();
+				Ground.I.CmReport.Clear();
+
 				using (WorkingDir wd = new WorkingDir())
 				{
 					string successfulFile = wd.MakePath();
 					double progressRate = 0.0;
+					List<string> reportBuff = new List<string>();
 
 					WaitDlgTools.Show(
 						Consts.CONV_PROCESSING_TITLE,
@@ -59,6 +65,20 @@ namespace Charlotte
 
 								if (message != null)
 									progressRate = double.Parse(Encoding.ASCII.GetString(message));
+							}
+
+							{
+								byte[] message = Ground.I.CmReport.Recv();
+
+								if (message != null)
+								{
+									reportBuff.Add(Encoding.UTF8.GetString(message));
+
+									while (REPORT_BUFF_MAX < reportBuff.Count)
+										reportBuff.RemoveAt(0);
+
+									WaitDlg.DetailMessagePost.Post(reportBuff.ToArray());
+								}
 							}
 
 							return progressRate;

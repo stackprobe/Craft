@@ -41,55 +41,72 @@ namespace Charlotte
 					throw new Exception("音楽ファイルではない。");
 			}
 
+			Ground.I.Logger.Report(this.PresumeAudioRelFile);
+			DateTime startedTime = DateTime.Now;
+			string endStatus = null;
+			try
 			{
-				string file = this.TryGetJacketFile();
-
-				if (file == null)
-					throw new Exception("ジャケット画像が見つからない。");
-
-				this.JacketFile = file;
-			}
-
-			{
-				string file = Path.Combine(this.OutputDir, this.PresumeAudioRelFile);
-
-				file = FileUtils.EraseExt(file) + Consts.MOVIE_EXT;
-
-				if (this.OutputOverwriteMode)
 				{
-					Ground.I.Logger.Info("上書きチェック_Skip");
+					string file = this.TryGetJacketFile();
+
+					if (file == null)
+						throw new Exception("ジャケット画像が見つからない。");
+
+					this.JacketFile = file;
 				}
-				else
+
 				{
-					Ground.I.Logger.Info("上書きチェック.1");
+					string file = Path.Combine(this.OutputDir, this.PresumeAudioRelFile);
+
+					file = FileUtils.EraseExt(file) + Consts.MOVIE_EXT;
+
+					if (this.OutputOverwriteMode)
+					{
+						Ground.I.Logger.Info("上書きチェック_Skip");
+					}
+					else
+					{
+						Ground.I.Logger.Info("上書きチェック.1");
+
+						if (File.Exists(file))
+							throw new Exception("変換済みの動画ファイルが存在します。");
+
+						Ground.I.Logger.Info("上書きチェック.2");
+					}
+
+					string dir = Path.GetDirectoryName(file);
+
+					// memo: dirの親と同名のファイルが存在するとディレクトリを作成出来ない。
+					// -> そのファイルを削除して良いか判断出来ないので、あえて削除せず、失敗させる。
+
+					FileTools.CreateDir(dir);
+					FileTools.Delete(file);
+					File.WriteAllBytes(file, BinTools.EMPTY); // テスト作成
+
+					if (File.Exists(file) == false)
+						throw new Exception("出力先の動画ファイルを作成出来ません。");
+
+					FileTools.Delete(file); // テスト削除
 
 					if (File.Exists(file))
-						throw new Exception("変換済みの動画ファイルが存在します。");
+						throw new Exception("出力先の動画ファイルをクリア出来ません。");
 
-					Ground.I.Logger.Info("上書きチェック.2");
+					this.MovieFile = file;
 				}
 
-				string dir = Path.GetDirectoryName(file);
+				this.Conv();
 
-				// memo: dirの親と同名のファイルが存在するとディレクトリを作成出来ない。
-				// -> そのファイルを削除して良いか判断出来ないので、あえて削除せず、失敗させる。
-
-				FileTools.CreateDir(dir);
-				FileTools.Delete(file);
-				File.WriteAllBytes(file, BinTools.EMPTY); // テスト作成
-
-				if (File.Exists(file) == false)
-					throw new Exception("出力先の動画ファイルを作成出来ません。");
-
-				FileTools.Delete(file); // テスト削除
-
-				if (File.Exists(file))
-					throw new Exception("出力先の動画ファイルをクリア出来ません。");
-
-				this.MovieFile = file;
+				endStatus = "成功";
 			}
-
-			this.Conv();
+			catch (Exception e)
+			{
+				endStatus = "失敗：" + e.Message;
+				throw;
+			}
+			finally
+			{
+				Ground.I.Logger.Report(endStatus + "　(処理時間：" + (DateTime.Now - startedTime).TotalSeconds.ToString("F3") + " 秒)");
+			}
 		}
 
 		private string TryGetJacketFile()

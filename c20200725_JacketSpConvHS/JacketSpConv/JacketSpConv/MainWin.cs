@@ -52,32 +52,41 @@ namespace Charlotte
 		{
 			// -- 0001
 
-			Ground.I = new Ground();
-
-			CommonUtils.AntiWindowsDefenderSmartScreen();
-
+			try
 			{
-				string file = @".\Conv.exe";
+				Ground.I = new Ground();
 
-				if (File.Exists(file) == false)
+				CommonUtils.AntiWindowsDefenderSmartScreen();
+
 				{
-					file = @"..\..\..\..\Conv\Conv\bin\Release\Conv.exe";
+					string file = @".\Conv.exe";
 
 					if (File.Exists(file) == false)
-						throw new Exception();
+					{
+						file = @"..\..\..\..\Conv\Conv\bin\Release\Conv.exe";
+
+						if (File.Exists(file) == false)
+							throw new Exception("no Conv.exe");
+					}
+					Ground.I.ConvExeFile = file;
 				}
-				Ground.I.ConvExeFile = file;
-			}
 
-			if (Ground.I.Load())
+				if (Ground.I.Load())
+				{
+					this.InputDir.Text = Ground.I.InputDir;
+					this.OutputDir.Text = Ground.I.OutputDir;
+					this.OutputToInputDir.Checked = Ground.I.OutputToInputDir;
+					this.OutputOverwriteMode.Checked = Ground.I.OutputOverwriteMode;
+				}
+
+				this.UIRefresh();
+			}
+			catch (Exception ex)
 			{
-				this.InputDir.Text = Ground.I.InputDir;
-				this.OutputDir.Text = Ground.I.OutputDir;
-				this.OutputToInputDir.Checked = Ground.I.OutputToInputDir;
-				this.OutputOverwriteMode.Checked = Ground.I.OutputOverwriteMode;
-			}
+				MessageDlgTools.Error("Error @ Shown", ex);
 
-			this.UIRefresh();
+				Environment.Exit(1); // fatal
+			}
 
 			// ----
 

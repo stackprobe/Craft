@@ -18,6 +18,6 @@ COPY /B ConvGenVideo\ConvGenVideo\ConvGenVideo\bin\Release\DxLibDotNet.dll out
 C:\Factory\Tools\xcp.exe doc out
 C:\Factory\Tools\xcp.exe C:\Dev\Fairy\Donut2\doc out
 
-C:\Factory\SubTools\zip.exe /O out ConvGenVideo
+C:\Factory\SubTools\zip.exe /O out ConvGenVideoHS
 
 PAUSE

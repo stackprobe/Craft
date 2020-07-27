@@ -27,6 +27,7 @@ namespace Charlotte
 		public NamedEventUnit EvMessage_GenVideoRunning = new NamedEventUnit(Consts.IPC_IDENT + "_MR");
 		public NamedEventUnit EvMessage_UserCancelled = new NamedEventUnit(Consts.IPC_IDENT + "_UC");
 		public FileCommunicator CmProgressRate = new FileCommunicator(Consts.IPC_IDENT + "_PR");
+		public FileCommunicator CmReport = new FileCommunicator(Consts.IPC_IDENT + "_RP");
 
 		// ----
 
@@ -44,6 +45,7 @@ namespace Charlotte
 				this.EvMessage_StartGenVideo.Dispose();
 				this.EvMessage_GenVideoRunning.Dispose();
 				this.EvMessage_UserCancelled.Dispose();
+				this.CmReport.Dispose();
 			}
 		}
 	}

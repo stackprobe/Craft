@@ -14,8 +14,9 @@ namespace Charlotte
 		{
 			using (LogWriter stat = new LogWriter(FileUtils.EraseExt(ProcMain.SelfFile) + "Stat.log"))
 			using (LogWriter info = new LogWriter(FileUtils.EraseExt(ProcMain.SelfFile) + "Info.log"))
+			using (LogWriter report = new LogWriter(FileUtils.EraseExt(ProcMain.SelfFile) + "Report.log"))
 			{
-				Ground.I.Logger = new Logger(stat, info);
+				Ground.I.Logger = new Logger(stat, info, report);
 				try
 				{
 					Ground.I.Logger.Stat("ConvMain 開始");
@@ -89,6 +90,7 @@ namespace Charlotte
 			files = files.Select(v => FileTools.ChangeRoot(v, inputDir)).ToArray();
 
 			Ground.I.CmProgressRate.Clear();
+			Ground.I.CmReport.Clear();
 
 			for (int index = 0; index < files.Length; index++)
 			{
