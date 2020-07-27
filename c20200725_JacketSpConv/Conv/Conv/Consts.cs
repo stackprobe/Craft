@@ -41,6 +41,5 @@ namespace Charlotte
 
 		public const int FPS = 20;
 		public const double AUDIO_DELAY_SEC = 0.2;
-		//public const int JPEG_QUALITY = 90; // del @ 2020.7.25
 	}
 }

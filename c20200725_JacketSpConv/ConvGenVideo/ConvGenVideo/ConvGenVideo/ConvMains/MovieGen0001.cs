@@ -111,7 +111,7 @@ namespace Charlotte.ConvMains
 
 					// ここでフレームを保存
 					DX.SaveDrawScreenToJPEG(0, 0, DDConsts.Screen_W, DDConsts.Screen_H, Path.Combine(wDir, string.Format("{0}.jpg", this.Frame)), Consts.JPEG_QUALITY);
-					//DX.SaveDrawScreen(0, 0, DDConsts.Screen_W, DDConsts.Screen_H, Path.Combine(wDir, string.Format("{0}.bmp", this.Frame))); // del @ 2020.7.25
+					//DX.SaveDrawScreen(0, 0, DDConsts.Screen_W, DDConsts.Screen_H, Path.Combine(wDir, string.Format("{0}.bmp", this.Frame)));
 
 					DDSubScreenUtils.RestoreDrawScreen();
 

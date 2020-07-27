@@ -111,7 +111,6 @@ namespace Charlotte
 		private string SpectrumFile;
 		private string SpectrumFile_L;
 		private string SpectrumFile_R;
-		private string VideoBmpDir;
 		private string VideoJpgDir;
 
 		private void Conv()
@@ -125,14 +124,12 @@ namespace Charlotte
 				this.SpectrumFile = wd.MakePath() + ".csv";
 				this.SpectrumFile_L = wd.MakePath() + ".csv";
 				this.SpectrumFile_R = wd.MakePath() + ".csv";
-				this.VideoBmpDir = wd.MakePath();
 				this.VideoJpgDir = wd.MakePath();
 
 				this.MakeWavFile();
 				this.MasteringWavFile();
 				this.MakeSpectrumFile();
-				this.MakeVideoBmp();
-				//this.MakeVideoJpg(); // del @ 2020.7.25
+				this.MakeVideoJpg();
 				this.MakeMovieFile();
 			}
 			Ground.I.Logger.Info("Conv.2");
@@ -236,7 +233,7 @@ namespace Charlotte
 			Ground.I.Logger.Info("MakeSpectrumFile.3");
 		}
 
-		private void MakeVideoBmp()
+		private void MakeVideoJpg()
 		{
 			try
 			{
@@ -276,7 +273,6 @@ namespace Charlotte
 					this.CheckVideoJpg(wd.GetPath("3"));
 
 					FileTools.MoveDir(wd.GetPath("3"), this.VideoJpgDir);
-					//FileTools.MoveDir(wd.GetPath("3"), this.VideoBmpDir); // del @ 2020.7.25
 				}
 			}
 			finally
@@ -356,35 +352,6 @@ namespace Charlotte
 			if (File.Exists(firstFrameFile) == false)
 				throw new Exception("映像データが空です。");
 		}
-
-#if false // del @ 2020.7.25
-		private void MakeVideoJpg()
-		{
-			FileTools.CreateDir(this.VideoJpgDir);
-
-			int frame;
-
-			for (frame = 0; ; frame++)
-			{
-				string rFile = Path.Combine(this.VideoBmpDir, string.Format("{0}.bmp", frame));
-				string wFile = Path.Combine(this.VideoJpgDir, string.Format("{0}.jpg", frame));
-
-				if (File.Exists(rFile) == false)
-					break;
-
-				if (frame % 200 == 0)
-				{
-					Ground.I.Logger.Info("B2J_frame: " + frame);
-
-					this.CheckCancel();
-				}
-
-				new Canvas2(rFile).Save(wFile, ImageFormat.Jpeg, Consts.JPEG_QUALITY);
-			}
-			if (frame < 1)
-				throw new Exception("映像データが空です。");
-		}
-#endif
 
 		private void MakeMovieFile()
 		{
