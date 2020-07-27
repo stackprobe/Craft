@@ -69,7 +69,7 @@ namespace Charlotte
 						Ground.I.Logger.Info("上書きチェック.1");
 
 						if (File.Exists(file))
-							throw new Exception("変換済みの動画ファイルが存在します。");
+							throw new Exception("変換済みの動画ファイルが存在します。(スキップ)");
 
 						Ground.I.Logger.Info("上書きチェック.2");
 					}

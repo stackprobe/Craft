@@ -26,7 +26,7 @@ namespace Charlotte.ConvMains
 					double[] row = sRow.Select(v => double.Parse(v)).ToArray();
 
 					if (row.Length != Consts.SPECTRA_LEN)
-						throw null;
+						throw new Exception("Bad spectra length: " + row.Length);
 
 					if (row.Any(v => v < 0.0 || 1.0 < v))
 						throw null;

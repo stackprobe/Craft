@@ -201,7 +201,7 @@ namespace Charlotte
 			{
 				string dir = this.InputDir.Text;
 
-				dir = InputFolderDlgTools.Existing("入力フォルダ", "入力フォルダを選択して下さい。", false, dir);
+				dir = InputFolderDlgTools.Existing("入力フォルダ", "入力フォルダを選択して下さい。", true, dir);
 
 				if (dir != null)
 				{
@@ -217,7 +217,7 @@ namespace Charlotte
 			{
 				string dir = this.OutputDir.Text;
 
-				dir = InputFolderDlgTools.Existing("出力フォルダ", "出力フォルダを選択して下さい。", false, dir);
+				dir = InputFolderDlgTools.Existing("出力フォルダ", "出力フォルダを選択して下さい。", true, dir);
 
 				if (dir != null)
 				{
@@ -291,9 +291,27 @@ namespace Charlotte
 
 				new ConvMain().Perform(inputDir, outputDir, this.OutputOverwriteMode.Checked);
 
+				using (ReportLogViewer f = new ReportLogViewer())
+				{
+					f.ShowDialog();
+				}
+
 				this.CloseWindow();
 				//this.Visible = true; // 再表示は不要
 			});
+		}
+
+		private void 最後に実行した時のレポートを表示するToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.Visible = false;
+
+			using (ReportLogViewer f = new ReportLogViewer())
+			{
+				f.ShowDialog();
+			}
+
+			this.CloseWindow();
+			//this.Visible = true; // 再表示は不要
 		}
 	}
 }
