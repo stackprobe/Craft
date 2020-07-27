@@ -25,7 +25,7 @@ namespace Charlotte.Utils
 
 		public void WriteLine(object message)
 		{
-			for (int c = 0; c < 3; c++)
+			for (int c = 0; c < 6; c++)
 			{
 				if (1 <= c)
 				{
@@ -36,14 +36,22 @@ namespace Charlotte.Utils
 				{
 					using (StreamWriter writer = new StreamWriter(this.LogFile, this.Wrote, Encoding.UTF8))
 					{
-						writer.WriteLine("[" + DateTime.Now + "] " + message);
+						WriteLogLine(writer, message);
+
+						if (1 <= c)
+							WriteLogLine(writer, "★ログ出力をリトライしました。リトライ回数：" + c);
 					}
 					this.Wrote = true;
-					break;
+					return;
 				}
 				catch
 				{ }
 			}
+		}
+
+		private static void WriteLogLine(StreamWriter writer, object message)
+		{
+			writer.WriteLine("[" + DateTime.Now + "] " + message);
 		}
 	}
 }

@@ -217,7 +217,7 @@ namespace Charlotte
 
 					if (frame % 200 == 0)
 					{
-						Ground.I.Logger.Info("MPF_frame: " + frame);
+						Ground.I.Logger.Info("MSF_frame: " + frame);
 
 						this.CheckCancel();
 					}
@@ -284,6 +284,10 @@ namespace Charlotte
 
 		private void AdjustJacketSize(string wdJacketFile, string wFile)
 		{
+			// memo: バイニリア補間(DX_DRAWMODE_BILINEAR)で綺麗に縮小できるのはアルゴリズム上2分の1サイズまでなので、
+			// らしい。--https://dxlib.xsrv.jp/cgi/patiobbs/patio.cgi?mode=view&no=4676
+			// -> ジャケットサイズの上限を画面サイズの2倍弱にする。
+
 			Ground.I.Logger.Info("ジャケット画像のサイズを矯正します。");
 
 			Canvas2 canvas = new Canvas2(wdJacketFile);

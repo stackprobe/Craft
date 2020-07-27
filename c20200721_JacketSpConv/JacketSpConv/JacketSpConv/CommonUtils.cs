@@ -83,11 +83,16 @@ namespace Charlotte
 
 		public static void WriteLog(object message)
 		{
-			using (StreamWriter writer = new StreamWriter(ProcMain.SelfFile + ".log", LogWrote, Encoding.UTF8))
+			try
 			{
-				writer.WriteLine("[" + DateTime.Now + "] " + message);
+				using (StreamWriter writer = new StreamWriter(ProcMain.SelfFile + ".log", LogWrote, Encoding.UTF8))
+				{
+					writer.WriteLine("[" + DateTime.Now + "] " + message);
+				}
+				LogWrote = true;
 			}
-			LogWrote = true;
+			catch
+			{ }
 		}
 	}
 }
