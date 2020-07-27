@@ -163,8 +163,8 @@ namespace Charlotte
 				File.Copy(this.JacketFile, oldFile);
 
 				this.Batch(
-					Consts.JP2ToBmp_FILE + " " + Path.GetFileName(oldFile) + " " + Path.GetFileName(fileNew),
-					wd.GetPath(".")
+					Ground.I.JP2ToBmpFile + " " + oldFile + " " + fileNew,
+					ProcMain.SelfDir
 					);
 
 				if (File.Exists(fileNew) == false)
