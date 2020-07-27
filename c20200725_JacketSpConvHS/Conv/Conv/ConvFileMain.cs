@@ -143,6 +143,7 @@ namespace Charlotte
 				this.SpectrumFile_R = wd.MakePath() + ".csv";
 				this.VideoJpgDir = wd.MakePath();
 
+				this.CheckJacketFile(wd);
 				this.MakeWavFile();
 				this.MasteringWavFile();
 				this.MakeSpectrumFile();
@@ -150,6 +151,29 @@ namespace Charlotte
 				this.MakeMovieFile();
 			}
 			Ground.I.Logger.Info("Conv.2");
+		}
+
+		private void CheckJacketFile(WorkingDir wd)
+		{
+			if (StringTools.EqualsIgnoreCase(Path.GetExtension(this.JacketFile), Consts.JPEG_2000_EXT)) // ? Jpeg-2000
+			{
+				string oldFile = wd.MakePath() + Consts.JPEG_2000_EXT;
+				string fileNew = wd.MakePath() + ".bmp";
+
+				File.Copy(this.JacketFile, oldFile);
+
+				this.Batch(
+					Consts.JP2ToBmp_FILE + " " + Path.GetFileName(oldFile) + " " + Path.GetFileName(fileNew),
+					wd.GetPath(".")
+					);
+
+				if (File.Exists(fileNew) == false)
+					throw new Exception("JPEG-2000 ファイルの処理に失敗しました。");
+
+				this.JacketFile = fileNew;
+			}
+			new Canvas2(this.JacketFile); // 読み込みテスト
+			GC.Collect();
 		}
 
 		private void MakeWavFile()
