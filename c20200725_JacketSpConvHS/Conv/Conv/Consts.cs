@@ -15,7 +15,7 @@ namespace Charlotte
 		public const string MASTER_FILE = @"C:\Factory\Program\WavMaster\Master.exe";
 		public const string wavCsv_FILE = @"C:\Factory\SubTools\wavCsv.exe";
 		public const string ImgTools_FILE = @"C:\app\Kit\ImgTools\ImgTools.exe";
-		public const string JP2ToBmp_FILE = @"C:\Apps\JP2ToBmp\JP2ToBmp.exe"; // 開発環境には存在しないプログラム
+		public const string JP2ToBmp_FILE = @"C:\Apps\JP2ToBmp\JP2ToBmp.exe";
 
 		public static string[] AUDIO_EXTS = new string[]
 		{

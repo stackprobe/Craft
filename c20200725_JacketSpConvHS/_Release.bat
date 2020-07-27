@@ -6,6 +6,9 @@ COPY Conv\Conv\bin\Release\*.dll out
 COPY JacketSpConv\JacketSpConv\bin\Release\*.exe out
 COPY JacketSpConv\JacketSpConv\bin\Release\*.dll out
 
+COPY C:\Dev\CSharp\wb\t20200727_JP2ToBmp\JP2ToBmp\JP2ToBmp\bin\Release\*.exe out
+COPY C:\Dev\CSharp\wb\t20200727_JP2ToBmp\JP2ToBmp\JP2ToBmp\bin\Release\*.dll out
+
 C:\Factory\SubTools\makeDDResourceFile.exe ConvGenVideo\Resource out\Resource.dat ConvGenVideo\Tools\MaskGZData.exe
 
 rem C:\Factory\SubTools\CallConfuserCLI.exe ConvGenVideo\ConvGenVideo\ConvGenVideo\bin\Release\ConvGenVideo.exe out\ConvGenVideo.exe

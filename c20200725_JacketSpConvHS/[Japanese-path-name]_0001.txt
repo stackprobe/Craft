@@ -1,9 +1,10 @@
 ----
-リリース方法 (いつもの手順)
+リリース方法
 
 準備
 	C:\Factory のビルド
 	newcsrr
+	C:\Dev\CSharp\wb\t20200727_JP2ToBmp\JP2ToBmp のビルド
 
 ここをビルド
 

@@ -64,6 +64,19 @@ namespace Charlotte
 					}
 					Ground.I.ConvGenVideoFile = file;
 				}
+
+				{
+					string file = @".\JP2ToBmp.exe";
+
+					if (File.Exists(file) == false)
+					{
+						file = @"C:\Dev\CSharp\wb\t20200727_JP2ToBmp\JP2ToBmp\JP2ToBmp\bin\Release\JP2ToBmp.exe"; // Dev-Env
+
+						if (File.Exists(file) == false)
+							throw new Exception("no JP2ToBmp.exe");
+					}
+					Ground.I.JP2ToBmpFile = file;
+				}
 			}
 
 			Ground.I.Logger.Stat("<1 " + inputDir);

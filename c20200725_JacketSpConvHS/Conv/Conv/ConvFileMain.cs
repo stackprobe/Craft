@@ -171,8 +171,28 @@ namespace Charlotte
 					throw new Exception("JPEG-2000 ファイルの処理に失敗しました。");
 
 				this.JacketFile = fileNew;
+
+				try
+				{
+					new Canvas2(this.JacketFile); // 読み込みテスト
+				}
+				catch
+				{
+					throw new Exception("JPEG-2000 ファイルの処理に失敗しました。(読み込みテスト)");
+				}
 			}
-			new Canvas2(this.JacketFile); // 読み込みテスト
+			else // ? Jpeg-2000 以外
+			{
+				try
+				{
+					new Canvas2(this.JacketFile); // 読み込みテスト
+				}
+				catch
+				{
+					throw new Exception("ジャケット画像ファイルの読み込みに失敗しました。");
+				}
+			}
+
 			GC.Collect();
 		}
 
