@@ -33,8 +33,8 @@ namespace Charlotte
 			try
 			{
 #if DEBUG
-				new Test0001().Test00();
-				//new Test0001().Test01();
+				//new Test0001().Test00();
+				new Test0001().Test01();
 				//new Test0001().Test02();
 #else
 				this.Main3(ar);

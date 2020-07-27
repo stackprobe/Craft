@@ -132,7 +132,7 @@ namespace Charlotte
 				this.MasteringWavFile();
 				this.MakeSpectrumFile();
 				this.MakeVideoBmp();
-				this.MakeVideoJpg();
+				//this.MakeVideoJpg(); // del @ 2020.7.25
 				this.MakeMovieFile();
 			}
 			Ground.I.Logger.Info("Conv.2");
@@ -243,7 +243,8 @@ namespace Charlotte
 				Ground.I.EvCancellable_N.Set();
 				Ground.I.EvMessage_StartGenVideo.Set();
 
-				Thread.Sleep(5000); // 予告期間
+				Thread.Sleep(200); // 予告期間
+				//Thread.Sleep(5000); // 予告期間
 
 				Ground.I.EvMessage_GenVideoRunning.Set();
 
@@ -272,7 +273,10 @@ namespace Charlotte
 					if (File.Exists(wd.GetPath("5.flg")) == false)
 						throw new Exception("映像データ生成プロセスが正常に動作しなかったようです。");
 
-					FileTools.MoveDir(wd.GetPath("3"), this.VideoBmpDir);
+					this.CheckVideoJpg(wd.GetPath("3"));
+
+					FileTools.MoveDir(wd.GetPath("3"), this.VideoJpgDir);
+					//FileTools.MoveDir(wd.GetPath("3"), this.VideoBmpDir); // del @ 2020.7.25
 				}
 			}
 			finally
@@ -345,6 +349,15 @@ namespace Charlotte
 			Ground.I.Logger.Info("ジャケット_H.2 = " + canvas.GetHeight());
 		}
 
+		private void CheckVideoJpg(string videoJpgDir)
+		{
+			string firstFrameFile = Path.Combine(videoJpgDir, "0.jpg");
+
+			if (File.Exists(firstFrameFile) == false)
+				throw new Exception("映像データが空です。");
+		}
+
+#if false // del @ 2020.7.25
 		private void MakeVideoJpg()
 		{
 			FileTools.CreateDir(this.VideoJpgDir);
@@ -371,6 +384,7 @@ namespace Charlotte
 			if (frame < 1)
 				throw new Exception("映像データが空です。");
 		}
+#endif
 
 		private void MakeMovieFile()
 		{

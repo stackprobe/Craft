@@ -21,7 +21,7 @@ namespace Charlotte.MovieGens
 
 		private void MG_EachFrame()
 		{
-#if !true // 本番・生成用
+#if true // 本番・生成用
 			DX.SaveDrawScreen(0, 0, DDConsts.Screen_W, DDConsts.Screen_H, Path.Combine(this.WDir, string.Format("{0}.bmp", this.Frame)));
 
 			DDEngine.EachFrame();
