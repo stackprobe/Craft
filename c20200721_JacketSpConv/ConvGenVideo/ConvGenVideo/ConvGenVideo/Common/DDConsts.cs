@@ -33,6 +33,8 @@ namespace Charlotte.Common
 
 		// app > @ Screen_WH
 
+		// memo: ffmpeg の仕様により Screen_WH 共に2の倍数であること。
+
 		public const int Screen_W = 960;
 		public const int Screen_H = 540;
 

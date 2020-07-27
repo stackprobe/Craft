@@ -406,8 +406,10 @@ namespace Charlotte
 
 				File.Copy(this.MasterWavFile, wd.GetPath("3.wav"));
 
+				// -codec:a copy を除去
+				// -ab 160k を追加
 				this.Batch(
-					Consts.FFMPEG_FILE + " -i 2.mp4 -i 3.wav -map 0:0 -map 1:0 -vcodec copy 4.mp4",
+					Consts.FFMPEG_FILE + " -i 2.mp4 -i 3.wav -map 0:0 -map 1:0 -vcodec copy -ab 160k 4.mp4",
 					wd.GetPath(".")
 					);
 
