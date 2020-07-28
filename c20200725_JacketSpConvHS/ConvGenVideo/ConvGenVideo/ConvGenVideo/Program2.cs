@@ -29,7 +29,7 @@ namespace Charlotte
 		{
 			DDAdditionalEvents.Ground_INIT = () =>
 			{
-				//DDGround.RO_MouseDispMode = true;
+				DDGround.RO_MouseDispMode = true;
 			};
 
 			DDAdditionalEvents.PostGameStart = () =>

@@ -56,8 +56,15 @@ namespace Charlotte.Common
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
 		public DDSimpleMenu()
+			: this(DDUtils.GetMouseDispMode())
+		{ }
+
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
+		public DDSimpleMenu(bool mouseEnabled)
 		{
-			this.MouseEnabled = DDUtils.GetMouseDispMode();
+			this.MouseEnabled = mouseEnabled;
 		}
 
 		//
