@@ -19,6 +19,7 @@ namespace Charlotte
 		public string OutputDir;
 		public bool OutputToInputDir;
 		public bool OutputOverwriteMode;
+		public int ConvThreadCount = Consts.CONV_THREAD_COUNT_DEF;
 
 		// < 保存データ
 
@@ -38,6 +39,7 @@ namespace Charlotte
 			this.OutputDir = lines[c++];
 			this.OutputToInputDir = int.Parse(lines[c++]) != 0;
 			this.OutputOverwriteMode = int.Parse(lines[c++]) != 0;
+			this.ConvThreadCount = int.Parse(lines[c++]);
 
 			// < 保存データ
 
@@ -54,6 +56,7 @@ namespace Charlotte
 			lines.Add(this.OutputDir);
 			lines.Add("" + (this.OutputToInputDir ? 1 : 0));
 			lines.Add("" + (this.OutputOverwriteMode ? 1 : 0));
+			lines.Add("" + this.ConvThreadCount);
 
 			// < 保存データ
 

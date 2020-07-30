@@ -38,6 +38,9 @@ namespace Charlotte
 						if (row == null)
 							break;
 
+						// memo: row[0,1]の値域は0～65535だが、32768が波形0(無音？)なので、これを0にするために65536で割る。
+
+						// 波形を [-1.0, 1.0) の区間にする。
 						wavData_L.Add((int.Parse(row[0]) / 65536.0 - 0.5) * 2.0);
 						wavData_R.Add((int.Parse(row[1]) / 65536.0 - 0.5) * 2.0);
 					}
@@ -98,6 +101,8 @@ namespace Charlotte
 
 		public double GetSpectrum(int hz)
 		{
+			// memo: 左右の波形の位相がずれている可能性を考慮すると、スペクトラムは左右別々に取得する必要がある。
+
 			return (this.GetSpectrum_L(hz) + this.GetSpectrum_R(hz)) / 2.0;
 		}
 

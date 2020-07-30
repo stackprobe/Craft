@@ -10,7 +10,7 @@ namespace Charlotte
 {
 	public class ConvMain
 	{
-		public void Perform(string inputDir, string outputDir, bool outputOverwriteMode, string successfulFile)
+		public void Perform(string inputDir, string outputDir, bool outputOverwriteMode, int threadCount, string successfulFile)
 		{
 			using (LogWriter stat = new LogWriter(FileUtils.EraseExt(ProcMain.SelfFile) + "Stat.log"))
 			using (LogWriter info = new LogWriter(FileUtils.EraseExt(ProcMain.SelfFile) + "Info.log"))
@@ -20,7 +20,7 @@ namespace Charlotte
 				try
 				{
 					Ground.I.Logger.Stat("ConvMain 開始");
-					this.Perform_02(inputDir, outputDir, outputOverwriteMode);
+					this.Perform_02(inputDir, outputDir, outputOverwriteMode, threadCount);
 					Ground.I.Logger.Stat("ConvMain 完了");
 					File.WriteAllBytes(successfulFile, BinTools.EMPTY); // 正常終了フラグ_作成
 					Ground.I.Logger.Stat("ConvMain 完了_2");
@@ -36,7 +36,7 @@ namespace Charlotte
 			}
 		}
 
-		private void Perform_02(string inputDir, string outputDir, bool outputOverwriteMode)
+		private void Perform_02(string inputDir, string outputDir, bool outputOverwriteMode, int threadCount)
 		{
 			// 環境のチェック
 			{
@@ -126,6 +126,7 @@ namespace Charlotte
 						InputDir = inputDir,
 						OutputDir = outputDir,
 						OutputOverwriteMode = outputOverwriteMode,
+						ThreadCount = threadCount,
 						PresumeAudioRelFile = file,
 					}
 					.Perform();

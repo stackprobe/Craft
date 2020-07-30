@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using DxLibDLL;
 using Charlotte.Common;
-using System.IO;
 using Charlotte.Tools;
 
 namespace Charlotte.ConvMains
@@ -13,14 +13,6 @@ namespace Charlotte.ConvMains
 	{
 		private SpectrumData SpData;
 		private int Frame = 0;
-
-		private void MG_EachFrame()
-		{
-			//DX.SaveDrawScreen(0, 0, DDConsts.Screen_W, DDConsts.Screen_H, Path.Combine(this.WDir, string.Format("{0}.bmp", this.Frame))); // old
-			DDEngine.EachFrame();
-
-			this.Frame++;
-		}
 
 		public void Main01(string spectrumFile, DDPicture jacket, string wDir, int spBarNum, int spBarWidth, int spBarHeight, I3Color spBarColor, double spBarAlpha, double z2)
 		{
@@ -115,18 +107,7 @@ namespace Charlotte.ConvMains
 
 					DDSubScreenUtils.RestoreDrawScreen();
 
-					// ---- 実際に表示される画面の描画
-
-					DDCurtain.DrawCurtain();
-
-					{
-						double rate = this.Frame * 1.0 / this.SpData.Rows.Length;
-						const int PROGRESS_BAR_H = 10;
-
-						DDDraw.DrawRect(DDGround.GeneralResource.WhiteBox, 0, (DDConsts.Screen_H - PROGRESS_BAR_H) / 2, Math.Max(5, DDConsts.Screen_W * rate), PROGRESS_BAR_H);
-					}
-
-					// ----
+					// ---- 以降、フレーム毎の処理
 
 					if (40 < this.Frame)
 						DDUtils.Approach(ref a, 0.0, 0.985);
@@ -138,7 +119,28 @@ namespace Charlotte.ConvMains
 					//z1 += 0.0001;
 					DDUtils.Approach(ref z2, 1.0, 0.9985);
 
-					this.MG_EachFrame();
+					if (this.Frame % 30 == 0) // 毎回やる必要は無い。
+					{
+						DDCurtain.DrawCurtain();
+
+						DDPrint.SetPrint(16, 16, 32);
+						DDPrint.SetBorder(new I3Color(0, 64, 128));
+
+						DDPrint.PrintLine("ConvGenVideo");
+						//DDPrint.PrintLine("ConvGenVideo [Version " + DDUserDatStrings.Version + "]");
+						DDPrint.PrintLine("映像を生成しています...");
+						DDPrint.PrintLine("右上の[X]ボタンを押すと全ての処理を中止(キャンセル)します。");
+
+						{
+							double rate = this.Frame * 1.0 / this.SpData.Rows.Length;
+							const int PROGRESS_BAR_H = 10;
+
+							DDDraw.DrawRect(DDGround.GeneralResource.WhiteBox, 0, (DDConsts.Screen_H - PROGRESS_BAR_H) / 2, Math.Max(5, DDConsts.Screen_W * rate), PROGRESS_BAR_H);
+						}
+
+						DDEngine.EachFrame();
+					}
+					this.Frame++;
 				}
 			}
 		}

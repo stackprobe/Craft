@@ -289,7 +289,7 @@ namespace Charlotte
 
 				this.Visible = false;
 
-				new ConvMain().Perform(inputDir, outputDir, this.OutputOverwriteMode.Checked);
+				new ConvMain().Perform(inputDir, outputDir, this.OutputOverwriteMode.Checked, Ground.I.ConvThreadCount);
 
 				using (ReportLogViewer f = new ReportLogViewer())
 				{
@@ -312,6 +312,19 @@ namespace Charlotte
 
 			this.CloseWindow();
 			//this.Visible = true; // 再表示は不要
+		}
+
+		private void convのスレッド数の変更ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Ground.I.ConvThreadCount = InputStringDlgTools.Int(
+				"ConvThreadCount",
+				"ConvThreadCount: (" + Consts.CONV_THREAD_COUNT_MIN + "-" + Consts.CONV_THREAD_COUNT_MAX + ")",
+				true,
+				Ground.I.ConvThreadCount,
+				Consts.CONV_THREAD_COUNT_MIN,
+				Consts.CONV_THREAD_COUNT_MAX,
+				Ground.I.ConvThreadCount
+				);
 		}
 	}
 }

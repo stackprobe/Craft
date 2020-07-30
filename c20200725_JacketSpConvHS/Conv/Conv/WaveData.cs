@@ -38,6 +38,9 @@ namespace Charlotte
 						if (row == null)
 							break;
 
+						// memo: row[0,1]の値域は0～65535だが、32768が波形0(無音？)なので、これを0にするために65536で割る。
+
+						// 波形を [-1.0, 1.0) の区間にする。
 						wavData_L.Add((int.Parse(row[0]) / 65536.0 - 0.5) * 2.0);
 						wavData_R.Add((int.Parse(row[1]) / 65536.0 - 0.5) * 2.0);
 					}
@@ -65,17 +68,22 @@ namespace Charlotte
 
 		public const int WINDOW_SIZE = 1000;
 
-		private double[] WavPart_L = new double[WINDOW_SIZE];
-		private double[] WavPart_R = new double[WINDOW_SIZE];
-
-		public void SetWavPart(int startPos)
+		public class WavPartInfo
 		{
+			public double[] WavPart_L = new double[WINDOW_SIZE];
+			public double[] WavPart_R = new double[WINDOW_SIZE];
+		}
+
+		public WavPartInfo GetWavPart(int startPos)
+		{
+			WavPartInfo wp = new WavPartInfo();
+
 			if (startPos < 0 || this.WavData_L.Length - WINDOW_SIZE < startPos) // ? startPos out of range
 			{
 				for (int offset = 0; offset < WINDOW_SIZE; offset++)
 				{
-					this.WavPart_L[offset] = 0.0;
-					this.WavPart_R[offset] = 0.0;
+					wp.WavPart_L[offset] = 0.0;
+					wp.WavPart_R[offset] = 0.0;
 				}
 			}
 			else
@@ -85,10 +93,11 @@ namespace Charlotte
 					double rate = offset * 1.0 / (WINDOW_SIZE - 1);
 					double hh = Hamming(rate);
 
-					this.WavPart_L[offset] = this.WavData_L[startPos + offset] * hh;
-					this.WavPart_R[offset] = this.WavData_R[startPos + offset] * hh;
+					wp.WavPart_L[offset] = this.WavData_L[startPos + offset] * hh;
+					wp.WavPart_R[offset] = this.WavData_R[startPos + offset] * hh;
 				}
 			}
+			return wp;
 		}
 
 		private static double Hamming(double rate)
@@ -96,25 +105,27 @@ namespace Charlotte
 			return 0.5 - 0.5 * Math.Cos(rate * Math.PI * 2.0);
 		}
 
-		public double GetSpectrum(int hz)
+		public double GetSpectrum(WavPartInfo wp, int hz)
 		{
-			return (this.GetSpectrum_L(hz) + this.GetSpectrum_R(hz)) / 2.0;
+			// memo: 左右の波形の位相がずれている可能性を考慮すると、スペクトラムは左右別々に取得する必要がある。
+
+			return (this.GetSpectrum_L(wp, hz) + this.GetSpectrum_R(wp, hz)) / 2.0;
 		}
 
-		public double GetSpectrum_L(int hz)
+		public double GetSpectrum_L(WavPartInfo wp, int hz)
 		{
-			return this.GetSpectrum(hz, this.WavPart_L);
+			return this.GetSpectrum(hz, wp.WavPart_L);
 		}
 
-		public double GetSpectrum_R(int hz)
+		public double GetSpectrum_R(WavPartInfo wp, int hz)
 		{
-			return this.GetSpectrum(hz, this.WavPart_R);
+			return this.GetSpectrum(hz, wp.WavPart_R);
 		}
 
 		private double GetSpectrum(int hz, double[] windowData)
 		{
-			if (hz < 1 || IntTools.IMAX < hz)
-				throw new Exception("Bad hz: " + hz);
+			//if (hz < 1 || IntTools.IMAX < hz)
+			//throw new Exception("Bad hz: " + hz);
 
 			double cc = 0.0;
 			double ss = 0.0;

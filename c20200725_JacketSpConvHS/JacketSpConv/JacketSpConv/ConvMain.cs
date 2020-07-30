@@ -12,7 +12,7 @@ namespace Charlotte
 	{
 		private const int REPORT_BUFF_MAX = 15;
 
-		public void Perform(string inputDir, string outputDir, bool outputOverwriteMode)
+		public void Perform(string inputDir, string outputDir, bool outputOverwriteMode, int threadCount)
 		{
 			try
 			{
@@ -32,7 +32,14 @@ namespace Charlotte
 						{
 							ProcessTools.Batch(new string[]
 							{
-								string.Format(Ground.I.ConvExeFile + " CS-Conv \"{0}\" \"{1}\" \"{2}\" \"{3}\"", inputDir, outputDir, outputOverwriteMode ? 1 : 0, successfulFile),
+								string.Format(
+									Ground.I.ConvExeFile + " CS-Conv \"{0}\" \"{1}\" {2} {3} \"{4}\""
+									, inputDir
+									, outputDir
+									, outputOverwriteMode ? 1 : 0
+									, threadCount
+									, successfulFile
+									),
 							},
 							ProcMain.SelfDir
 							);

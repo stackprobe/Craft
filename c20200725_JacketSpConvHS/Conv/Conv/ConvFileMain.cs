@@ -15,6 +15,7 @@ namespace Charlotte
 		public string InputDir;
 		public string OutputDir;
 		public bool OutputOverwriteMode;
+		public int ThreadCount;
 		public string PresumeAudioRelFile;
 
 		// <---- prm
@@ -262,13 +263,89 @@ namespace Charlotte
 			WaveData wavDat = new WaveData(this.MasterWavFile);
 			Ground.I.Logger.Info("MakeSpectrumFile.2");
 
+#if true
+			using (WorkingDir wd = new WorkingDir())
+			using (MultiThreadEx mtx = new MultiThreadEx())
+			{
+				Ground.I.Logger.Info("MakeSpectrumFile.3");
+
+				int frameEnd;
+
+				{
+					int frame;
+
+					for (frame = 1; MPF_GetWavPartPos(frame, wavDat) < wavDat.Length; frame++)
+					{ }
+
+					frameEnd = frame;
+				}
+
+				int THREAD_NUM = this.ThreadCount;
+
+				Ground.I.Logger.Info("THREAD_NUM:" + THREAD_NUM);
+
+				if (THREAD_NUM < 1)
+					throw null;
+
+				const string SP_CSV_LOCAL_FILE_BASE = "SP_Csv_";
+
+				for (int c = 0; c < THREAD_NUM; c++)
+				{
+					string thc_wFile = wd.GetPath(SP_CSV_LOCAL_FILE_BASE + c);
+					int thc_frameSt = (frameEnd * (c + 0)) / THREAD_NUM;
+					int thc_frameEd = (frameEnd * (c + 1)) / THREAD_NUM;
+
+					mtx.Add(() =>
+					{
+						using (CsvFileWriter writer = new CsvFileWriter(thc_wFile))
+						{
+							for (int frame = thc_frameSt; frame < thc_frameEd; frame++)
+							{
+								int wavPartPos = MPF_GetWavPartPos(frame, wavDat);
+								WaveData.WavPartInfo wp = wavDat.GetWavPart(wavPartPos);
+								SpectrumGraph graph = new SpectrumGraph(hz => wavDat.GetSpectrum(wp, hz));
+								CsvUtils.WriteRow(writer, graph);
+							}
+						}
+					});
+				}
+
+				Ground.I.Logger.Info("MakeSpectrumFile.4");
+				mtx.RelayThrow();
+				Ground.I.Logger.Info("MakeSpectrumFile.5");
+
+				using (CsvFileWriter writer = new CsvFileWriter(this.SpectrumFile))
+				{
+					for (int c = 0; c < THREAD_NUM; c++)
+					{
+						string rFile = wd.GetPath(SP_CSV_LOCAL_FILE_BASE + c);
+
+						using (CsvFileReader reader = new CsvFileReader(rFile))
+						{
+							for (; ; )
+							{
+								string[] row = reader.ReadRow();
+
+								if (row == null)
+									break;
+
+								writer.WriteRow(row);
+							}
+						}
+					}
+				}
+
+				Ground.I.Logger.Info("MakeSpectrumFile.6");
+			}
+#else // old
 			using (CsvFileWriter writer = new CsvFileWriter(this.SpectrumFile))
 			//using (CsvFileWriter writer_L = new CsvFileWriter(this.SpectrumFile_L)) // 不使用
 			//using (CsvFileWriter writer_R = new CsvFileWriter(this.SpectrumFile_R)) // 不使用
 			{
 				for (int frame = 0; ; frame++)
 				{
-					int wavPartPos = (int)((frame * 1.0 / Consts.FPS + Consts.AUDIO_DELAY_SEC) * wavDat.WavHz);
+					int wavPartPos = MPF_GetWavPartPos(frame, wavDat);
+					//int wavPartPos = (int)((frame * 1.0 / Consts.FPS + Consts.AUDIO_DELAY_SEC) * wavDat.WavHz);
 
 					if (wavDat.Length <= wavPartPos)
 						break;
@@ -292,6 +369,12 @@ namespace Charlotte
 				}
 			}
 			Ground.I.Logger.Info("MakeSpectrumFile.3");
+#endif
+		}
+
+		private static int MPF_GetWavPartPos(int frame, WaveData wavDat)
+		{
+			return (int)((frame * 1.0 / Consts.FPS + Consts.AUDIO_DELAY_SEC) * wavDat.WavHz);
 		}
 
 		private void MakeVideoJpg()

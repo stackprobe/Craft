@@ -17,6 +17,7 @@ namespace Charlotte.Tests
 				inputDir,
 				outputDir,
 				false,
+				3,
 				successfulFile
 				);
 		}

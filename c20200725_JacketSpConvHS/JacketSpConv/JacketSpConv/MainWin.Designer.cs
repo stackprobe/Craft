@@ -43,6 +43,8 @@
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.オプションToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.最後に実行した時のレポートを表示するToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.設定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.convのスレッド数の変更ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -59,7 +61,7 @@
 			this.InputDir.Name = "InputDir";
 			this.InputDir.ReadOnly = true;
 			this.InputDir.Size = new System.Drawing.Size(540, 27);
-			this.InputDir.TabIndex = 1;
+			this.InputDir.TabIndex = 2;
 			this.InputDir.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.InputDir_KeyPress);
 			// 
 			// label1
@@ -68,7 +70,7 @@
 			this.label1.Location = new System.Drawing.Point(50, 60);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(100, 20);
-			this.label1.TabIndex = 0;
+			this.label1.TabIndex = 1;
 			this.label1.Text = "入力フォルダ：";
 			// 
 			// BtnInputDir
@@ -77,7 +79,7 @@
 			this.BtnInputDir.Location = new System.Drawing.Point(600, 83);
 			this.BtnInputDir.Name = "BtnInputDir";
 			this.BtnInputDir.Size = new System.Drawing.Size(50, 27);
-			this.BtnInputDir.TabIndex = 2;
+			this.BtnInputDir.TabIndex = 3;
 			this.BtnInputDir.Text = "...";
 			this.BtnInputDir.UseVisualStyleBackColor = true;
 			this.BtnInputDir.Click += new System.EventHandler(this.BtnInputDir_Click);
@@ -88,7 +90,7 @@
 			this.label2.Location = new System.Drawing.Point(50, 160);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(100, 20);
-			this.label2.TabIndex = 3;
+			this.label2.TabIndex = 4;
 			this.label2.Text = "出力フォルダ：";
 			// 
 			// OutputDir
@@ -99,7 +101,7 @@
 			this.OutputDir.Name = "OutputDir";
 			this.OutputDir.ReadOnly = true;
 			this.OutputDir.Size = new System.Drawing.Size(540, 27);
-			this.OutputDir.TabIndex = 4;
+			this.OutputDir.TabIndex = 5;
 			this.OutputDir.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OutputDir_KeyPress);
 			// 
 			// BtnOutputDir
@@ -108,7 +110,7 @@
 			this.BtnOutputDir.Location = new System.Drawing.Point(600, 183);
 			this.BtnOutputDir.Name = "BtnOutputDir";
 			this.BtnOutputDir.Size = new System.Drawing.Size(50, 27);
-			this.BtnOutputDir.TabIndex = 5;
+			this.BtnOutputDir.TabIndex = 6;
 			this.BtnOutputDir.Text = "...";
 			this.BtnOutputDir.UseVisualStyleBackColor = true;
 			this.BtnOutputDir.Click += new System.EventHandler(this.BtnOutputDir_Click);
@@ -119,7 +121,7 @@
 			this.BtnStart.Location = new System.Drawing.Point(450, 260);
 			this.BtnStart.Name = "BtnStart";
 			this.BtnStart.Size = new System.Drawing.Size(200, 60);
-			this.BtnStart.TabIndex = 8;
+			this.BtnStart.TabIndex = 9;
 			this.BtnStart.Text = "変換開始";
 			this.BtnStart.UseVisualStyleBackColor = true;
 			this.BtnStart.Click += new System.EventHandler(this.BtnStart_Click);
@@ -132,7 +134,7 @@
 			this.OutputToInputDir.Location = new System.Drawing.Point(54, 216);
 			this.OutputToInputDir.Name = "OutputToInputDir";
 			this.OutputToInputDir.Size = new System.Drawing.Size(236, 24);
-			this.OutputToInputDir.TabIndex = 6;
+			this.OutputToInputDir.TabIndex = 7;
 			this.OutputToInputDir.Text = "入力フォルダと同じ場所に出力する";
 			this.OutputToInputDir.UseVisualStyleBackColor = true;
 			this.OutputToInputDir.CheckedChanged += new System.EventHandler(this.OutputToInputDir_CheckedChanged);
@@ -144,18 +146,19 @@
 			this.OutputOverwriteMode.Location = new System.Drawing.Point(54, 279);
 			this.OutputOverwriteMode.Name = "OutputOverwriteMode";
 			this.OutputOverwriteMode.Size = new System.Drawing.Size(197, 24);
-			this.OutputOverwriteMode.TabIndex = 7;
+			this.OutputOverwriteMode.TabIndex = 8;
 			this.OutputOverwriteMode.Text = "変換済みの動画を上書きする";
 			this.OutputOverwriteMode.UseVisualStyleBackColor = true;
 			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.オプションToolStripMenuItem});
+            this.オプションToolStripMenuItem,
+            this.設定ToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(684, 24);
-			this.menuStrip1.TabIndex = 9;
+			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
 			// オプションToolStripMenuItem
@@ -172,6 +175,21 @@
 			this.最後に実行した時のレポートを表示するToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
 			this.最後に実行した時のレポートを表示するToolStripMenuItem.Text = "最後に実行した時のレポートを表示する";
 			this.最後に実行した時のレポートを表示するToolStripMenuItem.Click += new System.EventHandler(this.最後に実行した時のレポートを表示するToolStripMenuItem_Click);
+			// 
+			// 設定ToolStripMenuItem
+			// 
+			this.設定ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.convのスレッド数の変更ToolStripMenuItem});
+			this.設定ToolStripMenuItem.Name = "設定ToolStripMenuItem";
+			this.設定ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+			this.設定ToolStripMenuItem.Text = "設定";
+			// 
+			// convのスレッド数の変更ToolStripMenuItem
+			// 
+			this.convのスレッド数の変更ToolStripMenuItem.Name = "convのスレッド数の変更ToolStripMenuItem";
+			this.convのスレッド数の変更ToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+			this.convのスレッド数の変更ToolStripMenuItem.Text = "ConvThreadCount";
+			this.convのスレッド数の変更ToolStripMenuItem.Click += new System.EventHandler(this.convのスレッド数の変更ToolStripMenuItem_Click);
 			// 
 			// MainWin
 			// 
@@ -224,6 +242,8 @@
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem オプションToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 最後に実行した時のレポートを表示するToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 設定ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem convのスレッド数の変更ToolStripMenuItem;
 	}
 }
 

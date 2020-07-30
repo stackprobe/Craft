@@ -59,9 +59,10 @@ namespace Charlotte
 				string inputDir = ar.NextArg();
 				string outputDir = ar.NextArg();
 				bool outputOverwriteMode = int.Parse(ar.NextArg()) != 0;
+				int threadCount = int.Parse(ar.NextArg());
 				string successfulFile = ar.NextArg();
 
-				new ConvMain().Perform(inputDir, outputDir, outputOverwriteMode, successfulFile);
+				new ConvMain().Perform(inputDir, outputDir, outputOverwriteMode, threadCount, successfulFile);
 			}
 			catch (Exception e)
 			{
