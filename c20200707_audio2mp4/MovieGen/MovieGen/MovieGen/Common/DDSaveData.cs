@@ -67,6 +67,8 @@ namespace Charlotte.Common
 				lines.Add("" + DDInput.PAUSE.KeyId);
 				lines.Add("" + DDInput.START.KeyId);
 
+				lines.Add("" + (DDGround.RO_MouseDispMode ? 1 : 0));
+
 				// 新しい項目をここへ追加...
 
 				blocks.Add(DDUtils.SplitableJoin(lines.ToArray()));
@@ -150,6 +152,8 @@ namespace Charlotte.Common
 				DDInput.R.KeyId = int.Parse(lines[c++]);
 				DDInput.PAUSE.KeyId = int.Parse(lines[c++]);
 				DDInput.START.KeyId = int.Parse(lines[c++]);
+
+				DDGround.RO_MouseDispMode = int.Parse(lines[c++]) != 0;
 
 				// 新しい項目をここへ追加...
 			}
