@@ -74,10 +74,8 @@ namespace Charlotte
 			public double[] WavPart_R = new double[WINDOW_SIZE];
 		}
 
-		public WavPartInfo GetWavPart(int startPos)
+		public void LoadWavPart(WavPartInfo wp, int startPos)
 		{
-			WavPartInfo wp = new WavPartInfo();
-
 			if (startPos < 0 || this.WavData_L.Length - WINDOW_SIZE < startPos) // ? startPos out of range
 			{
 				for (int offset = 0; offset < WINDOW_SIZE; offset++)
@@ -97,7 +95,6 @@ namespace Charlotte
 					wp.WavPart_R[offset] = this.WavData_R[startPos + offset] * hh;
 				}
 			}
-			return wp;
 		}
 
 		private static double Hamming(double rate)

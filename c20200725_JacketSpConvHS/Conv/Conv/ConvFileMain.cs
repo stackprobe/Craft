@@ -294,6 +294,7 @@ namespace Charlotte
 					string thc_wFile = wd.GetPath(SP_CSV_LOCAL_FILE_BASE + c);
 					int thc_frameSt = (frameEnd * (c + 0)) / THREAD_NUM;
 					int thc_frameEd = (frameEnd * (c + 1)) / THREAD_NUM;
+					WaveData.WavPartInfo thc_wp = new WaveData.WavPartInfo();
 
 					mtx.Add(() =>
 					{
@@ -302,8 +303,8 @@ namespace Charlotte
 							for (int frame = thc_frameSt; frame < thc_frameEd; frame++)
 							{
 								int wavPartPos = MPF_GetWavPartPos(frame, wavDat);
-								WaveData.WavPartInfo wp = wavDat.GetWavPart(wavPartPos);
-								SpectrumGraph graph = new SpectrumGraph(hz => wavDat.GetSpectrum(wp, hz));
+								wavDat.LoadWavPart(thc_wp, wavPartPos);
+								SpectrumGraph graph = new SpectrumGraph(hz => wavDat.GetSpectrum(thc_wp, hz));
 								CsvUtils.WriteRow(writer, graph);
 							}
 						}

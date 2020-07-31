@@ -137,7 +137,7 @@ namespace Charlotte
 							throw null;
 					}
 				}
-				this.ReportStatus.Text = string.Format("成功：{0}, スキップ：{1}, 失敗：{2}", successCount, skippedCount, failedCount);
+				this.ReportStatus.Text = string.Format("成功：{0} , スキップ：{1} , 失敗：{2}", successCount, skippedCount, failedCount);
 			}
 			finally
 			{
