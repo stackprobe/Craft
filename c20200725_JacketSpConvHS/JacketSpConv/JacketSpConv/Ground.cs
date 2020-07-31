@@ -15,11 +15,18 @@ namespace Charlotte
 
 		// 保存データ >
 
+		// -- 実行中ここに保持しない。
+
 		public string InputDir;
 		public string OutputDir;
 		public bool OutputToInputDir;
 		public bool OutputOverwriteMode;
+
+		// -- 実行中ここに保持する。
+
 		public int ConvThreadCount = Consts.CONV_THREAD_COUNT_DEF;
+
+		// --
 
 		// < 保存データ
 

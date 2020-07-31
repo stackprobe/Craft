@@ -15,7 +15,7 @@ namespace Charlotte
 		public const string CONV_PROCESSING_MESSAGE_GEN_VIDEO_RUNNING = "映像生成プロセスを実行しています...";
 
 		public const int CONV_THREAD_COUNT_MIN = 1;
-		public const int CONV_THREAD_COUNT_DEF = 2;
+		public const int CONV_THREAD_COUNT_DEF = 4;
 		public const int CONV_THREAD_COUNT_MAX = 16;
 	}
 }

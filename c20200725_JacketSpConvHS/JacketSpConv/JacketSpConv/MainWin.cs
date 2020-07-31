@@ -80,6 +80,7 @@ namespace Charlotte
 				}
 
 				this.UIRefresh();
+				ChocomintDialogsCommon.PostShown(this);
 			}
 			catch (Exception ex)
 			{

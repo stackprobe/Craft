@@ -33,6 +33,7 @@ namespace Charlotte
 			try
 			{
 				this.MS_Init();
+				this.MS_AutoResize();
 				this.LoadReport();
 				this.MS_AutoResize();
 
@@ -43,7 +44,11 @@ namespace Charlotte
 			}
 			catch (Exception ex)
 			{
-				MessageDlgTools.Error("レポート表示_初期化エラー", ex);
+				MessageDlgTools.Error("レポート_初期化エラー", ex);
+
+				// clear
+				this.MainSheet.RowCount = 0;
+				this.MainSheet.ColumnCount = 0;
 			}
 		}
 
@@ -86,7 +91,7 @@ namespace Charlotte
 				file = @"..\..\..\..\Conv\Conv\bin\Release\ConvReport.log";
 
 				if (File.Exists(file) == false)
-					throw new Exception("no ConvReport.log");
+					throw new Exception("レポートが見つかりません。");
 			}
 			return file;
 		}
