@@ -50,7 +50,7 @@ namespace Charlotte.Common
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		private bool MouseEnabled;
+		private bool MouseUsable;
 
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
@@ -62,9 +62,9 @@ namespace Charlotte.Common
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public DDSimpleMenu(bool mouseEnabled)
+		public DDSimpleMenu(bool mouseUsable)
 		{
-			this.MouseEnabled = mouseEnabled;
+			this.MouseUsable = mouseUsable;
 		}
 
 		//
@@ -77,7 +77,7 @@ namespace Charlotte.Common
 
 			for (; ; )
 			{
-				if (this.MouseEnabled)
+				if (this.MouseUsable)
 				{
 					DDMouse.UpdatePos();
 
@@ -131,7 +131,7 @@ namespace Charlotte.Common
 				selectIndex += items.Length;
 				selectIndex %= items.Length;
 
-				if (this.MouseEnabled && chgsel)
+				if (this.MouseUsable && chgsel)
 				{
 					DDMouse.X = 0;
 					DDMouse.Y = this.Y + (selectIndex + 1) * this.YStep + this.YStep / 2;
@@ -158,7 +158,7 @@ namespace Charlotte.Common
 
 				DDPrint.SetPrint(this.X, this.Y, this.YStep);
 				//DDPrint.SetPrint(16, 16, 32); // old
-				DDPrint.Print(title + "　(Mouse=" + this.MouseEnabled + ")");
+				DDPrint.Print(title + "　(Mouse=" + this.MouseUsable + ")");
 				DDPrint.PrintRet();
 
 				for (int c = 0; c < items.Length; c++)
@@ -308,7 +308,7 @@ namespace Charlotte.Common
 					DDPrint.Print("★　スペースを押すとキャンセルします。");
 					DDPrint.PrintRet();
 
-					if (this.MouseEnabled)
+					if (this.MouseUsable)
 					{
 						DDPrint.Print("★　右クリックするとキャンセルします。");
 						DDPrint.PrintRet();
@@ -457,11 +457,11 @@ namespace Charlotte.Common
 			{
 				bool chgval = false;
 
-				if (DDInput.A.IsPound() || this.MouseEnabled && DDMouse.L.GetInput() == -1)
+				if (DDInput.A.IsPound() || this.MouseUsable && DDMouse.L.GetInput() == -1)
 				{
 					break;
 				}
-				if (DDInput.B.IsPound() || this.MouseEnabled && DDMouse.R.GetInput() == -1)
+				if (DDInput.B.IsPound() || this.MouseUsable && DDMouse.R.GetInput() == -1)
 				{
 					if (value == origval)
 						break;
@@ -469,7 +469,7 @@ namespace Charlotte.Common
 					value = origval;
 					chgval = true;
 				}
-				if (this.MouseEnabled)
+				if (this.MouseUsable)
 				{
 					value += DDMouse.Rot;
 					chgval = true;
