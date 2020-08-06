@@ -7,7 +7,7 @@ namespace Charlotte
 {
 	public static class Consts
 	{
-		public const string IPC_IDENT = "{8e0d71e4-a754-4a40-a5f1-47dad142fbc3}"; // shared_uuid
+		public const string IPC_IDENT = "{33e5978f-9010-4ea9-a23a-19875946523f}"; // shared_uuid
 
 		public const string CONV_PROCESSING_TITLE = "変換中";
 		public const string CONV_PROCESSING_MESSAGE_NORMAL = "変換しています...";
