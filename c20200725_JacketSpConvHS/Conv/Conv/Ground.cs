@@ -36,17 +36,18 @@ namespace Charlotte
 		{
 			if (this.CmProgressRate != null)
 			{
-				this.CmProgressRate.Dispose();
-				this.CmProgressRate = null;
-
-				this.EvStopConv.Dispose();
-				this.EvCancellable_Y.Dispose();
-				this.EvCancellable_N.Dispose();
-				this.EvMessage_Normal.Dispose();
-				this.EvMessage_StartGenVideo.Dispose();
-				this.EvMessage_GenVideoRunning.Dispose();
-				this.EvMessage_UserCancelled.Dispose();
-				this.CmReport.Dispose();
+				ExceptionDam.Section(eDam =>
+				{
+					eDam.Dispose(ref this.EvStopConv);
+					eDam.Dispose(ref this.EvCancellable_Y);
+					eDam.Dispose(ref this.EvCancellable_N);
+					eDam.Dispose(ref this.EvMessage_Normal);
+					eDam.Dispose(ref this.EvMessage_StartGenVideo);
+					eDam.Dispose(ref this.EvMessage_GenVideoRunning);
+					eDam.Dispose(ref this.EvMessage_UserCancelled);
+					eDam.Dispose(ref this.CmProgressRate);
+					eDam.Dispose(ref this.CmReport);
+				});
 			}
 		}
 	}
