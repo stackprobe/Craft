@@ -32,9 +32,11 @@ namespace Charlotte
 
 		// ----
 
+		private LimitCounter DisposeOnce = LimitCounter.One();
+
 		public void Dispose()
 		{
-			if (this.CmProgressRate != null)
+			if (this.DisposeOnce.Issue())
 			{
 				ExceptionDam.Section(eDam =>
 				{

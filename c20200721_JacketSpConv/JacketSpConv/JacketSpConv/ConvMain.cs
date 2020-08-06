@@ -32,7 +32,7 @@ namespace Charlotte
 						{
 							ProcessTools.Batch(new string[]
 							{
-								string.Format(Ground.I.ConvExeFile + " CS-Conv \"{0}\" \"{1}\" \"{2}\" \"{3}\"", inputDir, outputDir, outputOverwriteMode ? 1 : 0, successfulFile),
+								string.Format(Ground.I.ConvExeFile + " CS-Conv {0} {1} {2} \"{3}\"", StringTools.LiteEncode(inputDir), StringTools.LiteEncode(outputDir), outputOverwriteMode ? 1 : 0, successfulFile),
 							},
 							ProcMain.SelfDir
 							);

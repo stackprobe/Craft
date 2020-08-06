@@ -56,8 +56,8 @@ namespace Charlotte
 					throw new Exception("不正なコールサイン");
 				}
 
-				string inputDir = ar.NextArg();
-				string outputDir = ar.NextArg();
+				string inputDir = StringTools.LiteDecode(ar.NextArg());
+				string outputDir = StringTools.LiteDecode(ar.NextArg());
 				bool outputOverwriteMode = int.Parse(ar.NextArg()) != 0;
 				string successfulFile = ar.NextArg();
 
