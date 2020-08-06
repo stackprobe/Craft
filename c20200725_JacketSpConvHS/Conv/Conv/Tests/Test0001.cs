@@ -48,5 +48,14 @@ namespace Charlotte.Tests
 				@"C:\temp\Test02_out.flg"
 				);
 		}
+
+		public void Test03()
+		{
+			Test01_Main(
+				@"C:\wb2\20200723_JacketSpConv_テスト入力データ\TestData0002 mini 全部時報\時報",
+				@"C:\temp\Test03_out",
+				@"C:\temp\Test03_out.flg"
+				);
+		}
 	}
 }

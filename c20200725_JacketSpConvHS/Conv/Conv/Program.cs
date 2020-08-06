@@ -34,8 +34,9 @@ namespace Charlotte
 			{
 #if DEBUG
 				//new Test0001().Test00();
-				new Test0001().Test01();
+				//new Test0001().Test01();
 				//new Test0001().Test02();
+				new Test0001().Test03();
 #else
 				this.Main3(ar);
 #endif
@@ -56,8 +57,8 @@ namespace Charlotte
 					throw new Exception("不正なコールサイン");
 				}
 
-				string inputDir = ar.NextArg();
-				string outputDir = ar.NextArg();
+				string inputDir = StringTools.LiteDecode(ar.NextArg());
+				string outputDir = StringTools.LiteDecode(ar.NextArg());
 				bool outputOverwriteMode = int.Parse(ar.NextArg()) != 0;
 				int threadCount = int.Parse(ar.NextArg());
 				string successfulFile = ar.NextArg();

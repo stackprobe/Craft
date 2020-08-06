@@ -129,8 +129,6 @@
 			// OutputToInputDir
 			// 
 			this.OutputToInputDir.AutoSize = true;
-			this.OutputToInputDir.Checked = true;
-			this.OutputToInputDir.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.OutputToInputDir.Location = new System.Drawing.Point(54, 216);
 			this.OutputToInputDir.Name = "OutputToInputDir";
 			this.OutputToInputDir.Size = new System.Drawing.Size(236, 24);
