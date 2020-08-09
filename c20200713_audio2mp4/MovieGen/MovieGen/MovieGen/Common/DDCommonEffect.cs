@@ -80,6 +80,8 @@ namespace Charlotte.Common
 		//
 		public double AAdd2 = 0.0;
 
+		// <---- prm
+
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//

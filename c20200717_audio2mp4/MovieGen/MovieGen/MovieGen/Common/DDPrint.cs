@@ -22,11 +22,13 @@ namespace Charlotte.Common
 			public I3Color BorderColor = new I3Color(-1, 0, 0);
 			public int BorderWidth = 0;
 
-			// Print() 用 --->
+			// ---- Print() 用 ----
 
 			public int X;
 			public int Y;
 			public string Line;
+
+			// ----
 		}
 
 		//
