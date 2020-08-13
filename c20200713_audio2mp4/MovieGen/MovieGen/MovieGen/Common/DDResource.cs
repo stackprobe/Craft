@@ -135,25 +135,19 @@ namespace Charlotte.Common
 			IEnumerable<string> files;
 
 			if (ReleaseMode)
-			{
 				files = File2ResInfo.Keys;
-			}
 			else
-			{
 				files = Directory.GetFiles(DDConsts.ResourceDir, "*", SearchOption.AllDirectories).Select(file => FileTools.ChangeRoot(file, DDConsts.ResourceDir));
 
-				// Sort
-				{
-					List<string> tmp = files.ToList();
-					tmp.Sort(StringTools.CompIgnoreCase);
-					files = tmp;
-				}
+			// '_' で始まるファイルの除去
+			// makeDDResourceFile はファイルリストを _index として保存するので、どちらの場合でも Where を行わなければならない。
+			files = files.Where(file => Path.GetFileName(file)[0] != '_');
 
-				// memo: makeDDResourceFile はファイルリストを sortJLinesICase してる。
-			}
-			return files.Where(file => Path.GetFileName(file)[0] != '_');
+			// ソート
+			// makeDDResourceFile はファイルリストを sortJLinesICase してる。
+			files = EnumerableTools.Sort(files, StringTools.CompIgnoreCase);
 
-			// memo: makeDDResourceFile はファイルリストを _index として保存するので、Where はどっちでもやっておく。
+			return files;
 		}
 	}
 }
