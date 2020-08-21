@@ -57,13 +57,13 @@ namespace Charlotte
 					throw new Exception("Bad log: " + message);
 			};
 
-			bool[] aliving = new bool[] { true };
+			bool aliving = true;
 
 			DDAdditionalEvents.PostGameStart_G2 = () =>
 			{
 				this.BeginInvoke((MethodInvoker)delegate
 				{
-					if (aliving[0])
+					if (aliving)
 						this.Visible = false;
 				});
 			};
@@ -76,7 +76,7 @@ namespace Charlotte
 
 				this.BeginInvoke((MethodInvoker)delegate
 				{
-					aliving[0] = false;
+					aliving = false;
 					this.Close();
 				});
 			});
