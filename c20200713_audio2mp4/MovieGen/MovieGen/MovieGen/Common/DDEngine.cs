@@ -21,7 +21,7 @@ namespace Charlotte.Common
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public static long LangolierTime;
+		public static long FrameChaserTime;
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
@@ -54,10 +54,10 @@ namespace Charlotte.Common
 		{
 			long currTime = DDUtils.GetCurrTime();
 
-			LangolierTime += 16L; // 16.666 == 60Hz
-			LangolierTime = LongTools.ToRange(LangolierTime, currTime - 100L, currTime + 100L);
+			FrameChaserTime += 16L; // 16.666 == 60Hz
+			FrameChaserTime = LongTools.ToRange(FrameChaserTime, currTime - 100L, currTime + 100L);
 
-			while (currTime < LangolierTime)
+			while (currTime < FrameChaserTime)
 			{
 				Thread.Sleep(1);
 				currTime = DDUtils.GetCurrTime();
