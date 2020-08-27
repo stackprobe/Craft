@@ -72,15 +72,17 @@ namespace Charlotte.Common
 		{
 			// app > @ enter EachFrame
 
+			//Ground.EL.ExecuteAllTask();
+
 			// < app
+
+			DDGround.EL.ExecuteAllTask();
+			DDCurtain.EachFrame();
 
 			if (DDSEUtils.EachFrame() == false)
 			{
 				DDMusicUtils.EachFrame();
 			}
-			DDGround.EL.ExecuteAllTask();
-			DDCurtain.EachFrame();
-
 			if (DDGround.MainScreen != null && DDSubScreenUtils.CurrDrawScreenHandle == DDGround.MainScreen.GetHandle())
 			{
 				DDSubScreenUtils.ChangeDrawScreen(DX.DX_SCREEN_BACK);

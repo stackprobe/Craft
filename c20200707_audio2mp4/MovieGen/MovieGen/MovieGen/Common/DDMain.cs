@@ -82,7 +82,7 @@ namespace Charlotte.Common
 			DX.SetGraphMode(DDGround.RealScreen_W, DDGround.RealScreen_H, 32);
 			DX.ChangeWindowMode(1); // 1: ウィンドウ 0: フルスクリーン
 
-			//DX.SetFullSceneAntiAliasingMode(4, 2); // 適当な値が分からん。フルスクリーン廃止したので不要
+			//DX.SetFullSceneAntiAliasingMode(4, 2); // フルスクリーンを廃止したので不要
 
 			DX.SetWindowIconHandle(GetAppIcon()); // ウィンドウ左上のアイコン
 
@@ -216,7 +216,7 @@ namespace Charlotte.Common
 		{
 			bool mdm = DDUtils.GetMouseDispMode();
 
-			//DDDerivationUtils.UnloadAll(); // -> DDPictureUtils.UnloadAll
+			//DDDerivationUtils.UnloadAll(); // moved -> DDPictureUtils.UnloadAll
 			DDPictureUtils.UnloadAll();
 			DDSubScreenUtils.UnloadAll();
 			DDFontUtils.UnloadAll();

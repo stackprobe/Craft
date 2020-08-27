@@ -28,7 +28,7 @@ namespace Charlotte.Common
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public static void EachFrame(bool oncePerFrame = true) // DDEngine.EachFrame()前に呼び出しても可
+		public static void EachFrame(bool oncePerFrame = true) // フレームループの途中から呼び出しても良い。
 		{
 			if (oncePerFrame)
 			{
