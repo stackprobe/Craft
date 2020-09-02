@@ -66,6 +66,8 @@ namespace Charlotte
 			}
 		}
 
+		//public const int WINDOW_SIZE = 5000;
+		//public const int WINDOW_SIZE = 3000;
 		public const int WINDOW_SIZE = 1000;
 
 		public class WavPartInfo
