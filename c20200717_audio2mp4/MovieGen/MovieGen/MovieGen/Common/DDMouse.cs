@@ -100,10 +100,22 @@ namespace Charlotte.Common
 			if (DX.GetMousePoint(out X, out Y) != 0) // ? 失敗
 				throw new DDError();
 
-			X *= DDConsts.Screen_W;
-			X /= DDGround.RealScreen_W;
-			Y *= DDConsts.Screen_H;
-			Y /= DDGround.RealScreen_H;
+			if (DDGround.RealScreenDraw_W != -1)
+			{
+				X -= DDGround.RealScreenDraw_L;
+				X *= DDConsts.Screen_W;
+				X /= DDGround.RealScreenDraw_W;
+				Y -= DDGround.RealScreenDraw_T;
+				Y *= DDConsts.Screen_H;
+				Y /= DDGround.RealScreenDraw_H;
+			}
+			else
+			{
+				X *= DDConsts.Screen_W;
+				X /= DDGround.RealScreen_W;
+				Y *= DDConsts.Screen_H;
+				Y /= DDGround.RealScreen_H;
+			}
 		}
 
 		//
@@ -114,11 +126,22 @@ namespace Charlotte.Common
 			int mx = X;
 			int my = Y;
 
-			mx *= DDGround.RealScreen_W;
-			mx /= DDConsts.Screen_W;
-			my *= DDGround.RealScreen_H;
-			my /= DDConsts.Screen_H;
-
+			if (DDGround.RealScreenDraw_W != -1)
+			{
+				mx *= DDGround.RealScreenDraw_W;
+				mx /= DDConsts.Screen_W;
+				mx += DDGround.RealScreenDraw_L;
+				my *= DDGround.RealScreenDraw_H;
+				my /= DDConsts.Screen_H;
+				my += DDGround.RealScreenDraw_T;
+			}
+			else
+			{
+				mx *= DDGround.RealScreen_W;
+				mx /= DDConsts.Screen_W;
+				my *= DDGround.RealScreen_H;
+				my /= DDConsts.Screen_H;
+			}
 			if (DX.SetMousePoint(mx, my) != 0) // ? 失敗
 				throw new DDError();
 		}
