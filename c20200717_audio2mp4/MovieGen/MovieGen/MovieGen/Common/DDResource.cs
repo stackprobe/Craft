@@ -125,9 +125,9 @@ namespace Charlotte.Common
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
 		/// <summary>
-		/// ファイルリストを取得する。
-		/// ソート済み
-		/// '_' で始まるファイルの除去済み
+		/// <para>ファイルリストを取得する。</para>
+		/// <para>ソート済み</para>
+		/// <para>'_' で始まるファイルの除去済み</para>
 		/// </summary>
 		/// <returns>ファイルリスト</returns>
 		public static IEnumerable<string> GetFiles()
